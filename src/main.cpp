@@ -2,9 +2,9 @@
 #include "TornadoCurve.h"
 int main()
 {
-    int control1[3]={6,0,5};
-    int control2[3]={-5,0,5};
-    int control3[3]={1,0,5};
+    int control1[3]={-10,-10,5};
+    int control2[3]={-10,-10,5};
+    int control3[3]={-10,-10,5};
     int* controlpoints[3]={control1,control2,control3};
 
 

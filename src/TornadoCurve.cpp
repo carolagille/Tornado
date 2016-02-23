@@ -108,9 +108,9 @@ void TornadoCurve::interpolate(int _frame,int _particleTime)
 void TornadoCurve::spiral(int _radius,int _particleTime)
 {
 
-    m_resultPoint[0]= m_midPoint[0]+_radius * (_particleTime+20) * (1.0/20.0) * sin (_particleTime);
-    m_resultPoint[1]= m_midPoint[1]+_radius * (_particleTime+20) * (1.0/20.0) * cos (_particleTime);
-    m_resultPoint[2]= m_midPoint[2]+(1.0/2.0) * _particleTime;
+    m_resultPoint[0]= m_midPoint[0]+_radius * ((float)_particleTime+20) *  sin ((float)_particleTime/2);
+    m_resultPoint[1]= m_midPoint[1]+_radius * ((float)_particleTime+20) *  cos ((float)_particleTime/2);
+    m_resultPoint[2]= m_midPoint[2]+  (float)_particleTime;
     //std::cout<<"particleTime"<<_particleTime<< std::endl;
 }
 
