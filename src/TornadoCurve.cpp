@@ -37,19 +37,23 @@ TornadoCurve::TornadoCurve(int _changeRate,int* _allcontrolPoints[3])
 void TornadoCurve::guideCurve(int _particleTime,int _controlPoint[],int _position,int _curveNum)
 {
     float t;
-
-    float procent=(float)( _particleTime % m_changeRate);
-    if(procent!=0)
+    t=_particleTime/m_timeUp;
+    /*float percent=(float)( _particleTime % m_changeRate);
+    //std::cout<<"percent:"<<percent<<std::endl;
+    if(percent!=0)
     {
-        t = procent/(float)m_changeRate ;
+        t = percent/(float)m_changeRate ;
     }
     else
     {
         t=0;
     }
-
+    */
+    //std::cout<<"t:"<<t<<std::endl;
     //std::cout<< "controlPoint"<< _controlPoint[_position]<< std::endl;
     m_curveResult[_curveNum][_position] = m_minHeight*(pow((t-1.0), 2.0)) + _controlPoint[_position] * (2.0 * (1.0-t)) + m_maxHeight * (pow(t,2.0));
+
+
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
     //std::cout<<"result: "<<m_curveResult[_curveNum][_position]<<std::endl;
 }
