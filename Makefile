@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_QML_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
+CXXFLAGS      = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I. -Iinclude -I../../../../Qt/5.5/clang_64/lib/QtOpenGL.framework/Headers -I../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I../../../../Qt/5.5/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
 QMAKE         = /Users/carolagille/Qt/5.5/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -33,10 +33,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Tornado1.0.0
-DISTDIR = /Users/carolagille/Dropbox/University/Programming/Tornado/.tmp/Tornado1.0.0
+DISTDIR = /Users/carolagille/Dropbox/University/Programming/Tornado/obj/Tornado1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wl,-rpath,/Users/carolagille/Qt/5.5/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/carolagille/Qt/5.5/clang_64/lib -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -stdlib=libc++ -mmacosx-version-min=10.7 -Wl,-rpath,/Users/carolagille/Qt/5.5/clang_64/lib
+LIBS          = $(SUBLIBS) -F/Users/carolagille/Qt/5.5/clang_64/lib -framework QtOpenGL -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -44,14 +44,14 @@ STRIP         =
 
 ####### Output directory
 
-OBJECTS_DIR   = ./
+OBJECTS_DIR   = obj/
 
 ####### Files
 
 SOURCES       = src/TornadoCurve.cpp \
 		src/main.cpp 
-OBJECTS       = TornadoCurve.o \
-		main.o
+OBJECTS       = obj/TornadoCurve.o \
+		obj/main.o
 DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.5/clang_64/mkspecs/features/device_config.prf \
@@ -179,6 +179,7 @@ DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/default_post.prf \
+		../../../../Qt/5.5/clang_64/mkspecs/features/c++11.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf \
@@ -188,13 +189,14 @@ DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/resources.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/moc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/unix/opengl.prf \
+		../../../../Qt/5.5/clang_64/mkspecs/features/uic.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/unix/thread.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/rez.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/testcase_targets.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf \
-		Tornado.pro TornadoCurve.h src/TornadoCurve.cpp \
+		Tornado.pro include/TornadoCurve.h src/TornadoCurve.cpp \
 		src/main.cpp
 QMAKE_TARGET  = Tornado
 DESTDIR       = #avoid trailing-slash linebreak
@@ -205,6 +207,8 @@ QMAKE_COMP_QMAKE_OBJECTIVE_CFLAGS = -pipe \
 		-g \
 		-isysroot \
 		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk \
+		-std=c++11 \
+		-stdlib=libc++ \
 		-mmacosx-version-min=10.7 \
 		-Wall \
 		-W
@@ -364,6 +368,7 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/default_post.prf \
+		../../../../Qt/5.5/clang_64/mkspecs/features/c++11.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf \
@@ -373,6 +378,7 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 		../../../../Qt/5.5/clang_64/mkspecs/features/resources.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/moc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/unix/opengl.prf \
+		../../../../Qt/5.5/clang_64/mkspecs/features/uic.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/unix/thread.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/mac/rez.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/testcase_targets.prf \
@@ -380,6 +386,8 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 		../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf \
 		Tornado.pro \
+		/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl \
+		/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl \
 		/Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl
 	$(QMAKE) -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug -o Makefile Tornado.pro
@@ -510,6 +518,7 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/resolve_config.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/default_post.prf:
+../../../../Qt/5.5/clang_64/mkspecs/features/c++11.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/default_post.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/objective_c.prf:
@@ -519,6 +528,7 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 ../../../../Qt/5.5/clang_64/mkspecs/features/resources.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/moc.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/unix/opengl.prf:
+../../../../Qt/5.5/clang_64/mkspecs/features/uic.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/unix/thread.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/mac/rez.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/testcase_targets.prf:
@@ -526,6 +536,8 @@ Makefile: Tornado.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf 
 ../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf:
 Tornado.pro:
+/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl:
+/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 /Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl:
 /Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl:
 qmake: FORCE
@@ -557,7 +569,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents TornadoCurve.h $(DISTDIR)/
+	$(COPY_FILE) --parents include/TornadoCurve.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/TornadoCurve.cpp src/main.cpp $(DISTDIR)/
 
 
@@ -588,6 +600,8 @@ compiler_moc_header_make_all:
 compiler_moc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
 compiler_yacc_decl_make_all:
@@ -600,11 +614,11 @@ compiler_clean:
 
 ####### Compile
 
-TornadoCurve.o: src/TornadoCurve.cpp TornadoCurve.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TornadoCurve.o src/TornadoCurve.cpp
+obj/TornadoCurve.o: src/TornadoCurve.cpp include/TornadoCurve.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/TornadoCurve.o src/TornadoCurve.cpp
 
-main.o: src/main.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+obj/main.o: src/main.cpp include/TornadoCurve.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 ####### Install
 
