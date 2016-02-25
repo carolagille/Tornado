@@ -9,3 +9,8 @@ have a look at this interpolation again
 
 interpolation for the individual curves
 might not work either it is not going to the right end point
+
+
+
+25 Feb guide Curve works
+maybe change height to a vector

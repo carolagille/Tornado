@@ -1,6 +1,8 @@
 #include "TornadoCurve.h"
 #include <iostream>
 #include <math.h>
+
+
 TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
 {
     m_changeRate = _changeRate;
@@ -25,8 +27,10 @@ TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
     m_resultPoint[2]=0;
     m_curveCount=2;
     m_minHeight=0.0;
-    m_maxHeight=40.0;
-    m_timeUp=40; // needs to be calculated when actually using the curves
+    m_maxHeight[0]=0.0;
+    m_maxHeight[1]=0.0;
+    m_maxHeight[2]=200.0;
+    m_timeUp=400; // needs to be calculated when actually using the curves
     m_midPoint[0]=0;
     m_midPoint[1]=0;
     m_midPoint[2]=0;
@@ -35,7 +39,7 @@ TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
 
 
 void TornadoCurve::guideCurve(int _particleTime,float _controlPoint[],int _position,int _curveNum)
-{
+{ // this function calculates a points by interpolating between a minumum and maximum height in respect to a control point
     float t;
     //t=0;
     if(_particleTime==0)
@@ -48,9 +52,8 @@ void TornadoCurve::guideCurve(int _particleTime,float _controlPoint[],int _posit
     }
 
 
-    m_curveResult[_curveNum][_position] = m_minHeight * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight * (pow(t,2.0));
+    m_curveResult[_curveNum][_position] = m_minHeight * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight[_position] * (pow(t,2.0));
 
-    //std::cout<< "curve"<<_curveNum<<": "<< m_curveResult[_curveNum][_position]<< (_position < 2 ? "," : "\n");
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
 
 
@@ -97,12 +100,13 @@ void TornadoCurve::interpolate(int _frame,int _particleTime)
          //t=0;
          for(int i=0;i<=2;i++)
         {
-            m_midPoint[i] = (m_curveResult[0][i] * pow((1-t),2.0)) + 2*t*(1-t) + (m_curveResult[1][i] * pow(t,2.0));
-            //m_midPoint[i] = (m_curveResult[0][i] * pow(cos(t),2.0)) + (m_curveResult[1][i] * pow(sin(t),2.0) );
-           //m_midPoint[i] = (m_curveResult[0][i]*(1.0-t))+(m_curveResult[1][i]*t); // figure out what t is
-           //V=V1 cos^2(1) +V2 sin^2 (t)
-            //V=v1(1-t)^2 + 2t(1-t) + v2 t^2
-           std::cout << m_midPoint[i] << (i < 2 ? "," : "\n");
+            m_midPoint[i] = (m_curveResult[0][i]*((2*pow(t,3.0))- (3*pow(t,2.0))+1))+(m_curveResult[1][i]*((-2*pow(t,3.0)) + (3*pow(t,2.0)))); //cubic interpolation
+            //m_midPoint[i] = (m_curveResult[0][i] * pow(cos(t),2.0)) + (m_curveResult[1][i] * pow(sin(t),2.0) ); //quadratic interpolation
+           // m_midPoint[i] = (m_curveResult[0][i]*(1.0-t))+(m_curveResult[1][i]*t); // linear interpolation
+
+
+            //std::cout << m_midPoint[i] << (i < 2 ? "," : "\n");
+            //std::cout << m_curveResult[0][i] << (i < 2 ? "," : "\n");
         }
 
 
@@ -112,18 +116,25 @@ void TornadoCurve::interpolate(int _frame,int _particleTime)
 void TornadoCurve::spiral(int _radius,int _particleTime)
 {
 
-    m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius * ((float)_particleTime+20) *  (1.0/2.0)*sin ((float)_particleTime/3.0);
-    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime+20) *  (1.0/2.0)*cos ((float)_particleTime/3.0);
+    m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin ((float)_particleTime/3.0);
+    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos ((float)_particleTime/3.0);
+    //m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius  *  (1.0/2.0)*sin ((float)_particleTime/3.0);
+    //m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius  *  (1.0/2.0)*cos ((float)_particleTime/3.0);
+
+
+
     //m_resultPoint[2]= (float) m_midPoint[2]+  (float)_particleTime;
-    m_resultPoint[2]= (float)_particleTime;
+    m_resultPoint[2]= (float)_particleTime/4;
     //std::cout<<"ppointe"<<m_midPoint[2]<< std::endl;
 }
 
 
 void TornadoCurve::printPoint()
 {
-    //std::cout<< (int)m_resultPoint[0] <<","<< (int)m_resultPoint[1]<<","<< (int)m_resultPoint[2] <<";"<< std::endl;
-    //std::cout<< (int)m_midPoint[0] <<","<< (int)m_midPoint[1]<<","<< (int)m_midPoint[2] <<";"<< std::endl;
+    std::cout<< m_resultPoint[0] <<","<< m_resultPoint[1]<<","<< m_resultPoint[2] <<";"<< std::endl;
+    //std::cout<< m_midPoint[0] <<","<< m_midPoint[1]<<","<< m_midPoint[2] <<";"<< std::endl;
+    //std::cout<<"curve1"<< m_curveResult[0][0] <<","<< (int)m_curveResult[0][1]<<","<< (int)m_curveResult[0][2] <<";"<< std::endl;
+    //std::cout<<"curve2"<< m_curveResult[1][0] <<","<< (int)m_curveResult[1][1]<<","<< (int)m_curveResult[1][2] <<";"<< std::endl;
 }
 
 
