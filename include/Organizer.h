@@ -2,7 +2,8 @@
 #define ORGANIZER_H
 
 #include <vector>
-#include"Particle.h"
+#include"ParticleSubsystem.h"
+
 class Organizer
 {
 public:
@@ -15,7 +16,7 @@ private:
     int m_frame;
     int m_partSubsysTreshold;
     int m_particleSubsysCount;
-    std::vector<Particle> m_partSubsysList;
+    std::vector<ParticleSubsystem> m_partSubsysList;
     int m_maxProductionRate;
     float m_radiusRange[2];
 

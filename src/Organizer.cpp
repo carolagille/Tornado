@@ -2,7 +2,7 @@
 #include "ParticleSubsystem.h"
 #include <random>
 #include <vector>
-
+#include<iostream>
 Organizer::Organizer()
 {
     m_frame=0;
@@ -11,6 +11,7 @@ Organizer::Organizer()
     m_particleSubsysCount=0;
     m_radiusRange[0]=5.0;
     m_radiusRange[1]=7.0;
+    m_partSubsysList = std::vector<ParticleSubsystem> ();
     createParticleSubsys();
 
 }
@@ -26,7 +27,7 @@ void Organizer::createParticleSubsys()
     if (m_particleSubsysCount < m_partSubsysTreshold)
     {
         int diffrence=m_partSubsysTreshold - m_particleSubsysCount;
-        for (int i; i<diffrence;i++)
+        for (int i=0; i<diffrence;i++)
         {
             std::default_random_engine generator;
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
@@ -36,7 +37,9 @@ void Organizer::createParticleSubsys()
             std::default_random_engine generator1;
             std::uniform_real_distribution<float> distribution1(0.0,1.0);
             float offset = distribution1(generator1);
-            m_partSubsysList.push_back (new ParticleSubsystem(radius,offset));
+
+            ParticleSubsystem PartSub(radius,offset);
+            m_partSubsysList.push_back (PartSub);
 
             m_particleSubsysCount++;
             if (m_particleSubsysCount >= m_partSubsysTreshold){return;}
@@ -50,13 +53,13 @@ void Organizer::createParticleSubsys()
 void Organizer::timerEvent()
 {
     createParticleSubsys();
-    for (int i;i<=m_particleSubsysCount;i++)
+    for (int i=0;i<=m_particleSubsysCount;i++)
     {
         m_partSubsysList[i].move();
         int out=m_partSubsysList[i].checkLife();
         if (out==1)
         {
-           m_partSubsysList.erase(i);
+           m_partSubsysList.erase(m_partSubsysList.begin()+i);
         }
     }
     m_frame++;

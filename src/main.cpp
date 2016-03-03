@@ -24,7 +24,6 @@ int main()
     return 0;
     */
 
-    std::cout<<"size of PArticleSubSys"<<sizeof(Particle)<< std::endl;
-
+    Organizer Tornado1;
 
 }
