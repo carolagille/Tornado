@@ -4,14 +4,14 @@
 class TornadoCurve
 {
  public:
-     TornadoCurve(int _changeRate,float* _controlPoint[3]);
+     TornadoCurve(int _changeRate,float* _controlPoint[3],float _offset);
      void guideCurve(int _particleTime, float _controlPoint[], int _position, int _curveNum); // make this a class????, creates guide curves by interpolating between start and end and a control curve
      void interpolate(int _frame,int _particleTime);//interpolates between the diffrent guide curves
      void spiral (int _radius, int _particleTime);// using the interpolating result this creates a spiral
-	 int* getPoint();
      void printPoint(); // prints out the point on the curve
- 
+     void getPoint(float* _destination[3]);
 private:
+    float m_offset;
     float m_changeRate; //how often it should swtichen between the guide curves
     float m_controlPoints[3][3]; //control points that are stored int a list, they are used to create the guide curves
     int m_tracker; // this keeps track of the curve thats active

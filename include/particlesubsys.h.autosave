@@ -1,0 +1,22 @@
+#ifndef PARTICLESUBSYS_H
+#define PARTICLESUBSYS_H
+
+class ParticleBase
+{
+    public:    
+    
+    void move();
+    
+
+    private:
+    float m_position[3];
+    int m_lifetime;
+    int m_age;
+    float m_rgba[4];
+    
+    
+    
+}
+
+
+#endif // PARTICLESUBSYS_H

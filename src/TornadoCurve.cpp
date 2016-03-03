@@ -3,16 +3,11 @@
 #include <math.h>
 
 
-TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
+TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _offset)
 {
+    m_offset=_offset;
     m_changeRate = _changeRate;
-    for(int i=0; i<=2;i++)
-    {
-        for(int j=0; j<=2;j++)
-        {
-            m_controlPoints[i][j]= _allcontrolPoints[i][j];
-        }
-    }
+
     for(int i=0; i<=1;i++)
     {
         for(int j=0; j<=2;j++)
@@ -21,6 +16,7 @@ TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
 
         }
     }
+
     m_tracker=0;
     m_resultPoint[0]=0; //improve later
     m_resultPoint[1]=0;
@@ -34,8 +30,19 @@ TornadoCurve::TornadoCurve(int _changeRate,float* _allcontrolPoints[3])
     m_midPoint[0]=0;
     m_midPoint[1]=0;
     m_midPoint[2]=0;
-}
 
+
+    for(int i=0; i<=2;i++)
+    {
+        for(int j=0; j<=1;j++)
+        {
+            m_controlPoints[i][j]= _allcontrolPoints[i][j];
+        }
+        m_controlPoints[i][2]=(float)(m_maxHeight[2]/2.0);
+    }
+
+
+}
 
 
 void TornadoCurve::guideCurve(int _particleTime,float _controlPoint[],int _position,int _curveNum)
@@ -116,8 +123,8 @@ void TornadoCurve::interpolate(int _frame,int _particleTime)
 void TornadoCurve::spiral(int _radius,int _particleTime)
 {
 
-    m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin ((float)_particleTime/3.0);
-    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos ((float)_particleTime/3.0);
+    m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin (((float)_particleTime/3.0)+ m_offset);
+    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos (((float)_particleTime/3.0) + m_offset);
     //m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius  *  (1.0/2.0)*sin ((float)_particleTime/3.0);
     //m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius  *  (1.0/2.0)*cos ((float)_particleTime/3.0);
 
@@ -138,3 +145,10 @@ void TornadoCurve::printPoint()
 }
 
 
+void TornadoCurve::getPoint(float *_destination[3])
+{
+    * _destination[0]=m_resultPoint[0];
+    * _destination[1]=m_resultPoint[1];
+    * _destination[2]=m_resultPoint[2];
+
+}
