@@ -96,9 +96,9 @@ void ParticleSystem::createParticles()
 void ParticleSystem::move()
 {
 
-    //Tornado.m_curve.spiral(m_radius,m_age,m_offset);
-    //float new_pos[3];
-    //Tornado::m_curve.getPoint(&new_pos);
+    Tornado.m_curve.spiral(m_radius,m_age,m_offset);
+    float new_pos[3];
+    Tornado::m_curve.getPoint(&new_pos);
 
 
 
