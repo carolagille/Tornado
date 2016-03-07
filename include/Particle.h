@@ -4,10 +4,11 @@
 class Particle
 {
 public:
-    Particle(float _rgba[4],float _position[3]);
+    Particle(float _rgba[4], float _center[3], float _radius);
     ~Particle();
     int checkLife();
     void move(float _center[3], float _boundingBox); //maybe make this delete the particle if its lifetime is over
+    void place(float _center[3], float _boundingBox);
 private:
     float m_position[3];
     int m_lifetime;

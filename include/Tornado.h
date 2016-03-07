@@ -1,17 +1,18 @@
 #ifndef TORNADO_H
 #define TORNADO_H
-
+#include "TornadoCurve.h"
 #include <vector>
-#include"ParticleSystem.h"
+#include "ParticleSystem.h"
 
 class Tornado
 {
 public:
-    Tornado();
+    Tornado(int _changeRate,float* _controlPoint[3], float _maxHeight);
     ~Tornado();
     void createParticleSystem();
     void save();
     void timerEvent();
+    TornadoCurve m_curve;
 private:
     int m_frame;
     int m_particleSystemTreshold;
@@ -20,6 +21,7 @@ private:
     int m_maxProductionRate;
     float m_radiusRange[2];
     float m_maxHeight;
+
 
 
 

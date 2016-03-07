@@ -2,10 +2,50 @@
 #include <iostream>
 #include <math.h>
 
-
-TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _offset, float _maxHeight)
+TornadoCurve::TornadoCurve() //Default Constructor
 {
-    m_offset=_offset;
+
+    m_changeRate = 10;
+
+    for(int i=0; i<=1;i++)
+    {
+        for(int j=0; j<=2;j++)
+        {
+            m_curveResult[i][j]= 0;
+
+        }
+    }
+
+    m_tracker=0;
+    m_resultPoint[0]=0; //improve later
+    m_resultPoint[1]=0;
+    m_resultPoint[2]=0;
+    m_curveCount=2;
+    m_minHeight=0.0;
+    m_maxHeight[0]=0.0;
+    m_maxHeight[1]=0.0;
+    m_maxHeight[2]=200;
+    m_timeUp=400; // needs to be calculated when actually using the curves
+    m_midPoint[0]=0;
+    m_midPoint[1]=0;
+    m_midPoint[2]=0;
+    m_frame=0;
+
+    for(int i=0; i<=2;i++)
+    {
+        for(int j=0; j<=1;j++)
+        {
+            m_controlPoints[i][j]= 100;
+        }
+        m_controlPoints[i][2]=(float)(m_maxHeight[2]/2.0);
+    }
+
+
+}
+
+TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _maxHeight)
+{
+
     m_changeRate = _changeRate;
 
     for(int i=0; i<=1;i++)
@@ -30,6 +70,7 @@ TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _
     m_midPoint[0]=0;
     m_midPoint[1]=0;
     m_midPoint[2]=0;
+    m_frame=0;
 
 
     for(int i=0; i<=2;i++)
@@ -66,73 +107,49 @@ void TornadoCurve::guideCurve(int _particleTime,float _controlPoint[],int _posit
 
 }
 
+void TornadoCurve::frameChange(int _frame)
+{
+    if (_frame % (int)m_changeRate == 0)
+    {
+        m_tracker++;
+        m_tracker %= (int)m_curveCount;
 
-void TornadoCurve::interpolate(int _frame,int _particleTime)
+    }
+
+    m_frame=_frame;
+}
+
+void TornadoCurve::interpolate(int _particleTime)
 {
 
-    int curveResultTrack=0;
 
-//        for(int i=0;i<=1;i++)
-//        {
-            if (_frame % (int)m_changeRate == 0)
-            {
-                m_tracker++;
-                m_tracker %= (int)m_curveCount;
 
-            }
             for(int j=0; j<=2;j++)
             {
                 guideCurve(_particleTime,m_controlPoints[m_tracker],j,0);
                 guideCurve(_particleTime,m_controlPoints[(m_tracker+1)%(int)m_curveCount],j,1);
-//                //std::cout<<"m_tracker"<<m_tracker<<std::endl;
-//                if(m_tracker<=1)
-//                {
-//                guideCurve(_particleTime,m_controlPoints[m_tracker+i],j,curveResultTrack);
-//                }
-//                else
-//                {
-//                guideCurve(_particleTime,m_controlPoints[m_tracker-i],j,curveResultTrack);
-//                }
-            }
-//            //gives you position on curve equations
-//            curveResultTrack++;
-//        }
-//    std::cout << "Frame " << _frame << " curves: " << m_tracker << ", " << (m_tracker+1)%(int)m_curveCount << "\n";
+//
+         float t = (float)(m_frame%(int)m_changeRate)/(float)m_changeRate;
 
-
-        // interpolate between position that the curve function return
-
-         float t = (float)(_frame%(int)m_changeRate)/(float)m_changeRate;
-         //std::cout<<"t:"<<t<<std::endl;
-         //t=0;
          for(int i=0;i<=2;i++)
         {
-            m_midPoint[i] = (m_curveResult[0][i]*((2*pow(t,3.0))- (3*pow(t,2.0))+1))+(m_curveResult[1][i]*((-2*pow(t,3.0)) + (3*pow(t,2.0)))); //cubic interpolation
+            m_midPoint[i] = (m_curveResult[0][i]*((2*pow(t ,3.0))- (3*pow(t ,2.0))+1))+(m_curveResult[1][i]*((-2*pow(t ,3.0)) + (3*pow(t ,2.0)))); //cubic interpolation
             //m_midPoint[i] = (m_curveResult[0][i] * pow(cos(t),2.0)) + (m_curveResult[1][i] * pow(sin(t),2.0) ); //quadratic interpolation
            // m_midPoint[i] = (m_curveResult[0][i]*(1.0-t))+(m_curveResult[1][i]*t); // linear interpolation
-
-
-            //std::cout << m_midPoint[i] << (i < 2 ? "," : "\n");
-            //std::cout << m_curveResult[0][i] << (i < 2 ? "," : "\n");
         }
 
 
 }
+}
 
 
-void TornadoCurve::spiral(int _radius,int _particleTime)
+void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
 {
-
-    m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin (((float)_particleTime/3.0)+ m_offset);
-    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos (((float)_particleTime/3.0) + m_offset);
-    //m_resultPoint[0]= (float)m_midPoint[0]+(float) _radius  *  (1.0/2.0)*sin ((float)_particleTime/3.0);
-    //m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius  *  (1.0/2.0)*cos ((float)_particleTime/3.0);
-
-
-
-    //m_resultPoint[2]= (float) m_midPoint[2]+  (float)_particleTime;
+    interpolate(_particleTime);
+    m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin (((float)_particleTime/3.0)+ _offset);
+    m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos (((float)_particleTime/3.0) + _offset);
     m_resultPoint[2]= (float)_particleTime/4;
-    //std::cout<<"ppointe"<<m_midPoint[2]<< std::endl;
+
 }
 
 

@@ -4,12 +4,15 @@
 class TornadoCurve
 {
  public:
-     TornadoCurve(int _changeRate, float* _controlPoint[3], float _offset, float _maxHeight);
+    TornadoCurve();
+     TornadoCurve(int _changeRate, float* _controlPoint[3], float _maxHeight);
      void guideCurve(int _particleTime, float _controlPoint[], int _position, int _curveNum); // make this a class????, creates guide curves by interpolating between start and end and a control curve
-     void interpolate(int _frame,int _particleTime);//interpolates between the diffrent guide curves
-     void spiral (int _radius, int _particleTime);// using the interpolating result this creates a spiral
+     void interpolate(int _particleTime);//interpolates between the diffrent guide curves
+     void spiral (int _radius, int _particleTime, int _offset);// using the interpolating result this creates a spiral
      void printPoint(); // prints out the point on the curve
      void getPoint(float* _destination[3]);
+     void frameChange(int _frame);
+
 private:
     float m_offset;
     float m_changeRate; //how often it should swtichen between the guide curves
@@ -22,6 +25,7 @@ private:
     float m_timeUp; // represents how long it takes the particle to reach the max height can also be used as lifetime of particle
     float m_midPoint[3]; // stores the midpoint calculated by the interpolation function by interpolating between two guide curve points
     float m_curveResult[2][3]; // stores the two results from the guide curve calculation as there are only two that need to be used
+    int m_frame;
 };
 
 

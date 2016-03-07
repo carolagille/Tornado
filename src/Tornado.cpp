@@ -1,9 +1,11 @@
 #include "Tornado.h"
 #include "ParticleSystem.h"
+#include "TornadoCurve.h"
 #include <random>
 #include <vector>
 #include<iostream>
-Tornado::Tornado()
+Tornado::Tornado(int _changeRate,float* _controlPoint[3], float _maxHeight) :
+    m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
     m_particleSystemTreshold=10; //equals to 10000 particles in total as every partciel subsys has 100 particles it self
@@ -11,7 +13,7 @@ Tornado::Tornado()
     m_particleSystemCount=0;
     m_radiusRange[0]=5.0;
     m_radiusRange[1]=7.0;
-    m_maxHeight=200.0;
+    m_maxHeight=_maxHeight;
     m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
     createParticleSystem();
@@ -57,6 +59,7 @@ void Tornado::createParticleSystem()
 
 void Tornado::timerEvent()
 {
+    m_curve.frameChange(m_frame);
     createParticleSystem();
     for (int i=0;i<=m_particleSystemCount;i++)
     {

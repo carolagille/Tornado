@@ -3,10 +3,12 @@
 #include "Particle.h"
 #include <forward_list>
 #include <vector>
+
 class ParticleSystem
 {
 public:
     ParticleSystem(float _radius, float _offset); // constructor takes in the radius from the Tornado class
+    ParticleSystem();
     ~ParticleSystem();
     void createParticles(); //creates Particle if the Treshold isn't reached yet
     void move(); //moves the particle along the Curve maybe include a age check in here and than delete particle
@@ -22,6 +24,8 @@ private:
     int m_maxProductionRate;
     int m_particleCount;
     std::vector<Particle*> m_particleList; // list to store the particles
+
+
 };
 
 
