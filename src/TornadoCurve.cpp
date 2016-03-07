@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _offset)
+TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _offset, float _maxHeight)
 {
     m_offset=_offset;
     m_changeRate = _changeRate;
@@ -25,7 +25,7 @@ TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _
     m_minHeight=0.0;
     m_maxHeight[0]=0.0;
     m_maxHeight[1]=0.0;
-    m_maxHeight[2]=200.0;
+    m_maxHeight[2]=_maxHeight;
     m_timeUp=400; // needs to be calculated when actually using the curves
     m_midPoint[0]=0;
     m_midPoint[1]=0;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "TornadoCurve.h"
-#include "Organizer.h"
-#include "ParticleSubsystem.h"
+#include "Tornado.h"
+#include "ParticleSystem.h"
 #include "Particle.h"
 #include <vector>
 
@@ -24,6 +24,7 @@ int main()
     return 0;
     */
 
-    Organizer Tornado1;
+    Tornado Tornado1;
+    return 0;
 
 }

@@ -3,6 +3,7 @@
 
 Particle::Particle(float _rgba[4], float _position[])
 {
+    std::cout<<"Particle created\n";
     m_position[0]=_position[0];
     m_position[1]=_position[1];
     m_position[2]=_position[2];

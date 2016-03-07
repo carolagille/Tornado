@@ -4,7 +4,7 @@
 class TornadoCurve
 {
  public:
-     TornadoCurve(int _changeRate,float* _controlPoint[3],float _offset);
+     TornadoCurve(int _changeRate, float* _controlPoint[3], float _offset, float _maxHeight);
      void guideCurve(int _particleTime, float _controlPoint[], int _position, int _curveNum); // make this a class????, creates guide curves by interpolating between start and end and a control curve
      void interpolate(int _frame,int _particleTime);//interpolates between the diffrent guide curves
      void spiral (int _radius, int _particleTime);// using the interpolating result this creates a spiral
