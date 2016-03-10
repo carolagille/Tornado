@@ -68,6 +68,10 @@ int main(int argc,char **argv)
     */
 
     Tornado:Tornado Tornado1(10,controlpoints,200);
+    for(int i=0;i<=400;i++)
+    {
+        Tornado1.update();
+    }
     return 0;
 
 }

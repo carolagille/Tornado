@@ -19,7 +19,7 @@ m_radius(5)
     m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
     m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
 
-    m_particleTreshold=10;
+    m_particleTreshold=1;
 
     m_maxProductionRate=1;
     m_particleCount=0;

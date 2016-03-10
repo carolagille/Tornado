@@ -8,7 +8,7 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=10; //equals to 10000 particles in total as every partciel subsys has 100 particles it self
+    m_particleSystemTreshold=5;
     m_maxProductionRate=1;
     m_particleSystemCount=0;
     m_radiusRange[0]=5.0;
@@ -45,6 +45,8 @@ void Tornado::createParticleSystem()
 
             ParticleSystem* PartSys=new ParticleSystem(radius,offset);
             m_particleSystemList.push_back (PartSys);
+            std::vector<ngl::Vec3> particlePoint;
+            m_storeList.push_back(particlePoint);
 
             m_particleSystemCount++;
             std::cout<<"running"<< std::endl;
@@ -57,7 +59,7 @@ void Tornado::createParticleSystem()
 
 }
 
-void Tornado::timerEvent()
+void Tornado::update()
 {
     m_curve.frameChange(m_frame);
     createParticleSystem();
@@ -66,6 +68,9 @@ void Tornado::timerEvent()
         int particleAge = m_particleSystemList[i]->getAge();
         m_curve.spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
         ngl::Vec3 point = m_curve.getPoint();
+
+
+        m_storeList[i].push_back(point);
 
         m_particleSystemList[i]->move(point);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);

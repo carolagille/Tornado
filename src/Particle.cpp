@@ -24,7 +24,22 @@ Particle::~Particle()
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
 {
     std::cout<<"movingParticle"<<std::endl;
+    ngl::Vec3 velocity = (_newCenter) - (_center);
+    ngl::Vec3 midResult = (m_position) + (velocity);
+    ngl::Vec3 distance = (midResult) - (_newCenter);
 
+    ngl::Vec3 newPos;
+
+    if(distance.length()<=(0.5* _boundingBox))
+    {
+        newPos = (midResult) + (0.3 * distance);
+    }
+    else if(distance.length() > (0.5* _boundingBox))
+    {
+        newPos = (midResult) - (0.3 * distance);
+    }
+
+    m_position= newPos;
 }
 
 int Particle::checkLife()

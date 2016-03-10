@@ -12,7 +12,7 @@ public:
     ~Tornado();
     void createParticleSystem();
     void save();
-    void timerEvent();
+    void update();
     TornadoCurve m_curve;
 private:
     int m_frame;
@@ -22,6 +22,8 @@ private:
     int m_maxProductionRate;
     float m_radiusRange[2];
     float m_maxHeight;
+
+    std::vector<std::vector<ngl::Vec3>> m_storeList;
 
 
 
