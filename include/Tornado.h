@@ -14,6 +14,7 @@ public:
     void save();
     void update();
     TornadoCurve m_curve;
+    void printList();
 private:
     int m_frame;
     int m_particleSystemTreshold;

@@ -42,8 +42,8 @@ m_radius(_radius)
     m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
     m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
 
-    m_particleTreshold=10;
-    m_maxProductionRate=1;
+    m_particleTreshold=0;
+    m_maxProductionRate=0;
     m_particleCount=0;
     m_particleList=std::vector<Particle*> ();
     createParticles();
@@ -52,7 +52,7 @@ m_radius(_radius)
 ParticleSystem::~ParticleSystem()
 {
   std::cout<<"Destructor Particle System called"<<std::endl;
-  for(int i=0;i<=(int)m_particleList.size();++i)
+  for(int i=0;i<(int)m_particleList.size();++i)
   {
       delete m_particleList[i];
   }
@@ -88,7 +88,7 @@ void ParticleSystem::move(ngl::Vec3 _position)
 
 
     createParticles();
-    for (int i=0;i<=m_particleCount;i++)
+    for (int i=0;i<m_particleCount;i++)
     {
         m_particleList[i]->move(_position,m_position,m_boundingBox);
         int out=m_particleList[i]->checkLife();
@@ -104,6 +104,7 @@ void ParticleSystem::move(ngl::Vec3 _position)
     m_position[2]= _position[2];
 
     //insert Curve function stuff here
+    m_age++;
 }
 
 

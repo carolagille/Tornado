@@ -67,11 +67,12 @@ int main(int argc,char **argv)
     return 0;
     */
 
-    Tornado:Tornado Tornado1(10,controlpoints,200);
+    Tornado Tornado1(10,controlpoints,200);
     for(int i=0;i<=400;i++)
     {
         Tornado1.update();
     }
+    Tornado1.printList();
     return 0;
 
 }

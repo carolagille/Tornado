@@ -4,7 +4,7 @@
 Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 {
     std::cout<<"Particle created\n";
-    m_position=(0.0f,0.0f,0.0f);
+    m_position=ngl::Vec3(0.0f,0.0f,0.0f);
 
     m_rgba=(_rgba);
 

@@ -11,18 +11,18 @@ TornadoCurve::TornadoCurve() //Default Constructor
     m_curveResult[1]=(0.0f);
 
     m_tracker=0;
-    m_resultPoint=(0.0f);
+    m_resultPoint=ngl::Vec3(0.0f,0.0f,0.0f);
 
     m_curveCount=2;
     m_minHeight=0.0;
-    m_maxHeight=(0.0f,0.0f,200.0f);
+    m_maxHeight=ngl::Vec3(0.0f,0.0f,200.0f);
     m_timeUp=400; // needs to be calculated when actually using the curves
     m_midPoint=(0.0f);
     m_frame=0;
 
     m_controlPoints[0]=(100.0f);
     m_controlPoints[1]=(100.0f);
-    m_controlPoints[0]=(100.0f,100.0f,(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[0]=ngl::Vec3(100.0f,100.0f,(float)(m_maxHeight[2]/2.0));
 
 
 }
@@ -32,25 +32,24 @@ TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float
 
     m_changeRate = _changeRate;
 
-    m_curveResult[0]=(0.0f);
-    m_curveResult[1]=(0.0f);
+    m_curveResult[0]=(0);
+    m_curveResult[1]=(0);
 
     m_tracker=0;
     m_resultPoint=(0.0f);
     m_curveCount=2;
     m_minHeight=0.0;
-    m_maxHeight[0]=0.0;
-    m_maxHeight[1]=0.0;
-    m_maxHeight=(0.0f,0.0f,_maxHeight);
 
+    m_maxHeight=ngl::Vec3(0.0f,0.0f,_maxHeight);
+    std::cout<<"m_maxHeight"<<m_maxHeight[0]<<","<<m_maxHeight[1]<<","<<m_maxHeight[2]<<"\n";
     m_timeUp=400; // needs to be calculated when actually using the curves
     m_midPoint=(0.0f);
     m_frame=0;
 
 
-    m_controlPoints[0]=(_allcontrolPoints[0][0],_allcontrolPoints[0][1],(float)(m_maxHeight[2]/2.0));
-    m_controlPoints[1]=(_allcontrolPoints[1][0],_allcontrolPoints[1][1],(float)(m_maxHeight[2]/2.0));
-    m_controlPoints[0]=(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[0]=ngl::Vec3(_allcontrolPoints[0][0],_allcontrolPoints[0][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[1]=ngl::Vec3(_allcontrolPoints[1][0],_allcontrolPoints[1][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[2]=ngl::Vec3(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
 
 
 
@@ -70,7 +69,7 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _p
         t=(float)_particleTime/(float)m_timeUp;
     }
 
-
+    //std::cout<<_position<<"\n";
     m_curveResult[_curveNum][_position] = m_minHeight * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight[_position] * (pow(t,2.0));
 
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
@@ -120,7 +119,7 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
     m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*sin (((float)_particleTime/3.0)+ _offset);
     m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/10.0+10) *  (1.0/5.0)*cos (((float)_particleTime/3.0) + _offset);
     m_resultPoint[2]= (float)_particleTime/4;
-
+    //printPoint();
 }
 
 

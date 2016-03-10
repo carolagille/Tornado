@@ -7,6 +7,9 @@
 #include <ngl/Vec4.h>
 
 class ParticleSystem
+//PArticle system Class which creates a colletion of particles that are born live and die over time, they hover around the particle systems center and
+// create their own movement. The particle system erases it self when it reaches the top of the tornadoe and is moved along a curve defined int the
+//Tornado class.
 {
 public:
     ParticleSystem(float _radius, float _offset); // constructor takes in the radius from the Tornado class
