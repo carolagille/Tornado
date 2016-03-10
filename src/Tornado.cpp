@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 #include<iostream>
-Tornado::Tornado(int _changeRate,float* _controlPoint[3], float _maxHeight) :
+Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
@@ -63,7 +63,11 @@ void Tornado::timerEvent()
     createParticleSystem();
     for (int i=0;i<=m_particleSystemCount;i++)
     {
-        m_particleSystemList[i]->move();
+        int particleAge = m_particleSystemList[i]->getAge();
+        m_curve.spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
+        ngl::Vec3 point = m_curve.getPoint();
+
+        m_particleSystemList[i]->move(point);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {

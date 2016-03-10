@@ -6,9 +6,17 @@
 #include <vector>
 #include <QtGui/QGuiApplication>
 #include "NGL_Context.h"
+#include <ngl/Vec3.h>
 
 int main(int argc,char **argv)
 {
+    //Control points
+    ngl::Vec3 control1=(30.0f,-10.0f,100.0f);
+    ngl::Vec3 control2=(-30.0f,50.0f,100.0f);
+    ngl::Vec3 control3=(5.0f,0.0f,100.0f);
+    ngl::Vec3 controlpoints[3]={control1,control2,control3};
+
+/*
     QGuiApplication app(argc,argv); //manages your program
 
     //argv and argc are command line inputs that can be taken by the
@@ -16,12 +24,6 @@ int main(int argc,char **argv)
 
     QSurfaceFormat format; //manages the buffer stuff
     format.setSamples(4);
-
-    //Control points
-    float control1[3]={30,-10,100};
-    float control2[3]={-30,50,100};
-    float control3[3]={5,0,100};
-    float* controlpoints[3]={control1,control2,control3};
 
 
 
@@ -52,7 +54,7 @@ int main(int argc,char **argv)
   window.show();
 
   return app.exec();
-
+*/
 /*
     TornadoCurve Tornado1(200,controlpoints);
     for(int i=0, j=100; i <= 400; i++,j++)
@@ -65,7 +67,7 @@ int main(int argc,char **argv)
     return 0;
     */
 
-    //Tornado:Tornado Tornado1(10,controlpoints,200);
-    //return 0;
+    Tornado:Tornado Tornado1(10,controlpoints,200);
+    return 0;
 
 }

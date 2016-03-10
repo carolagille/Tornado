@@ -3,11 +3,12 @@
 #include "TornadoCurve.h"
 #include <vector>
 #include "ParticleSystem.h"
+#include <ngl/Vec3.h>
 
 class Tornado
 {
 public:
-    Tornado(int _changeRate,float* _controlPoint[3], float _maxHeight);
+    Tornado(int _changeRate,ngl::Vec3 _controlPoint[3], float _maxHeight);
     ~Tornado();
     void createParticleSystem();
     void save();

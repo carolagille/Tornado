@@ -6,27 +6,21 @@
 #include<random>
 #include<iostream>
 
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem():
+m_offset(0),
+m_radius(5)
 {
     std::cout<<"ParticleSystem created\n";
-    m_offset=0;
+
     m_boundingBox = 0.5; //radius of a sphere soroundig the particle
-    m_position[0] = 0;
-    m_position[1] = 0;
-    m_position[2] = 0;
-
+    m_position = (0.0f,0.0f,0.0f);
     m_age = 0;
-    m_rgbaRange[0][0]=0.545;
-    m_rgbaRange[0][1]=0.513;
-    m_rgbaRange[0][2]=0.470;
-    m_rgbaRange[0][3]=1.0;
 
-    m_rgbaRange[1][0]=0.8;
-    m_rgbaRange[1][1]=0.78;
-    m_rgbaRange[1][2]=0.69;
-    m_rgbaRange[1][3]=0.8;
+    m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
+    m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
+
     m_particleTreshold=10;
-    m_radius=5;
+
     m_maxProductionRate=1;
     m_particleCount=0;
     m_particleList=std::vector<Particle*> ();
@@ -34,27 +28,21 @@ ParticleSystem::ParticleSystem()
 
 }
 
-ParticleSystem::ParticleSystem(float _radius, float _offset)
+ParticleSystem::ParticleSystem(float _radius, float _offset):
+m_offset(_offset),
+m_radius(_radius)
 {
     std::cout<<"ParticleSystem created\n";
-    m_offset=_offset;
     m_boundingBox = 0.5; //radius of a sphere soroundig the particle
-    m_position[0] = 0;
-    m_position[1] = 0;
-    m_position[2] = 0;
+
+    m_position = (0.0f,0.0f,0.0f);
 
     m_age = 0;
-    m_rgbaRange[0][0]=0.545;
-    m_rgbaRange[0][1]=0.513;
-    m_rgbaRange[0][2]=0.470;
-    m_rgbaRange[0][3]=1.0;
 
-    m_rgbaRange[1][0]=0.8;
-    m_rgbaRange[1][1]=0.78;
-    m_rgbaRange[1][2]=0.69;
-    m_rgbaRange[1][3]=0.8;
+    m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
+    m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
+
     m_particleTreshold=10;
-    m_radius=_radius;
     m_maxProductionRate=1;
     m_particleCount=0;
     m_particleList=std::vector<Particle*> ();
@@ -93,19 +81,16 @@ void ParticleSystem::createParticles()
     }
 }
 
-void ParticleSystem::move()
+void ParticleSystem::move(ngl::Vec3 _position)
 {
 
-    Tornado.m_curve.spiral(m_radius,m_age,m_offset);
-    float new_pos[3];
-    Tornado::m_curve.getPoint(&new_pos);
 
 
 
     createParticles();
     for (int i=0;i<=m_particleCount;i++)
     {
-        m_particleList[i]->move(m_position,m_boundingBox);
+        m_particleList[i]->move(_position,m_position,m_boundingBox);
         int out=m_particleList[i]->checkLife();
         if (out==1)
         {
@@ -113,6 +98,10 @@ void ParticleSystem::move()
            m_particleList.erase(m_particleList.begin()+i);
         }
     }
+
+    m_position[0]= _position[0];
+    m_position[1]= _position[1];
+    m_position[2]= _position[2];
 
     //insert Curve function stuff here
 }
@@ -125,4 +114,9 @@ int ParticleSystem::checkKill(float _maxHeight)
         return 1;
     }
     else {return 0;}
+}
+
+int ParticleSystem::getAge()
+{
+    return m_age;
 }

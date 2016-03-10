@@ -1,20 +1,23 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 #include <vector>
+#include <ngl/Vec3.h>
+#include <ngl/Vec4.h>
+
 class Particle
 {
 public:
-    Particle(float _rgba[4], float _center[3], float _radius);
+    Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius);
     ~Particle();
     int checkLife();
-    void move(float _center[3], float _boundingBox); //maybe make this delete the particle if its lifetime is over
-    void place(float _center[3], float _boundingBox);
+    void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox); //maybe make this delete the particle if its lifetime is over
+    void place(ngl::Vec3 _center, float _boundingBox);
 private:
-    float m_position[3];
+    ngl::Vec3 m_position;
     int m_lifetime;
     int m_age;
-    float m_rgba[4];
-    float m_velocity[3]; //speed and direction
+    ngl::Vec4 m_rgba;
+
 };
 
 #endif // PARTICLE_H

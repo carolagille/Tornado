@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT5BUILD -DNGL_DEBUG -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT5BUILD -DQT5BUILD -DNGL_DEBUG -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -msse -msse2 -msse3 -arch x86_64 -O2 -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 -Wall -W -Wno-unused-parameter -fPIC $(DEFINES)
-INCPATH       = -I. -Iinclude -I/usr/local/include -I/Users/carolagille/NGL/include -I/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
+INCPATH       = -I. -Iinclude -I/usr/local/include -I/Users/carolagille/NGL/include -I/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/Headers -Imoc -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
 QMAKE         = /Users/carolagille/Qt/5.5/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -65,7 +65,8 @@ DIST          = .qmake.stash \
 		include/Particle.h \
 		include/ParticleSystem.h \
 		include/Tornado.h \
-		include/NGL_Context.h src/TornadoCurve.cpp \
+		include/NGL_Context.h \
+		include/Shaders.h src/TornadoCurve.cpp \
 		src/main.cpp \
 		src/Particle.cpp \
 		src/ParticleSystem.cpp \
@@ -449,7 +450,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/TornadoCurve.h include/Particle.h include/ParticleSystem.h include/Tornado.h include/NGL_Context.h $(DISTDIR)/
+	$(COPY_FILE) --parents include/TornadoCurve.h include/Particle.h include/ParticleSystem.h include/Tornado.h include/NGL_Context.h include/Shaders.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/TornadoCurve.cpp src/main.cpp src/Particle.cpp src/ParticleSystem.cpp src/Tornado.cpp src/NGL_Context.cpp $(DISTDIR)/
 
 
@@ -1716,7 +1717,11 @@ obj/Tornado.o: src/Tornado.cpp include/Tornado.h \
 		include/Particle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Tornado.o src/Tornado.cpp
 
-obj/NGL_Context.o: src/NGL_Context.cpp include/NGL_Context.h \
+obj/NGL_Context.o: src/NGL_Context.cpp /Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGuiApplication \
+		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qguiapplication.h \
+		include/NGL_Context.h \
 		/Users/carolagille/NGL/include/ngl/Camera.h \
 		/Users/carolagille/NGL/include/ngl/Types.h \
 		/Users/carolagille/NGL/include/ngl/glew.h \
@@ -2916,9 +2921,7 @@ obj/NGL_Context.o: src/NGL_Context.cpp include/NGL_Context.h \
 		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qopenglwindow.h \
 		/Users/carolagille/NGL/include/ngl/NGLInit.h \
 		/Users/carolagille/NGL/include/ngl/Singleton.h \
-		/Users/carolagille/NGL/include/ngl/VAOPrimitives.h \
-		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGuiApplication \
-		/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qguiapplication.h
+		/Users/carolagille/NGL/include/ngl/VAOPrimitives.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGL_Context.o src/NGL_Context.cpp
 
 ####### Install

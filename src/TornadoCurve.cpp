@@ -1,92 +1,63 @@
 #include "TornadoCurve.h"
 #include <iostream>
 #include <math.h>
-
+#include <ngl/Vec3.h>
 TornadoCurve::TornadoCurve() //Default Constructor
 {
 
     m_changeRate = 10;
 
-    for(int i=0; i<=1;i++)
-    {
-        for(int j=0; j<=2;j++)
-        {
-            m_curveResult[i][j]= 0;
-
-        }
-    }
+    m_curveResult[0]=(0.0f);
+    m_curveResult[1]=(0.0f);
 
     m_tracker=0;
-    m_resultPoint[0]=0; //improve later
-    m_resultPoint[1]=0;
-    m_resultPoint[2]=0;
+    m_resultPoint=(0.0f);
+
     m_curveCount=2;
     m_minHeight=0.0;
-    m_maxHeight[0]=0.0;
-    m_maxHeight[1]=0.0;
-    m_maxHeight[2]=200;
+    m_maxHeight=(0.0f,0.0f,200.0f);
     m_timeUp=400; // needs to be calculated when actually using the curves
-    m_midPoint[0]=0;
-    m_midPoint[1]=0;
-    m_midPoint[2]=0;
+    m_midPoint=(0.0f);
     m_frame=0;
 
-    for(int i=0; i<=2;i++)
-    {
-        for(int j=0; j<=1;j++)
-        {
-            m_controlPoints[i][j]= 100;
-        }
-        m_controlPoints[i][2]=(float)(m_maxHeight[2]/2.0);
-    }
+    m_controlPoints[0]=(100.0f);
+    m_controlPoints[1]=(100.0f);
+    m_controlPoints[0]=(100.0f,100.0f,(float)(m_maxHeight[2]/2.0));
 
 
 }
 
-TornadoCurve::TornadoCurve(int _changeRate, float* _allcontrolPoints[3], float _maxHeight)
+TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float _maxHeight)
 {
 
     m_changeRate = _changeRate;
 
-    for(int i=0; i<=1;i++)
-    {
-        for(int j=0; j<=2;j++)
-        {
-            m_curveResult[i][j]= 0;
-
-        }
-    }
+    m_curveResult[0]=(0.0f);
+    m_curveResult[1]=(0.0f);
 
     m_tracker=0;
-    m_resultPoint[0]=0; //improve later
-    m_resultPoint[1]=0;
-    m_resultPoint[2]=0;
+    m_resultPoint=(0.0f);
     m_curveCount=2;
     m_minHeight=0.0;
     m_maxHeight[0]=0.0;
     m_maxHeight[1]=0.0;
-    m_maxHeight[2]=_maxHeight;
+    m_maxHeight=(0.0f,0.0f,_maxHeight);
+
     m_timeUp=400; // needs to be calculated when actually using the curves
-    m_midPoint[0]=0;
-    m_midPoint[1]=0;
-    m_midPoint[2]=0;
+    m_midPoint=(0.0f);
     m_frame=0;
 
 
-    for(int i=0; i<=2;i++)
-    {
-        for(int j=0; j<=1;j++)
-        {
-            m_controlPoints[i][j]= _allcontrolPoints[i][j];
-        }
-        m_controlPoints[i][2]=(float)(m_maxHeight[2]/2.0);
-    }
+    m_controlPoints[0]=(_allcontrolPoints[0][0],_allcontrolPoints[0][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[1]=(_allcontrolPoints[1][0],_allcontrolPoints[1][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[0]=(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
+
 
 
 }
 
 
-void TornadoCurve::guideCurve(int _particleTime,float _controlPoint[],int _position,int _curveNum)
+void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _position, int _curveNum)
 { // this function calculates a points by interpolating between a minumum and maximum height in respect to a control point
     float t;
     //t=0;
@@ -162,10 +133,9 @@ void TornadoCurve::printPoint()
 }
 
 
-void TornadoCurve::getPoint(float *_destination[3])
+ngl::Vec3 TornadoCurve::getPoint()
 {
-    * _destination[0]=m_resultPoint[0];
-    * _destination[1]=m_resultPoint[1];
-    * _destination[2]=m_resultPoint[2];
+     ngl::Vec3 _destination=(m_resultPoint);
+     return _destination;
 
 }

@@ -1,23 +1,16 @@
 #include "Particle.h"
 #include <iostream>
 #include <random>
-Particle::Particle(float _rgba[4], float _center[3],float _radius)
+Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 {
     std::cout<<"Particle created\n";
-    m_position[0]=0;
-    m_position[1]=0;
-    m_position[2]=0;
+    m_position=(0.0f,0.0f,0.0f);
 
-    m_rgba[0]=_rgba[0];
-    m_rgba[1]=_rgba[1];
-    m_rgba[2]=_rgba[2];
-    m_rgba[3]=_rgba[3];
+    m_rgba=(_rgba);
 
     m_lifetime=30;
     m_age=0;
-    m_velocity[0]=0;
-    m_velocity[1]=0;
-    m_velocity[2]=0;
+
 
     place(_center,_radius);
 
@@ -28,10 +21,10 @@ Particle::~Particle()
     std::cout<<"Destructor Particle called"<<std::endl;
 }
 
-void Particle::move(float _center[], float _boundingBox)
+void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
 {
     std::cout<<"movingParticle"<<std::endl;
-    //find out how to move
+
 }
 
 int Particle::checkLife()
@@ -43,7 +36,7 @@ int Particle::checkLife()
     else {return 0;}
 }
 
-void Particle::place(float _center[3], float _boundingBox)
+void Particle::place(ngl::Vec3 _center, float _boundingBox)
 {
     for(int i=0; i<=2;i++)
     {

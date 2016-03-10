@@ -1,7 +1,9 @@
+#include <QMouseEvent>
+#include <QGuiApplication> //includes all the event inter face related stuff
 #include "NGL_Context.h"
+
 #include <ngl/NGLInit.h>
 #include <iostream>
-#include <QGuiApplication> //includes all the event inter face related stuff
 
 NGL_Context::NGL_Context()
 {
@@ -33,11 +35,15 @@ void NGL_Context::initializeGL()
     glClearColor(1.0f,1.0f,1.0f,1.0f); //white background
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
+
+    //creating a point??
+
  }
 
 void NGL_Context::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,m_width,m_height);
+
 
 }
