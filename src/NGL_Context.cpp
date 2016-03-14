@@ -59,7 +59,7 @@ void NGL_Context::createPoints()
  GLuint vboID2;
  glGenBuffers(1, &vboID2);
 
-
+ glBindBuffer(GL_ARRAY_BUFFER, vboID);
  glBufferData(GL_ARRAY_BUFFER, pointsParticle.size()*sizeof(ngl::Vec3), &pointsParticle[0].m_x, GL_STATIC_DRAW);
 
  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,((ngl::Real *)NULL + 0));
@@ -127,7 +127,7 @@ void NGL_Context::initializeGL()
 
     //creating a point??
     createPoints();
-    glPointSize(10);
+    glPointSize(5);
     startTimer(10);
  }
 

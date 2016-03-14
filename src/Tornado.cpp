@@ -8,11 +8,11 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=100;
+    m_particleSystemTreshold=10000;
     m_maxProductionRate=1;
     m_particleSystemCount=0;
-    m_radiusRange[0]=5.0;
-    m_radiusRange[1]=7.0;
+    m_radiusRange[0]=4.0;
+    m_radiusRange[1]=8.0;
     m_maxHeight=_maxHeight;
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -41,7 +41,7 @@ void Tornado::createParticleSystem()
 
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
-            //std::cout<<"radius:"<<radius<<"\n";
+            std::cout<<"radius:"<<radius<<"\n";
             std::uniform_real_distribution<float> distribution1(0.0,10.0);
             float offset = distribution1(gen);
             //std::cout<<"offset:"<<offset<<"\n";
