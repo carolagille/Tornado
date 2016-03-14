@@ -60,3 +60,8 @@ void Particle::place(ngl::Vec3 _center, float _boundingBox)
         m_position[i]=distribution(generator);
     }
 }
+
+ngl::Vec3 Particle::getPoints()
+{
+    return m_position;
+}

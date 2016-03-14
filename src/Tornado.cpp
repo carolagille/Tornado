@@ -8,11 +8,11 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=50;
-    m_maxProductionRate=20;
+    m_particleSystemTreshold=100;
+    m_maxProductionRate=1;
     m_particleSystemCount=0;
-    m_radiusRange[0]=1.0;
-    m_radiusRange[1]=10.0;
+    m_radiusRange[0]=5.0;
+    m_radiusRange[1]=7.0;
     m_maxHeight=_maxHeight;
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -42,7 +42,7 @@ void Tornado::createParticleSystem()
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
             //std::cout<<"radius:"<<radius<<"\n";
-            std::uniform_real_distribution<float> distribution1(0.0,5.0);
+            std::uniform_real_distribution<float> distribution1(0.0,10.0);
             float offset = distribution1(gen);
             //std::cout<<"offset:"<<offset<<"\n";
 
@@ -66,9 +66,10 @@ void Tornado::createParticleSystem()
 }
 
 void Tornado::update()
-{
-    m_storeList.empty();
-    std::cout<<"running Tornado update\n";
+{   //std::cout<<"\nlist lenght"<<m_storeList.size()<<"\n";
+    m_storeParticleSysList.clear();
+    m_storeParticlePos.clear();
+    //std::cout<<"running Tornado update\n";
     m_curve.frameChange(m_frame);
     createParticleSystem();
     for (int i=0;i<m_particleSystemCount;i++)
@@ -80,9 +81,9 @@ void Tornado::update()
         ngl::Vec3 point = m_curve.getPoint();
 
         //std::cout<<point[0]<<","<<point[1]<<","<<point[2]<<"\n";
-        m_storeList.push_back(point);
+        m_storeParticleSysList.push_back(point);
 
-        m_particleSystemList[i]->move(point);
+        m_particleSystemList[i]->move(point,m_storeParticlePos);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {
@@ -96,20 +97,23 @@ void Tornado::update()
 
 void Tornado::printList()
 {
-   /* for(int i =0;i<(int)m_storeList.size();++i)
+    for(int i =0;i<(int)m_storeParticleSysList.size();++i)
     {
-        std::cout<<"\n \n \n\"ParticleSystem"<<i<<"\":[\n";
-        for(int j=0;j<(int)m_storeList[i].size();++j)
-        {
 
-            std::cout<<m_storeList[i][j].m_x<< "," <<m_storeList[i][j].m_y<<","  <<m_storeList[i][j].m_z<<";\n";
-        }
-    }*/
+            std::cout<<m_storeParticleSysList[i].m_x<< "," <<m_storeParticleSysList[i].m_y<<","  <<m_storeParticleSysList[i].m_z<<";\n";
+
+    }
 }
-std::vector<ngl::Vec3> Tornado::getList()
+std::vector<ngl::Vec3> Tornado::getParticleSysList()
 {
-    return m_storeList;
+    return m_storeParticleSysList;
 }
+
+std::vector<ngl::Vec3> Tornado::getParticleList()
+{
+    return m_storeParticlePos;
+}
+
 int Tornado::getParticleSysCount()
 {
     return m_particleSystemCount;
@@ -118,4 +122,14 @@ int Tornado::getParticleSysCount()
 void Tornado::save()
 {
 
+}
+
+void Tornado::changeMaxHeight(int _changeValue)
+{
+    m_maxHeight+=_changeValue;
+}
+int Tornado::getFullParticleCount()
+{
+    m_storeParticlePos.shrink_to_fit();
+    return m_storeParticlePos.size();
 }

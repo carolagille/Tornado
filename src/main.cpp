@@ -12,12 +12,12 @@ int main(int argc,char **argv)
 {
     std::cout<<"\n\n\n line 13\n";
     //Control points
-    ngl::Vec3 control1=(30.0f,-10.0f,100.0f);
-    ngl::Vec3 control2=(-30.0f,50.0f,100.0f);
-    ngl::Vec3 control3=(5.0f,0.0f,100.0f);
+    ngl::Vec3 control1(130.0f,+10.0f,100.0f);
+    ngl::Vec3 control2(-70.0f,-50.0f,100.0f);
+    ngl::Vec3 control3(50.0f,100.0f,100.0f);
     ngl::Vec3 controlpoints[3]={control1,control2,control3};
 
-    Tornado tornado1(10,controlpoints,200);
+    Tornado tornado1(300,controlpoints,400);
     std::cout<<"\n\n\n line 21\n";
     QGuiApplication app(argc,argv); //manages your program
 

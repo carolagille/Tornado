@@ -15,8 +15,11 @@ public:
     void update();
     TornadoCurve m_curve;
     void printList();
-    std::vector<ngl::Vec3> getList();
+    std::vector<ngl::Vec3> getParticleSysList();
+    std::vector<ngl::Vec3> getParticleList();
     int getParticleSysCount();
+    void changeMaxHeight(int _changeValue);
+    int getFullParticleCount();
 private:
     int m_frame;
     int m_particleSystemTreshold;
@@ -26,7 +29,8 @@ private:
     float m_radiusRange[2];
     float m_maxHeight;
 
-    std::vector<ngl::Vec3> m_storeList;
+    std::vector<ngl::Vec3> m_storeParticlePos;
+    std::vector<ngl::Vec3> m_storeParticleSysList;
 
 
 

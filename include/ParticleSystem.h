@@ -16,11 +16,12 @@ public:
     ParticleSystem();
     ~ParticleSystem();
     void createParticles(); //creates Particle if the Treshold isn't reached yet
-    void move(ngl::Vec3 _position); //moves the particle along the Curve maybe include a age check in here and than delete particle
+    void move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos); //moves the particle along the Curve maybe include a age check in here and than delete particle
     int checkKill(float _maxHeight); //if return 0 its keeps living if return 1 it gets killed
     const float m_offset;
     const float m_radius;
     int getAge();
+    int getParticleCount();
 private:
 
     float m_boundingBox;//for a sphere shape as a fuzzy object (maybe make this a class for diffrent shapes later)
@@ -31,6 +32,7 @@ private:
     int m_maxProductionRate;
     int m_particleCount;
     std::vector<Particle*> m_particleList; // list to store the particles
+
 
 
 };
