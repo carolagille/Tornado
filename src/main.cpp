@@ -18,12 +18,12 @@ int main(int argc,char **argv)
     ngl::Vec3 controlpoints[3]={control1,control2,control3};
 
     Tornado tornado1(300,controlpoints,400);
-    std::cout<<"\n\n\n line 21\n";
+    //std::cout<<"\n\n\n line 21\n";
     QGuiApplication app(argc,argv); //manages your program
 
     //argv and argc are command line inputs that can be taken by the
     //programm and used by the QGuiApplication
-    std::cout<<"\n\n\n line 26\n";
+    //std::cout<<"\n\n\n line 26\n";
     QSurfaceFormat format; //manages the buffer stuff
     format.setSamples(4);
     std::cout<<"\n\n\n line 29\n";
@@ -41,9 +41,9 @@ int main(int argc,char **argv)
   format.setMinorVersion(3);
 #endif
 //stuff???
-  std::cout<<"\n\n\n line 44\n";
+  //std::cout<<"\n\n\n line 44\n";
   format.setProfile(QSurfaceFormat::CoreProfile);
-  std::cout<<"\n\n\n line 46\n";
+  //std::cout<<"\n\n\n line 46\n";
   format.setDepthBufferSize(24);
 
 

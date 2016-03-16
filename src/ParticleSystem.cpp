@@ -12,14 +12,14 @@ m_radius(5)
 {
     //std::cout<<"ParticleSystem created\n";
 
-    m_boundingBox = 0.5; //radius of a sphere soroundig the particle
+    m_boundingBox = 100; //radius of a sphere soroundig the particle
     m_position = (0.0f,0.0f,0.0f);
     m_age = 0;
 
     m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
     m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
 
-    m_particleTreshold=1;
+    m_particleTreshold=4;
 
     m_maxProductionRate=1;
     m_particleCount=0;
@@ -81,7 +81,7 @@ void ParticleSystem::createParticles()
     }
 }
 
-void ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos)
+std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos)
 {
 
     createParticles();
@@ -90,15 +90,16 @@ void ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePo
         m_particleList[i]->move(_position,m_position,m_boundingBox);
 
         ngl::Vec3 position(m_particleList[i]->getPoints());
-
+        //std::cout<<"position:"<< position[0]<<position[1]<<position[2]<<"\n";
         _particlePos.push_back(position);
-
+        //std::cout<<"listSIze"<<_particlePos.size()<<"\n";
 
         int out=m_particleList[i]->checkLife();
         if (out==1)
         {
            delete m_particleList[i];
            m_particleList.erase(m_particleList.begin()+i);
+           m_particleCount--;
         }
     }
 
@@ -108,6 +109,7 @@ void ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePo
 
     //insert Curve function stuff here
     m_age++;
+    return _particlePos;
 }
 
 

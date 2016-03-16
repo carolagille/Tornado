@@ -22,6 +22,7 @@ NGL_Context::~NGL_Context()
 
 void NGL_Context::createPoints()
 {
+   //std::cout<<"\ncreatingPoints\n";
    m_tornado->update();
    std::vector<ngl::Vec3> pointsParticlSys= m_tornado->getParticleSysList();
   //make a vector from the vector that stores points in the Tornado class
@@ -47,9 +48,8 @@ void NGL_Context::createPoints()
 
   // always best to unbind after use
   glBindVertexArray(0);
-
-
-
+//---------------------------------//
+//second VAO//
   std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
 
  glGenVertexArrays(1, &m_vao2);
@@ -59,7 +59,7 @@ void NGL_Context::createPoints()
  GLuint vboID2;
  glGenBuffers(1, &vboID2);
 
- glBindBuffer(GL_ARRAY_BUFFER, vboID);
+ glBindBuffer(GL_ARRAY_BUFFER, vboID2);
  glBufferData(GL_ARRAY_BUFFER, pointsParticle.size()*sizeof(ngl::Vec3), &pointsParticle[0].m_x, GL_STATIC_DRAW);
 
  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,((ngl::Real *)NULL + 0));
@@ -74,18 +74,24 @@ void NGL_Context::updatePoints()
     std::vector<ngl::Vec3> pointsParticlSys= m_tornado->getParticleSysList();
 
     glBindVertexArray(m_vao);
-    // now copy the data/  glBindBuffer(GL_ARRAY_BUFFER, m_vao);
+    // now copy the data/
+    glBindBuffer(GL_ARRAY_BUFFER, m_vao);
     glBufferData(GL_ARRAY_BUFFER, pointsParticlSys.size()*sizeof(ngl::Vec3), &pointsParticlSys[0].m_x, GL_STATIC_DRAW);
   // always best to unbind after use
     glBindVertexArray(0);
 
+
+    //Second VAO
+
     std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
 
     glBindVertexArray(m_vao2);
-    // now copy the data/  glBindBuffer(GL_ARRAY_BUFFER, m_vao);
+    // now copy the data/
+    glBindBuffer(GL_ARRAY_BUFFER, m_vao2);
     glBufferData(GL_ARRAY_BUFFER, pointsParticle.size()*sizeof(ngl::Vec3), &pointsParticle[0].m_x, GL_STATIC_DRAW);
   // always best to unbind after use
     glBindVertexArray(0);
+
 }
 
 void NGL_Context::resizeGL(QResizeEvent *_event)
@@ -109,10 +115,11 @@ void NGL_Context::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
-    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(800,800,400),ngl::Vec3(0,0,400),ngl::Vec3(0,0,1));
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(400,400,200),ngl::Vec3(0,0,200),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45.0f,float(width()/height()),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
+    std::cout<<"\n calling initializeGl\n";
     // now load the default nglColour shader and set the colour for it.
     ngl::ShaderLib *shader = ngl::ShaderLib::instance();
 
@@ -128,7 +135,7 @@ void NGL_Context::initializeGL()
     //creating a point??
     createPoints();
     glPointSize(5);
-    startTimer(10);
+    startTimer(20);
  }
 
 void NGL_Context::paintGL()
@@ -148,12 +155,15 @@ void NGL_Context::paintGL()
     ngl::Mat4 MVP = m_vp;//=transform.getMatrix()*m_vp;
     shader->setRegisteredUniformFromMat4("MVP",MVP);
 //particle sys
+    glPointSize(6);
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getParticleSysCount());
 
     glBindVertexArray(0);
 
+    glPointSize(4);
+    std::cout<<"particleCount:"<<m_tornado->getFullParticleCount()<<"\n";
     //Particles
     shader->setShaderParam4f("Colour",0.0f,0.0f,0.470f,1.0f);
     glBindVertexArray(m_vao2);

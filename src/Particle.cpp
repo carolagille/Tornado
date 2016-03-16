@@ -23,23 +23,33 @@ Particle::~Particle()
 
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
 {
-    std::cout<<"movingParticle"<<std::endl;
-    ngl::Vec3 velocity = (_newCenter) - (_center);
-    ngl::Vec3 midResult = (m_position) + (velocity);
-    ngl::Vec3 distance = (midResult) - (_newCenter);
+    //std::cout<<"movingParticle"<<std::endl;
+    ngl::Vec3 velocity ((_newCenter) - (_center));
+    //std::cout<<"velocity"<<velocity[0]<<velocity[1]<<velocity[2]<<"\n";
+    ngl::Vec3 midResult ((m_position) + (velocity));
+    ngl::Vec3 distance ((midResult) - (_newCenter));
+    ngl::Vec3 normalvec(-velocity[1],+velocity[0],0);
+    ngl::Vec3 vecToCenter(_newCenter-m_position);
+
+
 
     ngl::Vec3 newPos;
 
-    if(distance.length()<=(0.5* _boundingBox))
+    if(distance.length()>(0.9* _boundingBox))
     {
-        newPos = (midResult) + (0.3 * distance);
+        newPos = (m_position) + (0.25 * velocity) + (0.25*vecToCenter);
+
     }
-    else if(distance.length() > (0.5* _boundingBox))
+    else if(distance.length() <= (0.5* _boundingBox))
     {
-        newPos = (midResult) - (0.3 * distance);
+    newPos = (m_position) + (0.5 * velocity) - (0.4*vecToCenter) + (0.1*normalvec);
+
     }
 
+    newPos[2]=_newCenter[2];
+
     m_position= newPos;
+    m_age++;
 }
 
 int Particle::checkLife()

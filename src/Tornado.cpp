@@ -8,7 +8,7 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=10000;
+    m_particleSystemTreshold=8000;
     m_maxProductionRate=1;
     m_particleSystemCount=0;
     m_radiusRange[0]=4.0;
@@ -41,7 +41,7 @@ void Tornado::createParticleSystem()
 
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
-            std::cout<<"radius:"<<radius<<"\n";
+            //std::cout<<"radius:"<<radius<<"\n";
             std::uniform_real_distribution<float> distribution1(0.0,10.0);
             float offset = distribution1(gen);
             //std::cout<<"offset:"<<offset<<"\n";
@@ -69,7 +69,7 @@ void Tornado::update()
 {   //std::cout<<"\nlist lenght"<<m_storeList.size()<<"\n";
     m_storeParticleSysList.clear();
     m_storeParticlePos.clear();
-    //std::cout<<"running Tornado update\n";
+    std::cout<<"running Tornado update\n";
     m_curve.frameChange(m_frame);
     createParticleSystem();
     for (int i=0;i<m_particleSystemCount;i++)
@@ -83,7 +83,7 @@ void Tornado::update()
         //std::cout<<point[0]<<","<<point[1]<<","<<point[2]<<"\n";
         m_storeParticleSysList.push_back(point);
 
-        m_particleSystemList[i]->move(point,m_storeParticlePos);
+        m_storeParticlePos = m_particleSystemList[i]->move(point,m_storeParticlePos);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {
@@ -130,6 +130,6 @@ void Tornado::changeMaxHeight(int _changeValue)
 }
 int Tornado::getFullParticleCount()
 {
-    m_storeParticlePos.shrink_to_fit();
+
     return m_storeParticlePos.size();
 }
