@@ -15,6 +15,7 @@ class TornadoCurve
      void changeRadiusGrowth(float _changeValue);
      void changeSpeed(float _changeValue);
      void changeMaxHeight(float _changeValue);
+     ngl::Vec3 getMidPoint();
 
 private:
     float m_offset;

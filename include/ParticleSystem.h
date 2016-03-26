@@ -16,7 +16,7 @@ public:
     ParticleSystem();
     ~ParticleSystem();
     void createParticles(); //creates Particle if the Treshold isn't reached yet
-    std::vector<ngl::Vec3> move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos); //moves the particle along the Curve maybe include a age check in here and than delete particle
+    std::vector<ngl::Vec3> move(ngl::Vec3 _position, std::vector<ngl::Vec3> _particlePos, ngl::Vec3 _center); //moves the particle along the Curve maybe include a age check in here and than delete particle
     int checkKill(float _maxHeight); //if return 0 its keeps living if return 1 it gets killed
     const float m_offset;
     const float m_radius;

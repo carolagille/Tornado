@@ -115,8 +115,8 @@ void NGL_Context::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
-    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(400,400,200),ngl::Vec3(0,0,200),ngl::Vec3(0,0,1));
-    ngl::Mat4 perspective=ngl::perspective(45.0f,float(width()/height()),0.1,10000);
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(500,500,150),ngl::Vec3(0,0,150),ngl::Vec3(0,0,1));
+    ngl::Mat4 perspective=ngl::perspective(60.0f,float(width()/height()),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
     std::cout<<"\n calling initializeGl\n";
@@ -149,7 +149,7 @@ void NGL_Context::paintGL()
     //ngl::Transformation transform;
     shader->use("nglColourShader");
     // set the colour to red
-    shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
+    shader->setShaderParam4f("Colour",0.8f,0.78f,0.69f,0.8f);
     //transform.setPosition(m_vao[0][0],m_vao[0][1],m_vao[0][2]);
 
     ngl::Mat4 MVP = m_vp;//=transform.getMatrix()*m_vp;
@@ -162,10 +162,10 @@ void NGL_Context::paintGL()
 
     glBindVertexArray(0);
 
-    glPointSize(4);
-    std::cout<<"particleCount:"<<m_tornado->getFullParticleCount()<<"\n";
-    //Particles
-    shader->setShaderParam4f("Colour",0.0f,0.0f,0.470f,1.0f);
+    glPointSize(3);
+    //std::cout<<"particleCount:"<<m_tornado->getFullParticleCount()<<"\n";
+    //Particles0.545f,0.513f,0.470f,1.0f
+    shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
     glBindVertexArray(m_vao2);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getFullParticleCount());

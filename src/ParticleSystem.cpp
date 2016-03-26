@@ -9,10 +9,10 @@
 ParticleSystem::ParticleSystem():
 m_offset(0),
 m_radius(5)
-{
+{   // Default constructor
     //std::cout<<"ParticleSystem created\n";
 
-    m_boundingBox = 100; //radius of a sphere soroundig the particle
+    m_boundingBox = 100.0; //radius of a sphere soroundig the particle
     m_position = (0.0f,0.0f,0.0f);
     m_age = 0;
 
@@ -32,8 +32,10 @@ ParticleSystem::ParticleSystem(float _radius, float _offset):
 m_offset(_offset),
 m_radius(_radius)
 {
+    //Particle System Constructor with inputs
+    //Inputs are used to create individual result for the particle system path
     //std::cout<<"ParticleSystem created\n";
-    m_boundingBox = 0.5; //radius of a sphere soroundig the particle
+    m_boundingBox = 10; //radius of a sphere soroundig the particle
 
     m_position = (0.0f,0.0f,0.0f);
 
@@ -42,7 +44,7 @@ m_radius(_radius)
     m_rgbaRange[0]= (0.545f,0.513f,0.470f,1.0f);
     m_rgbaRange[1]= (0.8f,0.78f,0.69f,0.8);
 
-    m_particleTreshold=5;
+    m_particleTreshold=7;
     m_maxProductionRate=1;
     m_particleCount=0;
     m_particleList=std::vector<Particle*> ();
@@ -81,14 +83,14 @@ void ParticleSystem::createParticles()
     }
 }
 
-std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos)
+std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position,std::vector<ngl::Vec3> _particlePos,ngl::Vec3 _center)
 {
 
     createParticles();
     for (int i=0;i<m_particleCount;i++)
     {
-        m_particleList[i]->move(_position,m_position,m_boundingBox);
-
+        m_particleList[i]->move(_position,m_position,m_boundingBox,_center);
+        //m_particleList[i]->move(ngl::Vec3(30.0,0.0,0.0),ngl::Vec3(30.0,0.0,0.0),m_boundingBox,ngl::Vec3(0.0,0.0,0.0));
         ngl::Vec3 position(m_particleList[i]->getPoints());
         //std::cout<<"position:"<< position[0]<<position[1]<<position[2]<<"\n";
         _particlePos.push_back(position);

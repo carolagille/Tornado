@@ -150,9 +150,13 @@ void TornadoCurve::printPoint()
 
 ngl::Vec3 TornadoCurve::getPoint()
 {
-     ngl::Vec3 _destination=(m_resultPoint);
-     return _destination;
 
+     return m_resultPoint;
+
+}
+ngl::Vec3 TornadoCurve::getMidPoint()
+{
+    return m_midPoint;
 }
 
 void TornadoCurve::changeRadiusGrowth(float _changeValue)
