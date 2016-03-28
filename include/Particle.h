@@ -13,7 +13,8 @@ public:
     ~Particle();
     int checkLife(); //checkes if the Particle should be killed or not
     void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox, ngl::Vec3 _tornadoCenter); //moving the particle based on a flock system kind of movement
-    void place(ngl::Vec3 _center, float _boundingBox); //called when constructed to place the particle near its particles origin
+    void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox);
+    ngl::Vec3 place(ngl::Vec3 _center, float _boundingBox); //called when constructed to place the particle near its particles origin
     ngl::Vec3 getPoints();
 private:
     ngl::Vec3 m_position;
@@ -21,6 +22,8 @@ private:
     int m_age;
     ngl::Vec3 m_velocity;
     ngl::Vec4 m_rgba;
+    int m_counter;
+    ngl::Vec3 m_newPosition;
 
 };
 

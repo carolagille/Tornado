@@ -7,6 +7,7 @@
 #include <ngl/ShaderLib.h>
 #include <ngl/Util.h>
 
+
 NGL_Context::NGL_Context(Tornado *_tornado)
 {
     m_tornado=_tornado;
@@ -108,6 +109,11 @@ void NGL_Context::resizeGL(int _w, int _h)
 
 void NGL_Context::initializeGL()
 {
+    m_zoom=500;
+    m_angleX=0;
+    m_angleZ=0;
+    m_gridCenter=100;
+    m_tornadoPosition=(0.0f,0.0f,0.0f);
 
     ngl::NGLInit::instance(); //creates one instance of init
     //to prevent you from creating lot of bog instances of smomething that just needs to be used once
@@ -115,8 +121,8 @@ void NGL_Context::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
-    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(500,500,150),ngl::Vec3(0,0,150),ngl::Vec3(0,0,1));
-    ngl::Mat4 perspective=ngl::perspective(60.0f,float(width()/height()),0.1,10000);
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
+    ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
     std::cout<<"\n calling initializeGl\n";
@@ -124,7 +130,11 @@ void NGL_Context::initializeGL()
     ngl::ShaderLib *shader = ngl::ShaderLib::instance();
 
     // set this as the active shader
-    m_tornadoPosition=(0.0f,0.0f,0.0f);
+
+
+    ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+    // create a plane
+    prim->createLineGrid("plane",20,20,30);
 
     shader->use("nglColourShader");
     // set the colour to red
@@ -140,21 +150,27 @@ void NGL_Context::initializeGL()
 
 void NGL_Context::paintGL()
 {
-    //std::cout<<"\n\ncalling Paint GL\n";
-    //m_tornado->update();
+    ngl::Transformation transform;
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
+    ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
+    m_vp=view*perspective;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,m_width,m_height);
 
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-    //ngl::Transformation transform;
+
     shader->use("nglColourShader");
     // set the colour to red
-    shader->setShaderParam4f("Colour",0.8f,0.78f,0.69f,0.8f);
-    //transform.setPosition(m_vao[0][0],m_vao[0][1],m_vao[0][2]);
 
-    ngl::Mat4 MVP = m_vp;//=transform.getMatrix()*m_vp;
+    transform.setRotation(m_angleX,0,m_angleZ);
+
+    ngl::Mat4 MVP =transform.getMatrix()*m_vp;
     shader->setRegisteredUniformFromMat4("MVP",MVP);
-//particle sys
+
+
+    //particle sys
+    shader->setShaderParam4f("Colour",0.8f,0.78f,0.69f,0.8f);
     glPointSize(6);
     glBindVertexArray(m_vao);
 
@@ -162,7 +178,7 @@ void NGL_Context::paintGL()
 
     glBindVertexArray(0);
 
-    glPointSize(3);
+    glPointSize(7);
     //std::cout<<"particleCount:"<<m_tornado->getFullParticleCount()<<"\n";
     //Particles0.545f,0.513f,0.470f,1.0f
     shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
@@ -172,6 +188,25 @@ void NGL_Context::paintGL()
 
     glBindVertexArray(0);
     //std::cout<<"\n\n\n line 119\n";
+
+
+    //Grid
+    ngl::Transformation transformGrid;
+    ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
+    //change colour to black
+    shader->setShaderParam4f("Colour",0.0f,0.0f,0.0f,1.0f);
+
+    transformGrid.setRotation(90+m_angleX,0,m_angleZ);
+    transformGrid.setScale(20,20,20);
+    ngl::Mat4 MVP2=transformGrid.getMatrix()*m_vp;
+    shader->setRegisteredUniformFromMat4("MVP",MVP2);
+
+
+    prim->draw("plane");
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//End Grid
+
 }
 void NGL_Context::timerEvent(QTimerEvent *_event)
 {
@@ -196,12 +231,42 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
       break;
   // turn off wire frame
   case Qt::Key_S : m_tornado->m_curve.changeSpeed(5); break;
-  // show full screen
+
   case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
-  // show windowedcase Qt::Key_N : showNormal(); break;
+
+  case Qt::Key_Plus : m_zoom-=50;std::cout<<"plus\n";break;
+
+  case Qt::Key_Minus : m_zoom+=50;break;
+
+  case Qt::Key_Up : m_angleX-=5;break;
+
+  case Qt::Key_Down : m_angleX+=5;break;
+
+  case Qt::Key_Right : m_angleZ-=5;break;
+
+  case Qt::Key_Left : m_angleZ+=5;break;
+
+  case Qt::Key_U : m_gridCenter-=10;break;
+
+  case Qt::Key_D : m_gridCenter+=10;break;
   default : break;
   }
   // finally update the GLWindow and re-draw
   //if (isExposed())
     update();
 }
+
+/*NGL_Context::saveImage()
+{
+    BYTE* pixels = new BYTE[ 3 * width * height];
+
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+    // Convert to FreeImage format & save to file
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+    FreeImage_Save(FIF_BMP, image, "C:/test.bmp", 0);
+
+    // Free resources
+    FreeImage_Unload(image);
+    delete [] pixels;
+}*/

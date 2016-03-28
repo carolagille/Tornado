@@ -17,6 +17,7 @@ public:
     void updatePoints();
     void timerEvent(QTimerEvent *);
     void keyPressEvent(QKeyEvent *_event);
+    void saveImage();
 private:
     void resizeGL(QResizeEvent *_event); //overloaded function that is automatically called when the window is resized
     void resizeGL(int _w,int _h);
@@ -27,6 +28,10 @@ private:
     ngl::Vec3 m_tornadoPosition;
     GLuint m_vao;//my vertex array object that stores the points position
     GLuint m_vao2;
+    int m_zoom;
+    int m_angleX;
+    int m_angleZ;
+    int m_gridCenter;
 
 };
 

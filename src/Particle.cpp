@@ -9,17 +9,38 @@ Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 
     m_rgba=(_rgba);
 
-    m_lifetime=100;
+    m_lifetime=1000;
     m_age=0;
     m_velocity=ngl::Vec3(0.0f,0.0f,0.0f);
-
-    place(_center,_radius);
-
+    m_counter=0;
+    m_position=place(_center,_radius);
+    m_newPosition =ngl::Vec3(0.0f,0.0f,0.0f);
 }
 
 Particle::~Particle()
 {
     //std::cout<<"Destructor Particle called"<<std::endl;
+}
+void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
+{
+    if (m_counter==0)
+    {
+        m_newPosition=place(_newCenter,_boundingBox);
+        m_counter=6;
+    }
+    else if (m_counter>0){m_counter--;}
+    //m_velocity.normalize();
+    ngl::Vec3 vecToNewPos = (1.0/(float)m_counter)*(m_newPosition-m_position);
+    //vecToNewPos.normalize();
+    m_velocity=0.2*(_newCenter-_center)+vecToNewPos+(1.0-(1/(float)m_counter))*m_velocity;
+    m_position+=m_velocity;
+    ngl::Vec3 distance(_newCenter-m_position);
+    if (distance.length()>=_boundingBox)
+    {
+        distance.normalize();
+        m_position+=distance;
+    }
+
 }
 
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,ngl::Vec3 _tornadoCenter)
@@ -52,7 +73,7 @@ void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,
 
     else if(0.6*_boundingBox<particleParticleSys.length()<0.4*_boundingBox)
     {
-        m_velocity=(0.5*m_velocity)+(0.5*particleSysVelocity);
+        m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
     }
 
 
@@ -82,8 +103,9 @@ int Particle::checkLife()
     else {return 0;}
 }
 
-void Particle::place(ngl::Vec3 _center, float _boundingBox)
+ngl::Vec3 Particle::place(ngl::Vec3 _center, float _boundingBox)
 { //This function is called once when the particle is created to place it at a random position inside the particles systems bounding box
+    ngl::Vec3 position;
     for(int i=0; i<=2;i++)
     {
         std::random_device rd;
@@ -91,9 +113,10 @@ void Particle::place(ngl::Vec3 _center, float _boundingBox)
 
         std::uniform_real_distribution<float> distribution(-_boundingBox,_boundingBox);
         //std::uniform_int_distribution<int> distribution(0.0,100.0);
-        m_position[i]=_center[i]+float(distribution(gen));
+        position[i]=_center[i]+float(distribution(gen));
     }
-    std::cout<<"paticle position"<<m_position[0]<<m_position[1]<<m_position[2]<<"\n";
+    return position;
+    //std::cout<<"paticle position"<<m_position[0]<<m_position[1]<<m_position[2]<<"\n";
 }
 
 ngl::Vec3 Particle::getPoints()

@@ -8,7 +8,7 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=10000;
+    m_particleSystemTreshold=1;
     m_maxProductionRate=1;
     m_particleSystemCount=0;
     m_radiusRange[0]=4.0;
