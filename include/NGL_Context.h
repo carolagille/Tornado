@@ -32,6 +32,7 @@ private:
     int m_angleX;
     int m_angleZ;
     int m_gridCenter;
+    GLubyte *m_pixels;
 
 };
 

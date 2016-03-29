@@ -20,7 +20,7 @@ NGL_Context::NGL_Context(Tornado *_tornado)
 NGL_Context::~NGL_Context()
 {
     std::cout<<"NGL Destructor called\n";
-    delete m_pixels;
+    free(m_pixels);
 }
 
 void NGL_Context::createPoints()
