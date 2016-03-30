@@ -6,13 +6,15 @@
 #include <iostream>
 #include <ngl/ShaderLib.h>
 #include <ngl/Util.h>
-
+#include <stdlib.h>
+#include <fstream>
 
 NGL_Context::NGL_Context(Tornado *_tornado)
 {   static const GLuint FORMAT_NBYTES = 4;
     m_pixels=NULL;
     m_tornado=_tornado;
-    m_pixels = malloc(FORMAT_NBYTES * m_width * m_height);
+    m_time=0;
+    m_pixels =(GLubyte*) malloc(4 * m_width * m_height);
     setTitle("Tornado Programm");
 
 }
@@ -20,7 +22,7 @@ NGL_Context::NGL_Context(Tornado *_tornado)
 NGL_Context::~NGL_Context()
 {
     std::cout<<"NGL Destructor called\n";
-    delete m_pixels;
+    free(m_pixels);
 }
 
 void NGL_Context::createPoints()
@@ -101,12 +103,14 @@ void NGL_Context::resizeGL(QResizeEvent *_event)
 {
     m_width=_event->size().width()*devicePixelRatio();
     m_height=_event->size().height()*devicePixelRatio();
+    m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
 }
 
 void NGL_Context::resizeGL(int _w, int _h)
 {
     m_width=_w*devicePixelRatio();
     m_height=_h*devicePixelRatio();
+    m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
 }
 
 void NGL_Context::initializeGL()
@@ -217,6 +221,7 @@ void NGL_Context::timerEvent(QTimerEvent *_event)
   //m_tornado->printList();
   updatePoints();
   update();
+  m_time++;
 }
 
 void NGL_Context::keyPressEvent(QKeyEvent *_event)
@@ -232,9 +237,11 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
       m_tornado->changeMaxHeight(100);
       break;
   // turn off wire frame
-  //case Qt::Key_S : m_tornado->m_curve.changeSpeed(5); break;
-  case Qt::Key_S : saveImage(); break;
+  case Qt::Key_1 :m_tornado->m_curve.changeSpeedUp(-0.2); break;
+  case Qt::Key_2 :m_tornado->m_curve.changeSpeedUp(0.2); break;
+  //case Qt::Key_S : saveImage(); break;
 
+  case Qt::Key_P: m_tornado->particlesOnOff();break;
   case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
 
   case Qt::Key_Plus : m_zoom-=50;std::cout<<"plus\n";break;
@@ -249,34 +256,53 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
 
   case Qt::Key_Left : m_angleZ+=5;break;
 
-  case Qt::Key_U : m_gridCenter-=10;break;
+  case Qt::Key_D : m_gridCenter-=10;break;
 
-  case Qt::Key_D : m_gridCenter+=10;break;
+  case Qt::Key_U : m_gridCenter+=10;break;
   default : break;
   }
-  // finally update the GLWindow and re-draw
-  //if (isExposed())
+
     update();
 }
 
 void NGL_Context::saveImage()
 {   //std::cout<<"Calling save image\n";
-    for(int i=0;i<100;i++)
-    {
-        for(int j=0;j<100;j++)
-        {
-            //GLuint rgb[3];
-            //glReadPixels(i,j,1,1,GL_RGB,GL_UNSIGNED_INT,rgb);
-            //std::cout<<rgb<<"\n";
+    glReadPixels(0, 0, m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, m_pixels);
+    puts("Frame"+(char)m_time);
+    create_ppm("tmp", m_time,4);
 
-            glFlush();
-            glFinish();
+}
 
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-            unsigned char data[4];
-            glReadPixels(i, j,1,1, GL_RGBA, GL_UNSIGNED_BYTE, data);
+//http://stackoverflow.com/questions/5844858/how-to-take-screenshot-in-opengl/36236839#36236839
 
+void NGL_Context::create_ppm(char *prefix, int frame_id, unsigned int pixel_nbytes )
+{
+    size_t i, j, cur;
+    //enum Constants { max_filename = 256 };
+   //char filename[max_filename];
+
+    std::string filename="Frame.ppm";
+    std::ofstream myfile;
+    myfile.open(filename);
+    myfile <<"P3\n"<<m_width<<"\n"<<m_height <<"\n"<<" 255\n";
+    for (i = 0; i < m_height; i++) {
+        for (j = 0; j < m_width; j++) {
+            cur = pixel_nbytes * ((m_height - i - 1) * m_width + j);
+            myfile << m_pixels[cur]<<m_pixels[cur + 1]<<m_pixels[cur + 2];
         }
+        myfile<<"\n";
     }
+    myfile.close();
+    /*snprintf(filename, max_filename, "%s%d.ppm", prefix, frame_id);
+    FILE *f = fopen(filename, "w");
+    fprintf(f, "P3\n%d %d\n%d\n", m_width, m_height, 255);
+    for (i = 0; i < m_height; i++) {
+        for (j = 0; j < m_width; j++) {
+            cur = pixel_nbytes * ((m_height - i - 1) * m_width + j);
+            fprintf(f, "%3d %3d %3d ",m_pixels[cur],m_pixels[cur + 1],m_pixels[cur + 2]);
+        }
+        fprintf(f, "\n");
+    }
+    fclose(f);*/
 }

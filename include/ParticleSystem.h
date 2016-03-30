@@ -12,7 +12,7 @@ class ParticleSystem
 //Tornado class.
 {
 public:
-    ParticleSystem(float _radius, float _offset); // constructor takes in the radius from the Tornado class
+    ParticleSystem(float _radius, float _offset, int treshold); // constructor takes in the radius from the Tornado class
     ParticleSystem();
     ~ParticleSystem();
     void createParticles(); //creates Particle if the Treshold isn't reached yet
@@ -22,6 +22,7 @@ public:
     const float m_radius;
     int getAge();
     int getParticleCount();
+    void switchParticles(int value);
 private:
 
     float m_boundingBox;//for a sphere shape as a fuzzy object (maybe make this a class for diffrent shapes later)

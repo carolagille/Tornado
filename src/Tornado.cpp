@@ -4,16 +4,22 @@
 #include <random>
 #include <vector>
 #include<iostream>
+#include <math.h>
+
 Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_curve(_changeRate, _controlPoint,_maxHeight)
 {
     m_frame=0;
-    m_particleSystemTreshold=10000;
-    m_maxProductionRate=1;
+    m_particleSystemTreshold=20000;
+    m_maxProductionRate=2;
     m_particleSystemCount=0;
     m_radiusRange[0]=4.0;
     m_radiusRange[1]=8.0;
     m_maxHeight=_maxHeight;
+    m_radiusChange=10.0;
+    m_radiusDiffrence=2;
+    m_particleState=4;
+
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
     createParticleSystem();
@@ -33,6 +39,17 @@ void Tornado::createParticleSystem()
 {//std::cout<<"running"<< std::endl;
     if (m_particleSystemCount < m_particleSystemTreshold)
     {
+        if(m_frame%50==0)
+        {
+        std::random_device rd2;
+        std::mt19937_64 gen(rd2());
+
+        std::uniform_int_distribution<int> distribution2(10,100);
+        m_radiusChange = (float)distribution2(gen);
+
+        std::uniform_int_distribution<int> distribution3(2,4);
+        m_radiusDiffrence=distribution3(gen);
+        }
         int diffrence=m_particleSystemTreshold - m_particleSystemCount;
         for (int i=0; i<diffrence;i++)
         {
@@ -41,13 +58,14 @@ void Tornado::createParticleSystem()
 
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
+            radius+= sqrt(pow((m_radiusDiffrence*sin((1.0/m_radiusChange)*(float)m_frame)),2));
             //std::cout<<"radius:"<<radius<<"\n";
             std::uniform_real_distribution<float> distribution1(0.0,10.0);
             float offset = distribution1(gen);
             //std::cout<<"offset:"<<offset<<"\n";
 
 
-            ParticleSystem* PartSys=new ParticleSystem(radius,offset);
+            ParticleSystem* PartSys=new ParticleSystem(radius,offset,m_particleState);
             m_particleSystemList.push_back (PartSys);
 
             std::vector<ngl::Vec3> particlePoint;
@@ -133,4 +151,16 @@ int Tornado::getFullParticleCount()
 {
 
     return m_storeParticlePos.size();
+}
+void Tornado::particlesOnOff()
+{
+    if (m_particleState==0){m_particleState=4;}
+    else if (m_particleState==4){m_particleState=0;}
+
+    for(int i =0;i<(int)m_storeParticleSysList.size();++i)
+    {
+
+      m_particleSystemList[i]->switchParticles(m_particleState);
+
+    }
 }

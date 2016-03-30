@@ -18,6 +18,7 @@ public:
     void timerEvent(QTimerEvent *);
     void keyPressEvent(QKeyEvent *_event);
     void saveImage();
+    void create_ppm(char *prefix, int frame_id, unsigned int pixel_nbytes );
 private:
     void resizeGL(QResizeEvent *_event); //overloaded function that is automatically called when the window is resized
     void resizeGL(int _w,int _h);
@@ -32,6 +33,7 @@ private:
     int m_angleX;
     int m_angleZ;
     int m_gridCenter;
+    int m_time;
     GLubyte *m_pixels;
 
 };

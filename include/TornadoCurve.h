@@ -13,7 +13,7 @@ class TornadoCurve
      ngl::Vec3 getPoint();
      void frameChange(int _frame);
      void changeRadiusGrowth(float _changeValue);
-     void changeSpeed(float _changeValue);
+     void changeSpeedUp(float _changeValue);
      void changeMaxHeight(float _changeValue);
      ngl::Vec3 getMidPoint();
 
@@ -30,8 +30,9 @@ private:
     ngl::Vec3 m_midPoint; // stores the midpoint calculated by the interpolation function by interpolating between two guide curve points
     ngl::Vec3 m_curveResult[2]; // stores the two results from the guide curve calculation as there are only two that need to be used
     int m_frame;
-    int m_speed;
+    float m_speed;
     float m_radiusGrowth;
+    float m_speedUp;
 };
 
 

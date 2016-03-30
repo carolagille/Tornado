@@ -20,6 +20,8 @@ public:
     int getParticleSysCount();
     void changeMaxHeight(int _changeValue);
     int getFullParticleCount();
+    void particlesOnOff();
+
 private:
     int m_frame;
     int m_particleSystemTreshold;
@@ -28,6 +30,9 @@ private:
     int m_maxProductionRate;
     float m_radiusRange[2];
     float m_maxHeight;
+    float m_radiusChange;
+    int m_radiusDiffrence;
+    int m_particleState;
 
     std::vector<ngl::Vec3> m_storeParticlePos;
     std::vector<ngl::Vec3> m_storeParticleSysList;

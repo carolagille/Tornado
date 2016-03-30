@@ -24,8 +24,9 @@ TornadoCurve::TornadoCurve() //Default Constructor
     m_controlPoints[1]=(100.0f);
     m_controlPoints[2]=ngl::Vec3(100.0f,100.0f,(float)(m_maxHeight[2]/2.0));
     m_speed=5;
+    m_speedUp=5;
     m_timeUp=m_maxHeight[2]*m_speed;
-    m_radiusGrowth=35.0;
+    m_radiusGrowth=75.0;
 }
 
 TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float _maxHeight)
@@ -38,13 +39,14 @@ TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float
 
     m_tracker=0;
     m_resultPoint=(0.0f);
-    m_curveCount=2;
+    m_curveCount=3;
     m_minHeight=0.0;
 
     m_maxHeight=ngl::Vec3(0.0f,0.0f,_maxHeight);
-    m_speed=3;
+    m_speed=2;
+    m_speedUp=2;
     //std::cout<<"m_maxHeight"<<m_maxHeight[0]<<","<<m_maxHeight[1]<<","<<m_maxHeight[2]<<"\n";
-    m_timeUp=_maxHeight*m_speed; // needs to be calculated when actually using the curves
+    m_timeUp=_maxHeight*m_speedUp; // needs to be calculated when actually using the curves
     m_midPoint=(0.0f);
     m_frame=0;
 
@@ -53,7 +55,7 @@ TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float
     m_controlPoints[1]=ngl::Vec3(_allcontrolPoints[1][0],_allcontrolPoints[1][1],(float)(m_maxHeight[2]/2.0));
     m_controlPoints[2]=ngl::Vec3(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
     //std::cout<<"m_maxHeight"<<m_controlPoints[0][0]<<","<<m_controlPoints[0][1]<<","<<m_controlPoints[0][2]<<"\n";
-    m_radiusGrowth=35.0;
+    m_radiusGrowth=55.0;
 
 }
 
@@ -125,7 +127,7 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
         m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+2) *  (1.0/(float)m_speed)*sin (((float)_particleTime/10.0)+ _offset);
         m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+2) *  (1.0/(float)m_speed)*cos (((float)_particleTime/10.0) + _offset);
 
-        m_resultPoint[2]= (float)_particleTime/m_speed;
+        m_resultPoint[2]= (float)_particleTime/m_speedUp;
     }
     else
     {
@@ -164,12 +166,16 @@ void TornadoCurve::changeRadiusGrowth(float _changeValue)
     m_radiusGrowth+=_changeValue;
 }
 
-void TornadoCurve::changeSpeed(float _changeValue)
+void TornadoCurve::changeSpeedUp(float _changeValue)
 {
-    m_speed+=_changeValue;
+    m_speedUp+=_changeValue;
+    if (m_speedUp<=0){m_speedUp=0.1;}
+
+    m_timeUp=m_maxHeight[2]*m_speedUp;
 }
 
 void TornadoCurve::changeMaxHeight(float _changeValue)
 {
     m_maxHeight[2]+=_changeValue;
+    m_timeUp=m_maxHeight[2]*m_speedUp;
 }

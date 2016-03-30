@@ -9,7 +9,7 @@ Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 
     m_rgba=(_rgba);
 
-    m_lifetime=1000;
+    m_lifetime=50;
     m_age=0;
     m_velocity=ngl::Vec3(0.0f,0.0f,0.0f);
     m_counter=0;
@@ -23,7 +23,7 @@ Particle::~Particle()
 }
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
 {
-    if (m_counter==0)
+    if (m_counter<=0)
     {
         m_newPosition=place(_newCenter,_boundingBox);
         m_counter=6;
@@ -31,15 +31,19 @@ void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
     else if (m_counter>0){m_counter--;}
     //m_velocity.normalize();
     ngl::Vec3 vecToNewPos = (1.0/(float)m_counter)*(m_newPosition-m_position);
+    vecToNewPos = (m_newPosition-m_position);
     //vecToNewPos.normalize();
     m_velocity=0.2*(_newCenter-_center)+vecToNewPos+(1.0-(1/(float)m_counter))*m_velocity;
+    m_velocity=vecToNewPos+(1.0-(1/(float)m_counter))*m_velocity;
+    m_velocity.normalize();
     m_position+=m_velocity;
     ngl::Vec3 distance(_newCenter-m_position);
-    if (distance.length()>=_boundingBox)
+    /*if (distance.length()>=_boundingBox)
     {
         distance.normalize();
         m_position+=distance;
     }
+*/
 
 }
 
@@ -67,17 +71,18 @@ void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,
 
     if(particleParticleSys.length()>_boundingBox)
     {
-        m_velocity=(0.5*m_velocity)+(0.3*particleSysVelocity)+(0.2*particleParticleSys);
-    }
-
-
-    else if(0.6*_boundingBox<particleParticleSys.length()<0.4*_boundingBox)
-    {
         m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
     }
 
 
-    else if(particleParticleSys.length()<=0.4*_boundingBox)
+    else if(_boundingBox<particleParticleSys.length()<0.6*_boundingBox)
+    {
+        //m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
+        m_velocity=m_velocity;
+    }
+
+
+    else if(particleParticleSys.length()<=_boundingBox)
     {
         particleSysTornadoCenter.normalize();
         if(particleSysTornadoCenter.length() > particleTornadoCenter.length())
