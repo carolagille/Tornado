@@ -30,6 +30,20 @@ DESTDIR=./
 
 CONFIG += console
 
+
+QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
+LIBS+=$$system(Magick++-config --ldflags --libs )
+macx:CONFIG+=c++11
+
+macx:INCLUDEPATH+=/usr/local/include/ImageMagick-6/
+
+macx:INCLUDEPATH+=/usr/local/include
+macx:LIBS+= -L/usr/local/lib/ -lMagick++-6.Q16 -lc++
+
+macx:QMAKE_CXXFLAGS+= -std=c++11 -stdlib=libc++
+
+
+
 OTHER_FILES+= README.mp \
               ./shaders/*.glsl
 

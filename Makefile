@@ -14,8 +14,8 @@ CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 DEFINES       = -DQT5BUILD -DQT5BUILD -DNGL_DEBUG -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -msse -msse2 -msse3 -arch x86_64 -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 -Wall -W -Wno-unused-parameter -fPIC $(DEFINES)
-INCPATH       = -I. -Iinclude -I/usr/local/include -I/Users/carolagille/NGL/include -I/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/Headers -Imoc -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
+CXXFLAGS      = -pipe -std=c++11 -stdlib=libc++ -msse -msse2 -msse3 -arch x86_64 -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 -Wall -W -Wno-unused-parameter -fPIC $(DEFINES)
+INCPATH       = -I. -Iinclude -I/usr/local/include/ImageMagick-6 -I/usr/local/include -I/usr/local/include -I/Users/carolagille/NGL/include -I/Users/carolagille/Qt/5.5/clang_64/lib/QtOpenGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/lib/QtCore.framework/Headers -Imoc -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/carolagille/Qt/5.5/clang_64/mkspecs/macx-clang -F/Users/carolagille/Qt/5.5/clang_64/lib
 QMAKE         = /Users/carolagille/Qt/5.5/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = Tornado1.0.0
 DISTDIR = /Users/carolagille/Dropbox/University/Programming/Tornado/obj/Tornado1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -headerpad_max_install_names -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -stdlib=libc++ -mmacosx-version-min=10.7 -Wl,-rpath,/Users/carolagille/NGL/lib
-LIBS          = $(SUBLIBS) -F/Users/carolagille/Qt/5.5/clang_64/lib -L/usr/local/lib -L/Users/carolagille/NGL/lib -l NGL -framework QtOpenGL -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/carolagille/Qt/5.5/clang_64/lib -L/usr/local/lib/ -lMagick++-6.Q16 -lc++ -L/usr/local/lib -L/Users/carolagille/NGL/lib -l NGL -framework QtOpenGL -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -7670,7 +7670,137 @@ obj/NGL_Context.o: src/NGL_Context.cpp /Users/carolagille/Qt/5.5/clang_64/lib/Qt
 		/Users/carolagille/NGL/include/ngl/Shader.h \
 		/Users/carolagille/NGL/include/ngl/ShaderProgram.h \
 		/Users/carolagille/NGL/include/ngl/Util.h \
-		/Users/carolagille/NGL/include/ngl/Mat3.h
+		/Users/carolagille/NGL/include/ngl/Mat3.h \
+		/usr/local/include/ImageMagick-6/Magick++.h \
+		/usr/local/include/ImageMagick-6/Magick++/Include.h \
+		/usr/local/include/ImageMagick-6/magick/magick-config.h \
+		/usr/local/include/ImageMagick-6/magick/magick-baseconfig.h \
+		/usr/local/include/ImageMagick-6/magick/MagickCore.h \
+		/usr/local/include/ImageMagick-6/magick/method-attribute.h \
+		/usr/local/include/ImageMagick-6/magick/methods.h \
+		/usr/local/include/ImageMagick-6/magick/magick-type.h \
+		/usr/local/include/ImageMagick-6/magick/accelerate.h \
+		/usr/local/include/ImageMagick-6/magick/fx.h \
+		/usr/local/include/ImageMagick-6/magick/draw.h \
+		/usr/local/include/ImageMagick-6/magick/geometry.h \
+		/usr/local/include/ImageMagick-6/magick/image.h \
+		/usr/local/include/ImageMagick-6/magick/color.h \
+		/usr/local/include/ImageMagick-6/magick/pixel.h \
+		/usr/local/include/ImageMagick-6/magick/colorspace.h \
+		/usr/local/include/ImageMagick-6/magick/constitute.h \
+		/usr/local/include/ImageMagick-6/magick/exception.h \
+		/usr/local/include/ImageMagick-6/magick/semaphore.h \
+		/usr/local/include/ImageMagick-6/magick/blob.h \
+		/usr/local/include/ImageMagick-6/magick/stream.h \
+		/usr/local/include/ImageMagick-6/magick/cache-view.h \
+		/usr/local/include/ImageMagick-6/magick/composite.h \
+		/usr/local/include/ImageMagick-6/magick/compress.h \
+		/usr/local/include/ImageMagick-6/magick/effect.h \
+		/usr/local/include/ImageMagick-6/magick/morphology.h \
+		/usr/local/include/ImageMagick-6/magick/layer.h \
+		/usr/local/include/ImageMagick-6/magick/locale_.h \
+		/usr/local/include/ImageMagick-6/magick/hashmap.h \
+		/usr/local/include/ImageMagick-6/magick/monitor.h \
+		/usr/local/include/ImageMagick-6/magick/profile.h \
+		/usr/local/include/ImageMagick-6/magick/string_.h \
+		/usr/local/include/ImageMagick-6/magick/quantum.h \
+		/usr/local/include/ImageMagick-6/magick/resample.h \
+		/usr/local/include/ImageMagick-6/magick/resize.h \
+		/usr/local/include/ImageMagick-6/magick/timer.h \
+		/usr/local/include/ImageMagick-6/magick/type.h \
+		/usr/local/include/ImageMagick-6/magick/statistic.h \
+		/usr/local/include/ImageMagick-6/magick/animate.h \
+		/usr/local/include/ImageMagick-6/magick/annotate.h \
+		/usr/local/include/ImageMagick-6/magick/artifact.h \
+		/usr/local/include/ImageMagick-6/magick/attribute.h \
+		/usr/local/include/ImageMagick-6/magick/cache.h \
+		/usr/local/include/ImageMagick-6/magick/channel.h \
+		/usr/local/include/ImageMagick-6/magick/cipher.h \
+		/usr/local/include/ImageMagick-6/magick/client.h \
+		/usr/local/include/ImageMagick-6/magick/coder.h \
+		/usr/local/include/ImageMagick-6/magick/colormap.h \
+		/usr/local/include/ImageMagick-6/magick/compare.h \
+		/usr/local/include/ImageMagick-6/magick/configure.h \
+		/usr/local/include/ImageMagick-6/magick/decorate.h \
+		/usr/local/include/ImageMagick-6/magick/delegate.h \
+		/usr/local/include/ImageMagick-6/magick/deprecate.h \
+		/usr/local/include/ImageMagick-6/magick/quantize.h \
+		/usr/local/include/ImageMagick-6/magick/registry.h \
+		/usr/local/include/ImageMagick-6/magick/display.h \
+		/usr/local/include/ImageMagick-6/magick/distort.h \
+		/usr/local/include/ImageMagick-6/magick/distribute-cache.h \
+		/usr/local/include/ImageMagick-6/magick/enhance.h \
+		/usr/local/include/ImageMagick-6/magick/feature.h \
+		/usr/local/include/ImageMagick-6/magick/fourier.h \
+		/usr/local/include/ImageMagick-6/magick/gem.h \
+		/usr/local/include/ImageMagick-6/magick/random_.h \
+		/usr/local/include/ImageMagick-6/magick/histogram.h \
+		/usr/local/include/ImageMagick-6/magick/identify.h \
+		/usr/local/include/ImageMagick-6/magick/image-view.h \
+		/usr/local/include/ImageMagick-6/magick/list.h \
+		/usr/local/include/ImageMagick-6/magick/log.h \
+		/usr/local/include/ImageMagick-6/magick/magic.h \
+		/usr/local/include/ImageMagick-6/magick/magick.h \
+		/usr/local/include/ImageMagick-6/magick/matrix.h \
+		/usr/local/include/ImageMagick-6/magick/memory_.h \
+		/usr/local/include/ImageMagick-6/magick/module.h \
+		/usr/local/include/ImageMagick-6/magick/version.h \
+		/usr/local/include/ImageMagick-6/magick/mime.h \
+		/usr/local/include/ImageMagick-6/magick/montage.h \
+		/usr/local/include/ImageMagick-6/magick/opencl.h \
+		/usr/local/include/ImageMagick-6/magick/option.h \
+		/usr/local/include/ImageMagick-6/magick/paint.h \
+		/usr/local/include/ImageMagick-6/magick/pixel-accessor.h \
+		/usr/local/include/ImageMagick-6/magick/policy.h \
+		/usr/local/include/ImageMagick-6/magick/prepress.h \
+		/usr/local/include/ImageMagick-6/magick/property.h \
+		/usr/local/include/ImageMagick-6/magick/resource_.h \
+		/usr/local/include/ImageMagick-6/magick/segment.h \
+		/usr/local/include/ImageMagick-6/magick/shear.h \
+		/usr/local/include/ImageMagick-6/magick/signature.h \
+		/usr/local/include/ImageMagick-6/magick/splay-tree.h \
+		/usr/local/include/ImageMagick-6/magick/token.h \
+		/usr/local/include/ImageMagick-6/magick/transform.h \
+		/usr/local/include/ImageMagick-6/magick/threshold.h \
+		/usr/local/include/ImageMagick-6/magick/utility.h \
+		/usr/local/include/ImageMagick-6/magick/vision.h \
+		/usr/local/include/ImageMagick-6/magick/xml-tree.h \
+		/usr/local/include/ImageMagick-6/magick/xwindow.h \
+		/usr/local/include/ImageMagick-6/wand/MagickWand.h \
+		/usr/local/include/ImageMagick-6/wand/method-attribute.h \
+		/usr/local/include/ImageMagick-6/wand/animate.h \
+		/usr/local/include/ImageMagick-6/wand/compare.h \
+		/usr/local/include/ImageMagick-6/wand/composite.h \
+		/usr/local/include/ImageMagick-6/wand/conjure.h \
+		/usr/local/include/ImageMagick-6/wand/convert.h \
+		/usr/local/include/ImageMagick-6/wand/deprecate.h \
+		/usr/local/include/ImageMagick-6/wand/drawing-wand.h \
+		/usr/local/include/ImageMagick-6/wand/pixel-wand.h \
+		/usr/local/include/ImageMagick-6/wand/magick-wand.h \
+		/usr/local/include/ImageMagick-6/wand/pixel-iterator.h \
+		/usr/local/include/ImageMagick-6/wand/display.h \
+		/usr/local/include/ImageMagick-6/wand/identify.h \
+		/usr/local/include/ImageMagick-6/wand/import.h \
+		/usr/local/include/ImageMagick-6/wand/magick-property.h \
+		/usr/local/include/ImageMagick-6/wand/magick-image.h \
+		/usr/local/include/ImageMagick-6/wand/mogrify.h \
+		/usr/local/include/ImageMagick-6/wand/montage.h \
+		/usr/local/include/ImageMagick-6/wand/stream.h \
+		/usr/local/include/ImageMagick-6/wand/wand-view.h \
+		/usr/local/include/ImageMagick-6/Magick++/Functions.h \
+		/usr/local/include/ImageMagick-6/Magick++/Image.h \
+		/usr/local/include/ImageMagick-6/Magick++/Blob.h \
+		/usr/local/include/ImageMagick-6/Magick++/ChannelMoments.h \
+		/usr/local/include/ImageMagick-6/Magick++/Color.h \
+		/usr/local/include/ImageMagick-6/Magick++/Drawable.h \
+		/usr/local/include/ImageMagick-6/Magick++/Geometry.h \
+		/usr/local/include/ImageMagick-6/Magick++/Exception.h \
+		/usr/local/include/ImageMagick-6/Magick++/TypeMetric.h \
+		/usr/local/include/ImageMagick-6/Magick++/Pixels.h \
+		/usr/local/include/ImageMagick-6/Magick++/ResourceLimits.h \
+		/usr/local/include/ImageMagick-6/Magick++/STL.h \
+		/usr/local/include/ImageMagick-6/Magick++/CoderInfo.h \
+		/usr/local/include/ImageMagick-6/Magick++/Montage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGL_Context.o src/NGL_Context.cpp
 
 ####### Install

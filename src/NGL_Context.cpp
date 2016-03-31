@@ -8,7 +8,7 @@
 #include <ngl/Util.h>
 #include <stdlib.h>
 #include <fstream>
-
+#include <Magick++.h>
 NGL_Context::NGL_Context(Tornado *_tornado)
 {   static const GLuint FORMAT_NBYTES = 4;
     m_pixels=NULL;
@@ -132,8 +132,39 @@ void NGL_Context::initializeGL()
     // store to vp for later use
     m_vp=view*perspective;
     std::cout<<"\n calling initializeGl\n";
+
+    // create my shader
+    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+      // we are creating a shader called Phong
+      shader->createShaderProgram("MyShader");
+      // now we are going to create empty shaders for Frag and Vert
+      shader->attachShader("MyShaderVert",ngl::ShaderType::VERTEX);
+      shader->attachShader("MyshaderFrag",ngl::ShaderType::FRAGMENT);
+
+
+      // attach the source
+      shader->loadShaderSource("MyShaderVert","/shaders/vertexShader.glsl");
+      shader->loadShaderSource("MyshaderFrag","/shaders/fragmentShader.glsl");
+
+      // compile the shaders
+      shader->compileShader("MyShaderVert");
+      shader->compileShader("MyshaderFrag");
+
+      // add them to the program
+      shader->attachShaderToProgram("MyShader","MyShaderVert");
+      shader->attachShaderToProgram("MyShader","MyshaderFrag");
+
+
+      // now we have associated this data we can link the shader
+      shader->linkProgramObject("MyShader");
+      // and make it active ready to load values
+      (*shader)["MyShader"]->use();
+      shader->autoRegisterUniforms("Myshader");
+
+
+
     // now load the default nglColour shader and set the colour for it.
-    ngl::ShaderLib *shader = ngl::ShaderLib::instance();
+
 
     // set this as the active shader
 
@@ -153,6 +184,42 @@ void NGL_Context::initializeGL()
     glPointSize(5);
     startTimer(20);
  }
+void NGL_Context::loadTexture()
+{
+  QImage image;
+  bool loaded=image.load("textures/test.jpg");
+  if(loaded == true)
+  {
+    int width=image.width();
+    int height=image.height();
+
+    unsigned char *data = new unsigned char[ width*height*3];
+    unsigned int index=0;
+    QRgb colour;
+    for( int y=0; y<height; ++y)
+    {
+      for( int x=0; x<width; ++x)
+      {
+        colour=image.pixel(x,y);
+
+        data[index++]=qRed(colour);
+        data[index++]=qGreen(colour);
+        data[index++]=qBlue(colour);
+      }
+    }
+
+
+  glGenTextures(1,&m_textureName);
+  glBindTexture(GL_TEXTURE_2D,m_textureName);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+
+  glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
+
+  glGenerateMipmap(GL_TEXTURE_2D); //  Allocate the mipmaps
+
+  }
+}
 
 void NGL_Context::paintGL()
 {
@@ -177,6 +244,7 @@ void NGL_Context::paintGL()
 
     //particle sys
     shader->setShaderParam4f("Colour",0.8f,0.78f,0.69f,0.8f);
+    shader->use("MyShader");
     glPointSize(6);
     glBindVertexArray(m_vao);
 
@@ -201,6 +269,7 @@ void NGL_Context::paintGL()
     ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
     //change colour to black
+    shader->use("nglColourShader");
     shader->setShaderParam4f("Colour",0.0f,0.0f,0.0f,1.0f);
 
     transformGrid.setRotation(90+m_angleX,0,m_angleZ);
@@ -239,7 +308,7 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
   // turn off wire frame
   case Qt::Key_1 :m_tornado->m_curve.changeSpeedUp(-0.2); break;
   case Qt::Key_2 :m_tornado->m_curve.changeSpeedUp(0.2); break;
-  //case Qt::Key_S : saveImage(); break;
+  case Qt::Key_S : saveImage(); break;
 
   case Qt::Key_P: m_tornado->particlesOnOff();break;
   case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
@@ -267,9 +336,19 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
 
 void NGL_Context::saveImage()
 {   //std::cout<<"Calling save image\n";
-    glReadPixels(0, 0, m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, m_pixels);
-    puts("Frame"+(char)m_time);
-    create_ppm("tmp", m_time,4);
+    glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
+    Magick::Blob b( m_pixels, 3 * m_width * m_height );
+    Magick::Image i( m_width,
+                     m_height,
+                     "RGB",
+                     Magick::CharPixel,
+                     m_pixels);
+    //Magick::Image i()
+    i.write( "MyPicture.jpg" );
+    std::cout<<"Saved Image\n";
+
+    //puts("Frame"+(char)m_time);
+    //create_ppm("tmp", m_time,4);
 
 }
 
