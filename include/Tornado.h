@@ -1,9 +1,8 @@
 #ifndef TORNADO_H
 #define TORNADO_H
 #include "TornadoCurve.h"
-#include <vector>
 #include "ParticleSystem.h"
-#include <ngl/Vec3.h>
+
 
 class Tornado
 {

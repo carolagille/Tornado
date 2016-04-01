@@ -3,6 +3,8 @@
 #include <vector>
 #include <ngl/Vec3.h>
 #include <ngl/Vec4.h>
+#include <iostream>
+#include <random>
 
 class Particle
 //Particle Class that creates a Partcile and a point representation of it. It moves with its particles origin and creats and in and out movement by

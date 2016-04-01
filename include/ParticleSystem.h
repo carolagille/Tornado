@@ -1,10 +1,7 @@
 #ifndef PARTICLESYSTEM_H
 #define PARTICLESYSTEM_H
 #include "Particle.h"
-#include <forward_list>
-#include <vector>
-#include <ngl/Vec3.h>
-#include <ngl/Vec4.h>
+
 
 class ParticleSystem
 //PArticle system Class which creates a colletion of particles that are born live and die over time, they hover around the particle systems center and

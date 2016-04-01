@@ -10,5 +10,9 @@ uniform sampler2D tex;
 void main()
 {
 
-    fragColour = texure(tex,gl_PointCoord);
+    fragColour = texture(tex,gl_PointCoord);
+    if (fragColour.r>=0.7 && fragColour.g>=0.7 && fragColour.b>=0.7)
+       {
+        discard;
+    }
 }

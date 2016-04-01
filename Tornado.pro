@@ -14,7 +14,8 @@ SOURCES+=$$PWD/src/TornadoCurve.cpp \
     src/Particle.cpp \
     src/ParticleSystem.cpp \
     src/Tornado.cpp \
-    src/NGL_Context.cpp
+    src/NGL_Context.cpp \
+    src/MainWindow.cpp
 OBJECTS_DIR= $$PWD/obj
 
 HEADERS+=$$PWD/include/TornadoCurve.h \
@@ -22,7 +23,8 @@ HEADERS+=$$PWD/include/TornadoCurve.h \
     include/ParticleSystem.h \
     include/Tornado.h \
     include/NGL_Context.h \
-    include/Shaders.h
+    include/Shaders.h \
+    include/MainWindow.h
 
 INCLUDEPATH+=$$PWD/include
 
@@ -31,18 +33,24 @@ DESTDIR=./
 CONFIG += console
 
 
+#QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
+#LIBS+=$$system(Magick++-config --ldflags --libs )
+#macx:CONFIG+=c++11
+
+#macx:INCLUDEPATH+=/usr/local/include/ImageMagick-6/
+
+#macx:INCLUDEPATH+=/usr/local/include
+#macx:LIBS+= -L/usr/local/lib/ -lMagick++-6.Q16 -lc++
+
+#macx:QMAKE_CXXFLAGS+= -std=c++11 -stdlib=libc++
+
 QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
 LIBS+=$$system(Magick++-config --ldflags --libs )
 macx:CONFIG+=c++11
-
-macx:INCLUDEPATH+=/usr/local/include/ImageMagick-6/
-
+macx:INCLUDEPATH+=/opt/ImageMagick/include/ImageMagick-6/
 macx:INCLUDEPATH+=/usr/local/include
-macx:LIBS+= -L/usr/local/lib/ -lMagick++-6.Q16 -lc++
-
+macx:LIBS+= -L/opt/ImageMagick/lib/ -lMagick++-6.Q16 -lc++
 macx:QMAKE_CXXFLAGS+= -std=c++11 -stdlib=libc++
-
-
 
 OTHER_FILES+= README.mp \
               ./shaders/*.glsl
@@ -71,3 +79,6 @@ else{
         message("Using custom NGL location")
         include($(NGLDIR)/UseNGL.pri)
 }
+
+FORMS += \
+    ui/MainWindow.ui

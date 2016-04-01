@@ -1,9 +1,6 @@
 #include "Tornado.h"
 #include "ParticleSystem.h"
 #include "TornadoCurve.h"
-#include <random>
-#include <vector>
-#include<iostream>
 #include <math.h>
 
 Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
@@ -18,7 +15,7 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_maxHeight=_maxHeight;
     m_radiusChange=10.0;
     m_radiusDiffrence=2;
-    m_particleState=4;
+    m_particleState=30;
 
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -36,7 +33,7 @@ Tornado::~Tornado()
 }
 
 void Tornado::createParticleSystem()
-{//std::cout<<"running"<< std::endl;
+{
     if (m_particleSystemCount < m_particleSystemTreshold)
     {
         if(m_frame%50==0)
@@ -59,10 +56,10 @@ void Tornado::createParticleSystem()
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
             radius+= sqrt(pow((m_radiusDiffrence*sin((1.0/m_radiusChange)*(float)m_frame)),2));
-            //std::cout<<"radius:"<<radius<<"\n";
+
             std::uniform_real_distribution<float> distribution1(0.0,10.0);
             float offset = distribution1(gen);
-            //std::cout<<"offset:"<<offset<<"\n";
+
 
 
             ParticleSystem* PartSys=new ParticleSystem(radius,offset,m_particleState);
@@ -84,22 +81,33 @@ void Tornado::createParticleSystem()
 }
 
 void Tornado::update()
-{   //std::cout<<"\nlist lenght"<<m_storeList.size()<<"\n";
+{
+
     m_storeParticleSysList.clear();
     m_storeParticlePos.clear();
+
+
+
     ngl::Vec3 center;
-    //std::cout<<"running Tornado update\n";
+
+
+
     m_curve.frameChange(m_frame);
+
+
     createParticleSystem();
+
+
     for (int i=0;i<m_particleSystemCount;i++)
     {
+
 
         int particleAge = m_particleSystemList[i]->getAge();
 
         m_curve.spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
         ngl::Vec3 point = m_curve.getPoint();
         //point=ngl::Vec3(30.0f,0.0f,0.0f);
-        //std::cout<<point[0]<<","<<point[1]<<","<<point[2]<<"\n";
+
         m_storeParticleSysList.push_back(point);
         //m_storeParticleSysList.push_back((10.0f,10.0f,10.0f));
         m_storeParticlePos = m_particleSystemList[i]->move(point,m_storeParticlePos,center);
@@ -154,8 +162,8 @@ int Tornado::getFullParticleCount()
 }
 void Tornado::particlesOnOff()
 {
-    if (m_particleState==0){m_particleState=4;}
-    else if (m_particleState==4){m_particleState=0;}
+    if (m_particleState==0){m_particleState=30;}
+    else if (m_particleState==30){m_particleState=0;}
 
     for(int i =0;i<(int)m_storeParticleSysList.size();++i)
     {

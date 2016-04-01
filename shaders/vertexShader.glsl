@@ -1,10 +1,10 @@
-#version 400 core
+#version 410 core
 
 //Vertex shaders gets position of a vertex (and other intformation like normals,uv)
 //and in the shader you can manipulate thoose positions with math. This is neccessary when
 //using a camera so the vertecies are displayed in replation to the camera
 
-#version 430
+
 
 
 in vec3 inPosition;
@@ -14,5 +14,5 @@ uniform mat4 MVP;
 
 void main()
 { //we can change the position in here but i don't want to change it
-    gl_Position = MVP vec4(inPosition,1.0);
+    gl_Position = MVP *vec4(inPosition,1.0);
 }

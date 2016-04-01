@@ -9,13 +9,23 @@
 #include <stdlib.h>
 #include <fstream>
 #include <Magick++.h>
-NGL_Context::NGL_Context(Tornado *_tornado)
-{   static const GLuint FORMAT_NBYTES = 4;
+#include <sstream>
+
+
+
+
+
+
+NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_parent)
+{
+  setFocus();
+ static const GLuint FORMAT_NBYTES = 4;
     m_pixels=NULL;
     m_tornado=_tornado;
     m_time=0;
+    m_render=0;
     m_pixels =(GLubyte*) malloc(4 * m_width * m_height);
-    setTitle("Tornado Programm");
+
 
 }
 
@@ -23,13 +33,20 @@ NGL_Context::~NGL_Context()
 {
     std::cout<<"NGL Destructor called\n";
     free(m_pixels);
+    delete m_tornado;
 }
 
 void NGL_Context::createPoints()
 {
-   //std::cout<<"\ncreatingPoints\n";
+
    m_tornado->update();
+
+
    std::vector<ngl::Vec3> pointsParticlSys= m_tornado->getParticleSysList();
+
+
+
+
   //make a vector from the vector that stores points in the Tornado class
   // than bing that later to the buffer
   // create a VAO and store the ID
@@ -51,10 +68,12 @@ void NGL_Context::createPoints()
   glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,((ngl::Real *)NULL + 0));
   glEnableVertexAttribArray(0);
 
+
   // always best to unbind after use
   glBindVertexArray(0);
 //---------------------------------//
 //second VAO//
+
   std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
 
  glGenVertexArrays(1, &m_vao2);
@@ -131,7 +150,7 @@ void NGL_Context::initializeGL()
     ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
-    std::cout<<"\n calling initializeGl\n";
+
 
     // create my shader
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -139,31 +158,33 @@ void NGL_Context::initializeGL()
       shader->createShaderProgram("MyShader");
       // now we are going to create empty shaders for Frag and Vert
       shader->attachShader("MyShaderVert",ngl::ShaderType::VERTEX);
-      shader->attachShader("MyshaderFrag",ngl::ShaderType::FRAGMENT);
+      shader->attachShader("MyShaderFrag",ngl::ShaderType::FRAGMENT);
 
 
       // attach the source
-      shader->loadShaderSource("MyShaderVert","/shaders/vertexShader.glsl");
-      shader->loadShaderSource("MyshaderFrag","/shaders/fragmentShader.glsl");
+      shader->loadShaderSource("MyShaderVert","shaders/vertexShader.glsl");
+      shader->loadShaderSource("MyShaderFrag","shaders/fragmentShader.glsl");
 
       // compile the shaders
       shader->compileShader("MyShaderVert");
-      shader->compileShader("MyshaderFrag");
+      shader->compileShader("MyShaderFrag");
 
       // add them to the program
       shader->attachShaderToProgram("MyShader","MyShaderVert");
-      shader->attachShaderToProgram("MyShader","MyshaderFrag");
+      shader->attachShaderToProgram("MyShader","MyShaderFrag");
 
 
       // now we have associated this data we can link the shader
       shader->linkProgramObject("MyShader");
       // and make it active ready to load values
       (*shader)["MyShader"]->use();
-      shader->autoRegisterUniforms("Myshader");
+      shader->autoRegisterUniforms("MyShader");
 
-
+      loadTexture();
 
     // now load the default nglColour shader and set the colour for it.
+
+
 
 
     // set this as the active shader
@@ -176,24 +197,37 @@ void NGL_Context::initializeGL()
     shader->use("nglColourShader");
     // set the colour to red
     shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
-    //creating a point??
 
 
     //creating a point??
     createPoints();
+
     glPointSize(5);
     startTimer(20);
  }
+
+
+
+
+
 void NGL_Context::loadTexture()
 {
+  glGenTextures(1, &m_textureName);
+
+
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  GLuint shaderHandle = shader->getProgramID("MyShader");
+
+
+
   QImage image;
-  bool loaded=image.load("textures/test.jpg");
+  bool loaded=image.load("textures/point.tif");
   if(loaded == true)
   {
     int width=image.width();
     int height=image.height();
 
-    unsigned char *data = new unsigned char[ width*height*3];
+    unsigned char *data = new unsigned char[ width*height*4];
     unsigned int index=0;
     QRgb colour;
     for( int y=0; y<height; ++y)
@@ -205,24 +239,29 @@ void NGL_Context::loadTexture()
         data[index++]=qRed(colour);
         data[index++]=qGreen(colour);
         data[index++]=qBlue(colour);
+        data[index++]=qAlpha(colour);
       }
     }
-
 
   glGenTextures(1,&m_textureName);
   glBindTexture(GL_TEXTURE_2D,m_textureName);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 
-  glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
+  glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,width,height,0,GL_RGBA,GL_UNSIGNED_BYTE,data);
 
   glGenerateMipmap(GL_TEXTURE_2D); //  Allocate the mipmaps
 
+  glUniform1i(glGetUniformLocation(shaderHandle,"tex"),0);
+
   }
+  else
+    std::cout<<"NOT LOADED\n";
 }
 
 void NGL_Context::paintGL()
 {
+
     ngl::Transformation transform;
     ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
@@ -243,25 +282,28 @@ void NGL_Context::paintGL()
 
 
     //particle sys
-    shader->setShaderParam4f("Colour",0.8f,0.78f,0.69f,0.8f);
-    shader->use("MyShader");
-    glPointSize(6);
+    shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
+
+    glPointSize(5);
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getParticleSysCount());
 
     glBindVertexArray(0);
 
-    glPointSize(7);
-    //std::cout<<"particleCount:"<<m_tornado->getFullParticleCount()<<"\n";
+    glPointSize(6);
+    ;
     //Particles0.545f,0.513f,0.470f,1.0f
+    //shader->use("nglColourShader");
+    //shader->use("MyShader");
+    shader->setRegisteredUniformFromMat4("MVP",MVP);
     shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
     glBindVertexArray(m_vao2);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getFullParticleCount());
 
     glBindVertexArray(0);
-    //std::cout<<"\n\n\n line 119\n";
+
 
 
     //Grid
@@ -281,16 +323,20 @@ void NGL_Context::paintGL()
     prim->draw("plane");
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 //End Grid
-
+    if(m_render)
+    {
+      saveImage();
+    }
+m_time++;
 }
 void NGL_Context::timerEvent(QTimerEvent *_event)
 {
-   //std::cout<<"calling timer event\n";
+
   m_tornado->update();
   //m_tornado->printList();
   updatePoints();
   update();
-  m_time++;
+
 }
 
 void NGL_Context::keyPressEvent(QKeyEvent *_event)
@@ -300,7 +346,7 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
   switch (_event->key())
   {
   // escape key to quit
-  case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
+  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
   // turn on wirframe rendering
   case Qt::Key_H : m_tornado->m_curve.changeMaxHeight(100);
       m_tornado->changeMaxHeight(100);
@@ -308,12 +354,20 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
   // turn off wire frame
   case Qt::Key_1 :m_tornado->m_curve.changeSpeedUp(-0.2); break;
   case Qt::Key_2 :m_tornado->m_curve.changeSpeedUp(0.2); break;
+  case Qt::Key_3 :m_tornado->m_curve.changeSpeed(-1); break;
+  case Qt::Key_4 :m_tornado->m_curve.changeSpeed(1); break;
+
+
+
   case Qt::Key_S : saveImage(); break;
 
   case Qt::Key_P: m_tornado->particlesOnOff();break;
   case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
+  case Qt::Key_Return :
+    m_render==0 ? m_render=1 : m_render=0;
 
-  case Qt::Key_Plus : m_zoom-=50;std::cout<<"plus\n";break;
+    break;
+  case Qt::Key_Plus : m_zoom-=50;break;
 
   case Qt::Key_Minus : m_zoom+=50;break;
 
@@ -335,7 +389,7 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
 }
 
 void NGL_Context::saveImage()
-{   //std::cout<<"Calling save image\n";
+{   std::cout<<"Calling save image\n";
     glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
     Magick::Blob b( m_pixels, 3 * m_width * m_height );
     Magick::Image i( m_width,
@@ -343,45 +397,19 @@ void NGL_Context::saveImage()
                      "RGB",
                      Magick::CharPixel,
                      m_pixels);
-    //Magick::Image i()
-    i.write( "MyPicture.jpg" );
-    std::cout<<"Saved Image\n";
 
-    //puts("Frame"+(char)m_time);
-    //create_ppm("tmp", m_time,4);
+    std::ostringstream filename;
+    filename<<"renders/tornado"<<m_time<<".jpg";
+
+    i.write(filename.str());
+
+
+
 
 }
 
-
-//http://stackoverflow.com/questions/5844858/how-to-take-screenshot-in-opengl/36236839#36236839
-
-void NGL_Context::create_ppm(char *prefix, int frame_id, unsigned int pixel_nbytes )
+void NGL_Context::renderOnOff()
 {
-    size_t i, j, cur;
-    //enum Constants { max_filename = 256 };
-   //char filename[max_filename];
-
-    std::string filename="Frame.ppm";
-    std::ofstream myfile;
-    myfile.open(filename);
-    myfile <<"P3\n"<<m_width<<"\n"<<m_height <<"\n"<<" 255\n";
-    for (i = 0; i < m_height; i++) {
-        for (j = 0; j < m_width; j++) {
-            cur = pixel_nbytes * ((m_height - i - 1) * m_width + j);
-            myfile << m_pixels[cur]<<m_pixels[cur + 1]<<m_pixels[cur + 2];
-        }
-        myfile<<"\n";
-    }
-    myfile.close();
-    /*snprintf(filename, max_filename, "%s%d.ppm", prefix, frame_id);
-    FILE *f = fopen(filename, "w");
-    fprintf(f, "P3\n%d %d\n%d\n", m_width, m_height, 255);
-    for (i = 0; i < m_height; i++) {
-        for (j = 0; j < m_width; j++) {
-            cur = pixel_nbytes * ((m_height - i - 1) * m_width + j);
-            fprintf(f, "%3d %3d %3d ",m_pixels[cur],m_pixels[cur + 1],m_pixels[cur + 2]);
-        }
-        fprintf(f, "\n");
-    }
-    fclose(f);*/
+  std::cout<<"changing render\n";
+  m_render==0 ? m_render=1 : m_render=0;
 }

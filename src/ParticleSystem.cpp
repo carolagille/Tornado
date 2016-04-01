@@ -2,9 +2,7 @@
 #include "Particle.h"
 #include "TornadoCurve.h"
 #include "Tornado.h"
-#include <vector>
-#include<random>
-#include<iostream>
+
 
 ParticleSystem::ParticleSystem():
 m_offset(0),

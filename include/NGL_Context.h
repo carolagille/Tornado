@@ -2,14 +2,21 @@
 #define NGL_CONTEXT_H
 
 #include <ngl/Camera.h> // Camera class that allows to movement in openGL
-//#include <ngl/Colour.h> //class that can operare on colours add and subract them
+
 #include <ngl/Transformation.h> //includes an object that makes it easier to tranform objects
-#include <QOpenGLWindow>
+
 #include "Tornado.h"
-class NGL_Context : public QOpenGLWindow
+#include <QOpenGLWidget>
+#include <QEvent>
+class NGL_Context : public QOpenGLWidget
 {
+Q_OBJECT
+public slots:
+  void renderOnOff();
+
+
 public:
-    NGL_Context(Tornado *_tornado);
+    NGL_Context(QWidget *_parent ,Tornado *_tornado);
     ~NGL_Context();
     void initializeGL(); //creating an ngl context and window
     void paintGL(); // called whenever the window needs to be redrawn
@@ -35,6 +42,8 @@ private:
     int m_angleZ;
     int m_gridCenter;
     int m_time;
+    int m_render;
+
     GLubyte *m_pixels;
     GLuint m_textureName;
 

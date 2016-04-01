@@ -1,6 +1,5 @@
 #include "Particle.h"
-#include <iostream>
-#include <random>
+
 Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 {   //Constructor
 
@@ -9,7 +8,12 @@ Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
 
     m_rgba=(_rgba);
 
-    m_lifetime=50;
+
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> distribution(10,70);
+
+    m_lifetime= distribution(generator);
+
     m_age=0;
     m_velocity=ngl::Vec3(0.0f,0.0f,0.0f);
     m_counter=0;
