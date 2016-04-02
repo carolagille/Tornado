@@ -25,6 +25,8 @@ NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_pa
     m_time=0;
     m_render=0;
     m_pixels =(GLubyte*) malloc(4 * m_width * m_height);
+    m_particleSize=4;
+    m_particleSubSysSize=4;
 
 
 }
@@ -221,7 +223,7 @@ void NGL_Context::loadTexture()
 
 
   QImage image;
-  bool loaded=image.load("textures/point.tif");
+  bool loaded=image.load("textures/dust.png");
   if(loaded == true)
   {
     int width=image.width();
@@ -284,20 +286,21 @@ void NGL_Context::paintGL()
     //particle sys
     shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
 
-    glPointSize(5);
+    glPointSize(m_particleSubSysSize);
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getParticleSysCount());
 
     glBindVertexArray(0);
+    //case Qt::Key_P: m_tornado->particlesOnOff();break;
 
-    glPointSize(6);
+    glPointSize(m_particleSize);
     ;
     //Particles0.545f,0.513f,0.470f,1.0f
     //shader->use("nglColourShader");
-    //shader->use("MyShader");
+    shader->use("MyShader");
     shader->setRegisteredUniformFromMat4("MVP",MVP);
-    shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
+    //shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
     glBindVertexArray(m_vao2);
 
     glDrawArrays(GL_POINTS,0,m_tornado->getFullParticleCount());
@@ -361,7 +364,6 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
 
   case Qt::Key_S : saveImage(); break;
 
-  case Qt::Key_P: m_tornado->particlesOnOff();break;
   case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
   case Qt::Key_Return :
     m_render==0 ? m_render=1 : m_render=0;
@@ -412,4 +414,12 @@ void NGL_Context::renderOnOff()
 {
   std::cout<<"changing render\n";
   m_render==0 ? m_render=1 : m_render=0;
+}
+void NGL_Context::changeParticleSize(int value)
+{
+  m_particleSize=value;
+}
+void NGL_Context::changeParticleSubSys(int value)
+{
+  m_particleSubSysSize=value;
 }

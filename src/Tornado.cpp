@@ -15,7 +15,8 @@ Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
     m_maxHeight=_maxHeight;
     m_radiusChange=10.0;
     m_radiusDiffrence=2;
-    m_particleState=30;
+    m_particleCount=10;
+    m_particleState=0;
 
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -160,10 +161,10 @@ int Tornado::getFullParticleCount()
 
     return m_storeParticlePos.size();
 }
-void Tornado::particlesOnOff()
+void Tornado::particlesOnOff(bool state=0)
 {
-    if (m_particleState==0){m_particleState=30;}
-    else if (m_particleState==30){m_particleState=0;}
+    if (state==true){m_particleState=m_particleCount;}
+    else if (state==false){m_particleState=0;}
 
     for(int i =0;i<(int)m_storeParticleSysList.size();++i)
     {
@@ -171,4 +172,18 @@ void Tornado::particlesOnOff()
       m_particleSystemList[i]->switchParticles(m_particleState);
 
     }
+}
+void Tornado::changeParticleCount(int value)
+{
+  m_particleCount=value;
+  if(m_particleState>0)
+  {
+   m_particleState=m_particleCount;
+  for(int i =0;i<(int)m_storeParticleSysList.size();++i)
+  {
+
+    m_particleSystemList[i]->switchParticles(m_particleState);
+
+  }
+  }
 }

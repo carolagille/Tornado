@@ -2,10 +2,14 @@
 #define TORNADO_H
 #include "TornadoCurve.h"
 #include "ParticleSystem.h"
+#include "QObject"
 
-
-class Tornado
+class Tornado: public QObject
 {
+  Q_OBJECT
+public slots:
+  void particlesOnOff(bool state);
+  void changeParticleCount(int value);
 public:
     Tornado(int _changeRate,ngl::Vec3 _controlPoint[3], float _maxHeight);
     ~Tornado();
@@ -19,7 +23,7 @@ public:
     int getParticleSysCount();
     void changeMaxHeight(int _changeValue);
     int getFullParticleCount();
-    void particlesOnOff();
+
 
 private:
     int m_frame;
@@ -32,7 +36,7 @@ private:
     float m_radiusChange;
     int m_radiusDiffrence;
     int m_particleState;
-
+    int m_particleCount;
     std::vector<ngl::Vec3> m_storeParticlePos;
     std::vector<ngl::Vec3> m_storeParticleSysList;
 

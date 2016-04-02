@@ -11,7 +11,7 @@ void main()
 {
 
     fragColour = texture(tex,gl_PointCoord);
-    if (fragColour.r>=0.7 && fragColour.g>=0.7 && fragColour.b>=0.7)
+    if (fragColour.r>=0.9 && fragColour.g>=0.9 && fragColour.b>=0.9)
        {
         discard;
     }

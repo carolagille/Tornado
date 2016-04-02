@@ -1,5 +1,6 @@
 TARGET=Tornado
-QT+=gui opengl core
+QT+=gui opengl core\
+
 CONFIG+=c++11
 
 isEqual(QT_MAJOR_VERSION, 5) {
@@ -8,7 +9,7 @@ isEqual(QT_MAJOR_VERSION, 5) {
 }
 
 MOC_DIR=moc
-
+CONFIG-=app_bundle
 SOURCES+=$$PWD/src/TornadoCurve.cpp \
          $$PWD/src/main.cpp \
     src/Particle.cpp \

@@ -6,14 +6,16 @@
 #include <ngl/Transformation.h> //includes an object that makes it easier to tranform objects
 
 #include "Tornado.h"
+#include <QObject>
 #include <QOpenGLWidget>
-#include <QEvent>
+
 class NGL_Context : public QOpenGLWidget
 {
 Q_OBJECT
 public slots:
   void renderOnOff();
-
+  void changeParticleSize(int value);
+  void changeParticleSubSys(int value);
 
 public:
     NGL_Context(QWidget *_parent ,Tornado *_tornado);
@@ -43,6 +45,8 @@ private:
     int m_gridCenter;
     int m_time;
     int m_render;
+    int m_particleSize;
+    int m_particleSubSysSize;
 
     GLubyte *m_pixels;
     GLuint m_textureName;

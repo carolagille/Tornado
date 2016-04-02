@@ -124,8 +124,14 @@ void TornadoCurve::interpolate(int _particleTime)
 
 void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
 {
+    if((_particleTime<100 )&&(_particleTime>=1))
+    {(
+      m_resultPoint[0]= (float)m_midPoint[0]+((float)_radius * ((1-100/_particleTime)* ((float)_particleTime/m_radiusGrowth+2) + (100/_particleTime)* 5)) * (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset));
+      m_resultPoint[1]= (float)m_midPoint[1]+((float)_radius * ((1-100/_particleTime)* ((float)_particleTime/m_radiusGrowth+2) + (100/_particleTime)* 5)) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0))) + _offset);
 
-    if(_particleTime<m_timeUp)
+      m_resultPoint[2]= (float)_particleTime/m_speedUp ;
+    }
+    else if(_particleTime<m_timeUp)
       {
         interpolate(_particleTime);
         m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+2) *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
