@@ -1,8 +1,17 @@
 #ifndef TORNADOCURVE_H__
 #define TORNADOCURVE_H__
 #include <ngl/Vec3.h>
-class TornadoCurve
-{
+#include <QObject>
+class TornadoCurve:public QObject
+{Q_OBJECT
+ public slots:
+    void setHeight(float _changeValue);
+    void setControllPoint1X(int _changeValue);
+    void setControllPoint1Z(int _changeValue);
+    void setControllPoint2X(int _changeValue);
+    void setControllPoint2Z(int _changeValue);
+    void setControllPoint3X(int _changeValue);
+    void setControllPoint3Z(int _changeValue);
  public:
     TornadoCurve();
      TornadoCurve(int _changeRate, ngl::Vec3 _controlPoint[3], float _maxHeight);
@@ -14,9 +23,10 @@ class TornadoCurve
      void frameChange(int _frame);
      void changeRadiusGrowth(float _changeValue);
      void changeSpeedUp(float _changeValue);
-     void changeMaxHeight(float _changeValue);
+
      ngl::Vec3 getMidPoint();
      void changeSpeed(float _changeValue);
+
 
 private:
     float m_offset;

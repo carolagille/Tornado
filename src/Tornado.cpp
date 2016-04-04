@@ -3,9 +3,10 @@
 #include "TornadoCurve.h"
 #include <math.h>
 
-Tornado::Tornado(int _changeRate, ngl::Vec3 _controlPoint[], float _maxHeight) :
-    m_curve(_changeRate, _controlPoint,_maxHeight)
+Tornado::Tornado(float _maxHeight, TornadoCurve *_curve)
+
 {
+    m_curve=_curve;
     m_frame=0;
     m_particleSystemTreshold=20000;
     m_maxProductionRate=2;
@@ -93,7 +94,7 @@ void Tornado::update()
 
 
 
-    m_curve.frameChange(m_frame);
+    m_curve->frameChange(m_frame);
 
 
     createParticleSystem();
@@ -105,8 +106,8 @@ void Tornado::update()
 
         int particleAge = m_particleSystemList[i]->getAge();
 
-        m_curve.spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
-        ngl::Vec3 point = m_curve.getPoint();
+        m_curve->spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
+        ngl::Vec3 point = m_curve->getPoint();
         //point=ngl::Vec3(30.0f,0.0f,0.0f);
 
         m_storeParticleSysList.push_back(point);
@@ -152,9 +153,9 @@ void Tornado::save()
 
 }
 
-void Tornado::changeMaxHeight(int _changeValue)
+void Tornado::setHeight(int _changeValue)
 {
-    m_maxHeight+=_changeValue;
+    m_maxHeight=_changeValue;
 }
 int Tornado::getFullParticleCount()
 {

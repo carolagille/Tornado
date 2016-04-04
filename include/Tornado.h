@@ -10,20 +10,20 @@ class Tornado: public QObject
 public slots:
   void particlesOnOff(bool state);
   void changeParticleCount(int value);
+  void setHeight(int _changeValue);
 public:
-    Tornado(int _changeRate,ngl::Vec3 _controlPoint[3], float _maxHeight);
+    Tornado(float _maxHeight, TornadoCurve* _curve);
     ~Tornado();
     void createParticleSystem();
     void save();
     void update();
-    TornadoCurve m_curve;
+    TornadoCurve *m_curve;
     void printList();
     std::vector<ngl::Vec3> getParticleSysList();
     std::vector<ngl::Vec3> getParticleList();
     int getParticleSysCount();
-    void changeMaxHeight(int _changeValue);
-    int getFullParticleCount();
 
+    int getFullParticleCount();
 
 private:
     int m_frame;

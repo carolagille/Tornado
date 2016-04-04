@@ -189,8 +189,39 @@ void TornadoCurve::changeSpeed(float _changeValue)
     m_timeUp=m_maxHeight[2]*m_speed;
 }
 
-void TornadoCurve::changeMaxHeight(float _changeValue)
+void TornadoCurve::setHeight(float _changeValue)
 {
-    m_maxHeight[2]+=_changeValue;
+    m_maxHeight[2]=_changeValue;
     m_timeUp=m_maxHeight[2]*m_speedUp;
+}
+void TornadoCurve::setControllPoint1X(int _changeValue)
+{
+  m_controlPoints[0][0]=_changeValue;
+  std::cout<<"changing controll point\n";
+
+}
+void TornadoCurve::setControllPoint1Z(int _changeValue)
+{
+  m_controlPoints[0][1]=_changeValue;
+
+}
+void TornadoCurve::setControllPoint2X(int _changeValue)
+{
+  m_controlPoints[1][0]=_changeValue;
+
+}
+void TornadoCurve::setControllPoint2Z(int _changeValue)
+{
+  m_controlPoints[1][1]=_changeValue;
+
+}
+void TornadoCurve::setControllPoint3X(int _changeValue)
+{
+  m_controlPoints[2][0]=_changeValue;
+
+}
+void TornadoCurve::setControllPoint3Z(int _changeValue)
+{
+  m_controlPoints[2][1]=_changeValue;
+
 }

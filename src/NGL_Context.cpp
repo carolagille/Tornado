@@ -258,7 +258,7 @@ void NGL_Context::loadTexture()
 
   }
   else
-    std::cout<<"NOT LOADED\n";
+    std::cout<<"TEXURE FILE NOT LOADED\n";
 }
 
 void NGL_Context::paintGL()
@@ -351,22 +351,11 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
   // escape key to quit
   //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
   // turn on wirframe rendering
-  case Qt::Key_H : m_tornado->m_curve.changeMaxHeight(100);
-      m_tornado->changeMaxHeight(100);
+
+
       break;
   // turn off wire frame
-  case Qt::Key_1 :m_tornado->m_curve.changeSpeedUp(-0.2); break;
-  case Qt::Key_2 :m_tornado->m_curve.changeSpeedUp(0.2); break;
-  case Qt::Key_3 :m_tornado->m_curve.changeSpeed(-1); break;
-  case Qt::Key_4 :m_tornado->m_curve.changeSpeed(1); break;
 
-
-
-  case Qt::Key_S : saveImage(); break;
-
-  case Qt::Key_R : m_tornado->m_curve.changeRadiusGrowth(5);break;
-  case Qt::Key_Return :
-    m_render==0 ? m_render=1 : m_render=0;
 
     break;
   case Qt::Key_Plus : m_zoom-=50;break;
