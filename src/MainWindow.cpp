@@ -30,6 +30,15 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   connect(m_ui->Point3Z,SIGNAL(valueChanged(int)),m_curve,SLOT(setControllPoint3Z(int)));
   connect(m_ui->Height,SIGNAL(valueChanged(int)),m_curve,SLOT(setHeight(int)));
   connect(m_ui->Height,SIGNAL(valueChanged(int)),tornado1,SLOT(setHeight(int)));
+  connect(m_ui->texureSlot,SIGNAL(textChanged(QString)),m_scene,SLOT(setTexure(QString)));
+  connect(m_ui->Down,SIGNAL(clicked(bool)),m_scene,SLOT(down()));
+  connect(m_ui->Up,SIGNAL(clicked(bool)),m_scene,SLOT(up()));
+  connect(m_ui->Left,SIGNAL(clicked(bool)),m_scene,SLOT(left()));
+  connect(m_ui->Right,SIGNAL(clicked(bool)),m_scene,SLOT(right()));
+  connect(m_ui->RotateDown,SIGNAL(clicked(bool)),m_scene,SLOT(rotateDown()));
+  connect(m_ui->RotateUp,SIGNAL(clicked(bool)),m_scene,SLOT(rotateUp()));
+  connect(m_ui->zoomIn,SIGNAL(clicked(bool)),m_scene,SLOT(zoomIn()));
+  connect(m_ui->zoomOut,SIGNAL(clicked(bool)),m_scene,SLOT(zoomOut()));
 
   //remeber to connect height to tonado and tornado curve
 

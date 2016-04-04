@@ -20,6 +20,7 @@ NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_pa
 {
   setFocus();
  static const GLuint FORMAT_NBYTES = 4;
+    m_texure="textures/point.tif" ;
     m_pixels=NULL;
     m_tornado=_tornado;
     m_time=0;
@@ -223,7 +224,7 @@ void NGL_Context::loadTexture()
 
 
   QImage image;
-  bool loaded=image.load("textures/dust.png");
+  bool loaded=image.load(m_texure);
   if(loaded == true)
   {
     int width=image.width();
@@ -264,6 +265,8 @@ void NGL_Context::loadTexture()
 void NGL_Context::paintGL()
 {
 
+    //loadTexture();
+    glBindTexture(GL_TEXTURE_2D,m_textureName);
     ngl::Transformation transform;
     ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
@@ -353,30 +356,51 @@ void NGL_Context::keyPressEvent(QKeyEvent *_event)
   // turn on wirframe rendering
 
 
-      break;
-  // turn off wire frame
-
-
-    break;
   case Qt::Key_Plus : m_zoom-=50;break;
 
-  case Qt::Key_Minus : m_zoom+=50;break;
+  case Qt::Key_Minus : break;
 
-  case Qt::Key_Up : m_angleX-=5;break;
-
-  case Qt::Key_Down : m_angleX+=5;break;
-
-  case Qt::Key_Right : m_angleZ-=5;break;
-
-  case Qt::Key_Left : m_angleZ+=5;break;
-
-  case Qt::Key_D : m_gridCenter-=10;break;
-
-  case Qt::Key_U : m_gridCenter+=10;break;
   default : break;
   }
 
     update();
+}
+void NGL_Context::zoomIn()
+{
+  m_zoom-=50;
+}
+void NGL_Context::zoomOut()
+{
+  m_zoom+=50;
+}
+void NGL_Context::rotateUp()
+{
+   m_angleX-=5;
+}
+
+void NGL_Context::rotateDown()
+{
+  m_angleX+=5;
+}
+
+void NGL_Context::left()
+{
+  m_angleZ+=5;
+}
+
+void NGL_Context::right()
+{
+  m_angleZ-=5;
+}
+
+void NGL_Context::up()
+{
+  m_gridCenter+=10;
+}
+
+void NGL_Context::down()
+{
+  m_gridCenter-=10;
 }
 
 void NGL_Context::saveImage()
@@ -411,4 +435,9 @@ void NGL_Context::changeParticleSize(int value)
 void NGL_Context::changeParticleSubSys(int value)
 {
   m_particleSubSysSize=value;
+}
+void NGL_Context::setTexure(QString _texureName)
+{
+  m_texure=_texureName;
+  loadTexture();
 }

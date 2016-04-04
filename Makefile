@@ -1934,64 +1934,7 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QOpenGLWidget \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
-		ui_MainWindow.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/QVariant \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QAction \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qaction.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QCheckBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qcheckbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QDoubleSpinBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qspinbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qvalidator.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QGridLayout \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QGroupBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qframe.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QLabel \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlabel.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QLineEdit \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlineedit.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtextcursor.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtextformat.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QPushButton \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QSpacerItem \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QSpinBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h
+		ui_MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MainWindow.o src/MainWindow.cpp
 
 obj/moc_TornadoCurve.o: moc/moc_TornadoCurve.cpp 

@@ -16,6 +16,15 @@ public slots:
   void renderOnOff();
   void changeParticleSize(int value);
   void changeParticleSubSys(int value);
+  void setTexure(QString _texureName);
+  void rotateUp();
+  void rotateDown();
+  void left();
+  void right();
+  void up();
+  void down();
+  void zoomIn();
+  void zoomOut();
 
 public:
     NGL_Context(QWidget *_parent ,Tornado *_tornado);
@@ -47,6 +56,7 @@ private:
     int m_render;
     int m_particleSize;
     int m_particleSubSysSize;
+    QString m_texure;
 
     GLubyte *m_pixels;
     GLuint m_textureName;
