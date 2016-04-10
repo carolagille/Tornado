@@ -3,6 +3,7 @@
 #include "TornadoCurve.h"
 #include "ParticleSystem.h"
 #include "QObject"
+#include <memory>
 
 class Tornado: public QObject
 {
@@ -11,8 +12,10 @@ public slots:
   void particlesOnOff(bool state);
   void changeParticleCount(int value);
   void setHeight(int _changeValue);
+  void setRadiusMin(double _changeValue);
+  void setRadiusMax(double _changeValue);
 public:
-    Tornado(float _maxHeight, TornadoCurve* _curve);
+    Tornado(TornadoCurve* _curve);
     ~Tornado();
     void createParticleSystem();
     void save();
@@ -22,14 +25,14 @@ public:
     std::vector<ngl::Vec3> getParticleSysList();
     std::vector<ngl::Vec3> getParticleList();
     int getParticleSysCount();
-
+    void restart();
     int getFullParticleCount();
 
 private:
     int m_frame;
     int m_particleSystemTreshold;
     int m_particleSystemCount;
-    std::vector<ParticleSystem*> m_particleSystemList;
+    std::vector<std::unique_ptr<ParticleSystem>> m_particleSystemList;
     int m_maxProductionRate;
     float m_radiusRange[2];
     float m_maxHeight;

@@ -8,7 +8,7 @@
 #include "Tornado.h"
 #include <QObject>
 #include <QOpenGLWidget>
-
+#include <QMouseEvent>
 class NGL_Context : public QOpenGLWidget
 {
 Q_OBJECT
@@ -25,7 +25,10 @@ public slots:
   void down();
   void zoomIn();
   void zoomOut();
-
+signals:
+  void resetParticleSize(int _newValue);
+  void resetParticleSysSize(int _newValue);
+  void resetTexure(QString _newValue);
 public:
     NGL_Context(QWidget *_parent ,Tornado *_tornado);
     ~NGL_Context();
@@ -38,6 +41,11 @@ public:
     void saveImage();
     void create_ppm(char *prefix, int frame_id, unsigned int pixel_nbytes );
     void loadTexture();
+    GLubyte *m_pixels;
+    int getHeight();
+    int getWidth();
+    void restart();
+
 private:
     void resizeGL(QResizeEvent *_event); //overloaded function that is automatically called when the window is resized
     void resizeGL(int _w,int _h);
@@ -58,8 +66,18 @@ private:
     int m_particleSubSysSize;
     QString m_texure;
 
-    GLubyte *m_pixels;
+
     GLuint m_textureName;
+
+  /*void mouseMoveEvent ( QMouseEvent * _event );
+
+  void mousePressEvent (QMouseEvent *_event );
+
+  void mouseReleaseEvent (QMouseEvent *_event);
+
+  void wheelEvent(QWheelEvent *_event );*/
+
+
 
 };
 

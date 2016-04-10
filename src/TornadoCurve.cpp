@@ -27,6 +27,8 @@ TornadoCurve::TornadoCurve() //Default Constructor
     m_speedUp=5;
     m_timeUp=m_maxHeight[2]*m_speed;
     m_radiusGrowth=75.0;
+    m_pickUpTime=100;
+    m_pickUpRadius=10.0;
 }
 
 TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float _maxHeight)
@@ -57,7 +59,8 @@ TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float
     m_controlPoints[2]=ngl::Vec3(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
 
     m_radiusGrowth=55.0;
-
+    m_pickUpTime=100;
+    m_pickUpRadius=10.0;
 }
 
 
@@ -124,12 +127,34 @@ void TornadoCurve::interpolate(int _particleTime)
 
 void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
 {
-    if((_particleTime<100 )&&(_particleTime>=1))
-    {(
-      m_resultPoint[0]= (float)m_midPoint[0]+((float)_radius * ((1-100/_particleTime)* ((float)_particleTime/m_radiusGrowth+2) + (100/_particleTime)* 5)) * (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset));
-      m_resultPoint[1]= (float)m_midPoint[1]+((float)_radius * ((1-100/_particleTime)* ((float)_particleTime/m_radiusGrowth+2) + (100/_particleTime)* 5)) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0))) + _offset);
 
+    if((_particleTime<m_pickUpTime)&&(_particleTime>=1))
+    {
+      float t;
+      interpolate(_particleTime);
+      if(_particleTime==0)
+      {
+        t=0;
+
+      }
+      else
+      {
+        t=(float)_particleTime/m_pickUpTime;
+      }
+      std::cout<<t<<"\n";
+      float origin=(float)m_midPoint[0]+(float)_radius * m_pickUpRadius *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+      float normal=(float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+2) *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+
+      m_resultPoint[0]=(1-t)*origin+(t)*normal;
+      //m_resultPoint[0]=0.9*origin+0.1*normal;
+      origin=(float)m_midPoint[1]+(float)_radius * m_pickUpRadius *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+      normal=(float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+2) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+
+
+
+      m_resultPoint[1]=(1-t)*origin+(t)*normal;
       m_resultPoint[2]= (float)_particleTime/m_speedUp ;
+      printPoint();
     }
     else if(_particleTime<m_timeUp)
       {
@@ -224,4 +249,36 @@ void TornadoCurve::setControllPoint3Z(int _changeValue)
 {
   m_controlPoints[2][1]=_changeValue;
 
+}
+
+void TornadoCurve::setCurveCount(int _changeValue)
+{
+  m_curveCount=_changeValue;
+  if(m_curveCount==2)
+  {
+    emit disableCurve3(false);
+
+    emit disableCurve2(true);
+  }
+  else if(m_curveCount==1)
+  {
+    emit disableCurve3(false);
+    emit disableCurve2(false);
+  }
+  else
+  {
+    emit disableCurve3(true);
+    emit disableCurve2(true);
+  }
+
+}
+void TornadoCurve::setPickUpRadius(double _changeValue)
+{
+  m_pickUpRadius= _changeValue;
+
+}
+
+void TornadoCurve::setPickUpTime(int _changeValue)
+{
+  m_pickUpTime=_changeValue;
 }

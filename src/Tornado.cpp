@@ -3,7 +3,7 @@
 #include "TornadoCurve.h"
 #include <math.h>
 
-Tornado::Tornado(float _maxHeight, TornadoCurve *_curve)
+Tornado::Tornado(TornadoCurve *_curve)
 
 {
     m_curve=_curve;
@@ -13,10 +13,10 @@ Tornado::Tornado(float _maxHeight, TornadoCurve *_curve)
     m_particleSystemCount=0;
     m_radiusRange[0]=4.0;
     m_radiusRange[1]=8.0;
-    m_maxHeight=_maxHeight;
+    m_maxHeight=400;
     m_radiusChange=10.0;
     m_radiusDiffrence=2;
-    m_particleCount=10;
+    m_particleCount=1;
     m_particleState=0;
 
     //m_particleSystemList = std::vector<ParticleSystem*> ();
@@ -27,11 +27,7 @@ Tornado::Tornado(float _maxHeight, TornadoCurve *_curve)
 
 Tornado::~Tornado()
 {
-    std::cout<<"Destructor Tornado called"<<std::endl;
-    for(int i=0;i<(int)m_particleSystemList.size();++i)
-    {
-        delete m_particleSystemList[i];
-    }
+
 }
 
 void Tornado::createParticleSystem()
@@ -57,6 +53,8 @@ void Tornado::createParticleSystem()
 
             std::uniform_real_distribution<float> distribution(m_radiusRange[0],m_radiusRange[1]);
             float radius = distribution(gen);
+            //std::cout<<"radius"<<radius<<"\n";
+
             radius+= sqrt(pow((m_radiusDiffrence*sin((1.0/m_radiusChange)*(float)m_frame)),2));
 
             std::uniform_real_distribution<float> distribution1(0.0,10.0);
@@ -64,12 +62,9 @@ void Tornado::createParticleSystem()
 
 
 
-            ParticleSystem* PartSys=new ParticleSystem(radius,offset,m_particleState);
-            m_particleSystemList.push_back (PartSys);
+            m_particleSystemList.push_back(std::unique_ptr<ParticleSystem>(new ParticleSystem(radius,offset,m_particleState)));
 
             std::vector<ngl::Vec3> particlePoint;
-
-
 
             m_particleSystemCount++;
 
@@ -116,7 +111,6 @@ void Tornado::update()
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {
-           delete m_particleSystemList[i];
            m_particleSystemList.erase(m_particleSystemList.begin()+i);
            m_particleSystemCount--;
         }
@@ -187,4 +181,41 @@ void Tornado::changeParticleCount(int value)
 
   }
   }
+}
+
+void Tornado::setRadiusMin(double _changeValue)
+{
+  std::cout<<"changing Radius\n";
+  m_radiusRange[0]=_changeValue;
+}
+void Tornado::setRadiusMax(double _changeValue)
+{
+  m_radiusRange[1]=_changeValue;
+}
+
+void Tornado::restart()
+{
+
+  m_particleSystemList.clear();
+  m_particleCount=1;
+  m_particleSystemCount=0;
+
+  m_frame=0;
+  m_storeParticleSysList.clear();
+
+  createParticleSystem();
+  m_storeParticlePos.clear();
+
+
+  m_frame=0;
+  m_particleSystemTreshold=20000;
+  m_maxProductionRate=2;
+
+  m_radiusRange[0]=4.0;
+  m_radiusRange[1]=8.0;
+  m_maxHeight=400;
+  m_radiusChange=10.0;
+  m_radiusDiffrence=2;
+  m_particleCount=1;
+  m_particleState=0;
 }

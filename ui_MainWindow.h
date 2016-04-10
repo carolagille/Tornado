@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
@@ -23,9 +24,11 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,32 +38,33 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGridLayout *s_mainWindowGridLayout;
-    QSpacerItem *horizontalSpacer;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QFormLayout *formLayout;
     QGroupBox *groupBox;
-    QGridLayout *gridLayout_2;
-    QPushButton *m_RenderButton;
+    QVBoxLayout *verticalLayout;
     QGroupBox *groupBox_5;
     QGridLayout *gridLayout_5;
-    QDoubleSpinBox *doubleSpinBox;
-    QLabel *label_9;
+    QDoubleSpinBox *radiusMax;
     QLabel *label_11;
-    QDoubleSpinBox *doubleSpinBox_2;
+    QDoubleSpinBox *radiusMin;
+    QLabel *label_9;
     QSpinBox *Height;
     QGroupBox *groupBox_2;
     QGridLayout *gridLayout;
-    QLabel *label_2;
-    QLabel *label;
-    QSpinBox *Point1X;
-    QSpinBox *Point1Z;
-    QLabel *label_5;
-    QSpinBox *Point3X;
-    QSpinBox *Point3Z;
     QLabel *label_4;
-    QSpinBox *Point2X;
+    QLabel *label_2;
+    QSpinBox *Point1Z;
+    QSpinBox *CurveCount;
+    QLabel *label_12;
     QSpinBox *Point2Z;
+    QSpinBox *Point2X;
+    QSpinBox *Point1X;
+    QLabel *label_5;
+    QSpinBox *Point3Z;
+    QSpinBox *Point3X;
+    QLabel *label;
     QLabel *label_3;
-    QSpacerItem *verticalSpacer;
-    QPushButton *m_restartButton;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_3;
     QSpinBox *ParticleCount;
@@ -81,10 +85,20 @@ public:
     QPushButton *Right;
     QPushButton *Down;
     QPushButton *RotateDown;
-    QPushButton *RotateUp;
-    QPushButton *zoomOut;
     QPushButton *zoomIn;
+    QPushButton *zoomOut;
+    QPushButton *RotateUp;
     QSpacerItem *horizontalSpacer_4;
+    QGroupBox *groupBox_7;
+    QGridLayout *gridLayout_7;
+    QGroupBox *groupBox_8;
+    QGroupBox *groupBox_9;
+    QGroupBox *groupBox_10;
+    QSpacerItem *verticalSpacer;
+    QPushButton *m_restartButton;
+    QPushButton *m_RenderButton;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *horizontalSpacer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -92,47 +106,51 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1250, 794);
+        MainWindow->setEnabled(true);
+        MainWindow->resize(1250, 920);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         s_mainWindowGridLayout = new QGridLayout(centralwidget);
         s_mainWindowGridLayout->setObjectName(QStringLiteral("s_mainWindowGridLayout"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        s_mainWindowGridLayout->addItem(horizontalSpacer, 0, 0, 1, 1);
-
-        groupBox = new QGroupBox(centralwidget);
+        scrollArea = new QScrollArea(centralwidget);
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 442, 984));
+        formLayout = new QFormLayout(scrollAreaWidgetContents);
+        formLayout->setObjectName(QStringLiteral("formLayout"));
+        groupBox = new QGroupBox(scrollAreaWidgetContents);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        gridLayout_2 = new QGridLayout(groupBox);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        m_RenderButton = new QPushButton(groupBox);
-        m_RenderButton->setObjectName(QStringLiteral("m_RenderButton"));
-
-        gridLayout_2->addWidget(m_RenderButton, 5, 1, 1, 1);
-
+        verticalLayout = new QVBoxLayout(groupBox);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         groupBox_5 = new QGroupBox(groupBox);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
         gridLayout_5 = new QGridLayout(groupBox_5);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        doubleSpinBox = new QDoubleSpinBox(groupBox_5);
-        doubleSpinBox->setObjectName(QStringLiteral("doubleSpinBox"));
+        radiusMax = new QDoubleSpinBox(groupBox_5);
+        radiusMax->setObjectName(QStringLiteral("radiusMax"));
+        radiusMax->setMaximum(100);
+        radiusMax->setValue(8);
 
-        gridLayout_5->addWidget(doubleSpinBox, 3, 1, 1, 1);
-
-        label_9 = new QLabel(groupBox_5);
-        label_9->setObjectName(QStringLiteral("label_9"));
-
-        gridLayout_5->addWidget(label_9, 2, 0, 1, 1);
+        gridLayout_5->addWidget(radiusMax, 3, 2, 1, 1);
 
         label_11 = new QLabel(groupBox_5);
         label_11->setObjectName(QStringLiteral("label_11"));
 
         gridLayout_5->addWidget(label_11, 3, 0, 1, 1);
 
-        doubleSpinBox_2 = new QDoubleSpinBox(groupBox_5);
-        doubleSpinBox_2->setObjectName(QStringLiteral("doubleSpinBox_2"));
+        radiusMin = new QDoubleSpinBox(groupBox_5);
+        radiusMin->setObjectName(QStringLiteral("radiusMin"));
+        radiusMin->setMaximum(100);
+        radiusMin->setValue(4);
 
-        gridLayout_5->addWidget(doubleSpinBox_2, 3, 2, 1, 1);
+        gridLayout_5->addWidget(radiusMin, 3, 1, 1, 1);
+
+        label_9 = new QLabel(groupBox_5);
+        label_9->setObjectName(QStringLiteral("label_9"));
+
+        gridLayout_5->addWidget(label_9, 2, 0, 1, 1);
 
         Height = new QSpinBox(groupBox_5);
         Height->setObjectName(QStringLiteral("Height"));
@@ -146,23 +164,15 @@ public:
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         gridLayout = new QGridLayout(groupBox_2);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        label_4 = new QLabel(groupBox_2);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        gridLayout->addWidget(label_4, 4, 0, 1, 1);
+
         label_2 = new QLabel(groupBox_2);
         label_2->setObjectName(QStringLiteral("label_2"));
 
-        gridLayout->addWidget(label_2, 0, 1, 1, 1);
-
-        label = new QLabel(groupBox_2);
-        label->setObjectName(QStringLiteral("label"));
-
-        gridLayout->addWidget(label, 1, 0, 1, 1);
-
-        Point1X = new QSpinBox(groupBox_2);
-        Point1X->setObjectName(QStringLiteral("Point1X"));
-        Point1X->setMinimum(-1000);
-        Point1X->setMaximum(1000);
-        Point1X->setValue(130);
-
-        gridLayout->addWidget(Point1X, 1, 1, 1, 1);
+        gridLayout->addWidget(label_2, 2, 1, 1, 1);
 
         Point1Z = new QSpinBox(groupBox_2);
         Point1Z->setObjectName(QStringLiteral("Point1Z"));
@@ -170,41 +180,20 @@ public:
         Point1Z->setMaximum(1000);
         Point1Z->setValue(10);
 
-        gridLayout->addWidget(Point1Z, 1, 2, 1, 1);
+        gridLayout->addWidget(Point1Z, 3, 2, 1, 1);
 
-        label_5 = new QLabel(groupBox_2);
-        label_5->setObjectName(QStringLiteral("label_5"));
+        CurveCount = new QSpinBox(groupBox_2);
+        CurveCount->setObjectName(QStringLiteral("CurveCount"));
+        CurveCount->setMinimum(1);
+        CurveCount->setMaximum(3);
+        CurveCount->setValue(3);
 
-        gridLayout->addWidget(label_5, 3, 0, 1, 1);
+        gridLayout->addWidget(CurveCount, 1, 2, 1, 1);
 
-        Point3X = new QSpinBox(groupBox_2);
-        Point3X->setObjectName(QStringLiteral("Point3X"));
-        Point3X->setMinimum(-1000);
-        Point3X->setMaximum(1000);
-        Point3X->setValue(50);
+        label_12 = new QLabel(groupBox_2);
+        label_12->setObjectName(QStringLiteral("label_12"));
 
-        gridLayout->addWidget(Point3X, 3, 1, 1, 1);
-
-        Point3Z = new QSpinBox(groupBox_2);
-        Point3Z->setObjectName(QStringLiteral("Point3Z"));
-        Point3Z->setMinimum(-1000);
-        Point3Z->setMaximum(1000);
-        Point3Z->setValue(100);
-
-        gridLayout->addWidget(Point3Z, 3, 2, 1, 1);
-
-        label_4 = new QLabel(groupBox_2);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        gridLayout->addWidget(label_4, 2, 0, 1, 1);
-
-        Point2X = new QSpinBox(groupBox_2);
-        Point2X->setObjectName(QStringLiteral("Point2X"));
-        Point2X->setMinimum(-1000);
-        Point2X->setMaximum(1000);
-        Point2X->setValue(-70);
-
-        gridLayout->addWidget(Point2X, 2, 1, 1, 1);
+        gridLayout->addWidget(label_12, 1, 1, 1, 1);
 
         Point2Z = new QSpinBox(groupBox_2);
         Point2Z->setObjectName(QStringLiteral("Point2Z"));
@@ -212,27 +201,60 @@ public:
         Point2Z->setMaximum(1000);
         Point2Z->setValue(-50);
 
-        gridLayout->addWidget(Point2Z, 2, 2, 1, 1);
+        gridLayout->addWidget(Point2Z, 4, 2, 1, 1);
+
+        Point2X = new QSpinBox(groupBox_2);
+        Point2X->setObjectName(QStringLiteral("Point2X"));
+        Point2X->setMinimum(-1000);
+        Point2X->setMaximum(1000);
+        Point2X->setValue(-70);
+
+        gridLayout->addWidget(Point2X, 4, 1, 1, 1);
+
+        Point1X = new QSpinBox(groupBox_2);
+        Point1X->setObjectName(QStringLiteral("Point1X"));
+        Point1X->setMinimum(-1000);
+        Point1X->setMaximum(1000);
+        Point1X->setValue(130);
+
+        gridLayout->addWidget(Point1X, 3, 1, 1, 1);
+
+        label_5 = new QLabel(groupBox_2);
+        label_5->setObjectName(QStringLiteral("label_5"));
+
+        gridLayout->addWidget(label_5, 5, 0, 1, 1);
+
+        Point3Z = new QSpinBox(groupBox_2);
+        Point3Z->setObjectName(QStringLiteral("Point3Z"));
+        Point3Z->setMinimum(-1000);
+        Point3Z->setMaximum(1000);
+        Point3Z->setValue(100);
+
+        gridLayout->addWidget(Point3Z, 5, 2, 1, 1);
+
+        Point3X = new QSpinBox(groupBox_2);
+        Point3X->setObjectName(QStringLiteral("Point3X"));
+        Point3X->setMinimum(-1000);
+        Point3X->setMaximum(1000);
+        Point3X->setValue(50);
+
+        gridLayout->addWidget(Point3X, 5, 1, 1, 1);
+
+        label = new QLabel(groupBox_2);
+        label->setObjectName(QStringLiteral("label"));
+
+        gridLayout->addWidget(label, 3, 0, 1, 1);
 
         label_3 = new QLabel(groupBox_2);
         label_3->setObjectName(QStringLiteral("label_3"));
 
-        gridLayout->addWidget(label_3, 0, 2, 1, 1);
+        gridLayout->addWidget(label_3, 2, 2, 1, 1);
 
 
         gridLayout_5->addWidget(groupBox_2, 1, 0, 1, 3);
 
 
-        gridLayout_2->addWidget(groupBox_5, 0, 1, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_2->addItem(verticalSpacer, 4, 1, 1, 1);
-
-        m_restartButton = new QPushButton(groupBox);
-        m_restartButton->setObjectName(QStringLiteral("m_restartButton"));
-
-        gridLayout_2->addWidget(m_restartButton, 5, 2, 1, 1);
+        verticalLayout->addWidget(groupBox_5);
 
         groupBox_3 = new QGroupBox(groupBox);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
@@ -261,13 +283,13 @@ public:
 
         ParticleSystemSize = new QSpinBox(groupBox_3);
         ParticleSystemSize->setObjectName(QStringLiteral("ParticleSystemSize"));
-        ParticleSystemSize->setMinimum(1);
+        ParticleSystemSize->setMinimum(4);
         ParticleSystemSize->setMaximum(100);
 
         gridLayout_3->addWidget(ParticleSystemSize, 6, 0, 1, 1);
 
 
-        gridLayout_2->addWidget(groupBox_3, 1, 1, 1, 2);
+        verticalLayout->addWidget(groupBox_3);
 
         groupBox_4 = new QGroupBox(groupBox);
         groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
@@ -290,13 +312,13 @@ public:
 
         ParticleSize = new QSpinBox(groupBox_4);
         ParticleSize->setObjectName(QStringLiteral("ParticleSize"));
-        ParticleSize->setMinimum(1);
+        ParticleSize->setMinimum(4);
         ParticleSize->setMaximum(200);
 
         gridLayout_4->addWidget(ParticleSize, 0, 1, 1, 1);
 
 
-        gridLayout_2->addWidget(groupBox_4, 2, 1, 1, 2);
+        verticalLayout->addWidget(groupBox_4);
 
         groupBox_6 = new QGroupBox(groupBox);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
@@ -327,30 +349,78 @@ public:
 
         gridLayout_6->addWidget(RotateDown, 2, 0, 1, 1);
 
-        RotateUp = new QPushButton(groupBox_6);
-        RotateUp->setObjectName(QStringLiteral("RotateUp"));
+        zoomIn = new QPushButton(groupBox_6);
+        zoomIn->setObjectName(QStringLiteral("zoomIn"));
 
-        gridLayout_6->addWidget(RotateUp, 2, 3, 1, 1);
+        gridLayout_6->addWidget(zoomIn, 0, 3, 1, 1);
 
         zoomOut = new QPushButton(groupBox_6);
         zoomOut->setObjectName(QStringLiteral("zoomOut"));
 
         gridLayout_6->addWidget(zoomOut, 0, 0, 1, 1);
 
-        zoomIn = new QPushButton(groupBox_6);
-        zoomIn->setObjectName(QStringLiteral("zoomIn"));
+        RotateUp = new QPushButton(groupBox_6);
+        RotateUp->setObjectName(QStringLiteral("RotateUp"));
 
-        gridLayout_6->addWidget(zoomIn, 0, 3, 1, 1);
+        gridLayout_6->addWidget(RotateUp, 2, 3, 1, 1);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_6->addItem(horizontalSpacer_4, 1, 2, 1, 1);
 
 
-        gridLayout_2->addWidget(groupBox_6, 3, 1, 1, 2);
+        verticalLayout->addWidget(groupBox_6);
+
+        groupBox_7 = new QGroupBox(groupBox);
+        groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
+        gridLayout_7 = new QGridLayout(groupBox_7);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        groupBox_8 = new QGroupBox(groupBox_7);
+        groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
+
+        gridLayout_7->addWidget(groupBox_8, 0, 0, 1, 1);
+
+        groupBox_9 = new QGroupBox(groupBox_7);
+        groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
+
+        gridLayout_7->addWidget(groupBox_9, 0, 1, 1, 1);
+
+        groupBox_10 = new QGroupBox(groupBox_7);
+        groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
+
+        gridLayout_7->addWidget(groupBox_10, 0, 2, 1, 1);
 
 
-        s_mainWindowGridLayout->addWidget(groupBox, 0, 1, 1, 1);
+        verticalLayout->addWidget(groupBox_7);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+        m_restartButton = new QPushButton(groupBox);
+        m_restartButton->setObjectName(QStringLiteral("m_restartButton"));
+
+        verticalLayout->addWidget(m_restartButton);
+
+        m_RenderButton = new QPushButton(groupBox);
+        m_RenderButton->setObjectName(QStringLiteral("m_RenderButton"));
+
+        verticalLayout->addWidget(m_RenderButton);
+
+
+        formLayout->setWidget(1, QFormLayout::LabelRole, groupBox);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        s_mainWindowGridLayout->addWidget(scrollArea, 0, 2, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        s_mainWindowGridLayout->addItem(horizontalSpacer_2, 0, 1, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        s_mainWindowGridLayout->addItem(horizontalSpacer, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -370,17 +440,16 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "GroupBox", 0));
-        m_RenderButton->setText(QApplication::translate("MainWindow", "Render", 0));
         groupBox_5->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
-        label_9->setText(QApplication::translate("MainWindow", "Tornado Height", 0));
         label_11->setText(QApplication::translate("MainWindow", "Radius Range", 0));
+        label_9->setText(QApplication::translate("MainWindow", "Tornado Height", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "ControlPoints", 0));
-        label_2->setText(QApplication::translate("MainWindow", "X", 0));
-        label->setText(QApplication::translate("MainWindow", "Point1", 0));
-        label_5->setText(QApplication::translate("MainWindow", "Point3", 0));
         label_4->setText(QApplication::translate("MainWindow", "Point2", 0));
+        label_2->setText(QApplication::translate("MainWindow", "X", 0));
+        label_12->setText(QApplication::translate("MainWindow", "Curves", 0));
+        label_5->setText(QApplication::translate("MainWindow", "Point3", 0));
+        label->setText(QApplication::translate("MainWindow", "Point1", 0));
         label_3->setText(QApplication::translate("MainWindow", "Y", 0));
-        m_restartButton->setText(QApplication::translate("MainWindow", "Restart", 0));
         groupBox_3->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
         particleOnOff->setText(QApplication::translate("MainWindow", "Particles", 0));
         label_6->setText(QApplication::translate("MainWindow", "Particle Count", 0));
@@ -395,9 +464,15 @@ public:
         Right->setText(QApplication::translate("MainWindow", "Right", 0));
         Down->setText(QApplication::translate("MainWindow", "Down", 0));
         RotateDown->setText(QApplication::translate("MainWindow", "Rotate Down", 0));
-        RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
-        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
         zoomIn->setText(QApplication::translate("MainWindow", "Zoom In", 0));
+        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
+        RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
+        groupBox_7->setTitle(QApplication::translate("MainWindow", "Advanced Controlls", 0));
+        groupBox_8->setTitle(QApplication::translate("MainWindow", "Particle", 0));
+        groupBox_9->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
+        groupBox_10->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
+        m_restartButton->setText(QApplication::translate("MainWindow", "Restart", 0));
+        m_RenderButton->setText(QApplication::translate("MainWindow", "Render", 0));
     } // retranslateUi
 
 };

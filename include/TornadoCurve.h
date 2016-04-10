@@ -12,6 +12,13 @@ class TornadoCurve:public QObject
     void setControllPoint2Z(int _changeValue);
     void setControllPoint3X(int _changeValue);
     void setControllPoint3Z(int _changeValue);
+    void setCurveCount(int _changeValue);
+    void setPickUpRadius(double _changeValue);
+    void setPickUpTime(int _changeValue);
+ signals:
+    void disableCurve2(bool _state);
+    void disableCurve3(bool _state);
+
  public:
     TornadoCurve();
      TornadoCurve(int _changeRate, ngl::Vec3 _controlPoint[3], float _maxHeight);
@@ -23,7 +30,7 @@ class TornadoCurve:public QObject
      void frameChange(int _frame);
      void changeRadiusGrowth(float _changeValue);
      void changeSpeedUp(float _changeValue);
-
+     void restart();
      ngl::Vec3 getMidPoint();
      void changeSpeed(float _changeValue);
 
@@ -44,6 +51,8 @@ private:
     float m_speed;
     float m_radiusGrowth;
     float m_speedUp;
+    int m_pickUpTime;
+    float m_pickUpRadius;
 };
 
 

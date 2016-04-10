@@ -10,11 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   ngl::Vec3 control3(50.0f,100.0f,100.0f);
   ngl::Vec3 controlpoints[3]={control1,control2,control3};
   m_curve= new TornadoCurve(300,controlpoints,400);
-  Tornado *tornado1 = new Tornado(400,m_curve);
+  Tornado *tornado1 = new Tornado(m_curve);
 
 
   m_scene=new NGL_Context(this, tornado1);
-  m_ui->s_mainWindowGridLayout->addWidget(m_scene,0,0,1,1);
+  m_ui->s_mainWindowGridLayout->addWidget(m_scene,0,0,1,2);
+  QRect size=m_ui->s_mainWindowGridLayout->cellRect(0,0);
+  std::cout<<size.height()<<","<<size.width()<<"\n";
+
 
   connect(m_ui->m_RenderButton,SIGNAL(clicked()),m_scene,SLOT(renderOnOff()));
   connect(m_ui->m_restartButton,SIGNAL(clicked()),this,SLOT(restart()));
@@ -39,7 +42,18 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   connect(m_ui->RotateUp,SIGNAL(clicked(bool)),m_scene,SLOT(rotateUp()));
   connect(m_ui->zoomIn,SIGNAL(clicked(bool)),m_scene,SLOT(zoomIn()));
   connect(m_ui->zoomOut,SIGNAL(clicked(bool)),m_scene,SLOT(zoomOut()));
+  connect(m_ui->CurveCount,SIGNAL(valueChanged(int)),tornado1->m_curve,SLOT(setCurveCount(int)));
+  connect(m_ui->radiusMin,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMin(double)));
+  connect(m_ui->radiusMax,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMax(double)));
 
+  connect(m_scene,SIGNAL(resetParticleSize(int)),m_ui->ParticleSize,SLOT(setValue(int)));
+  connect(m_scene,SIGNAL(resetParticleSysSize(int)),m_ui->ParticleSystemSize,SLOT(setValue(int)));
+  connect(m_scene,SIGNAL(resetTexure(QString)),m_ui->texureSlot,SLOT(setText(QString)));
+
+  connect(tornado1->m_curve,SIGNAL(disableCurve2(bool)),m_ui->Point2X,SLOT(setEnabled(bool)));
+  connect(tornado1->m_curve,SIGNAL(disableCurve2(bool)),m_ui->Point2Z,SLOT(setEnabled(bool)));
+  connect(tornado1->m_curve,SIGNAL(disableCurve3(bool)),m_ui->Point3X,SLOT(setEnabled(bool)));
+  connect(tornado1->m_curve,SIGNAL(disableCurve3(bool)),m_ui->Point3Z,SLOT(setEnabled(bool)));
   //remeber to connect height to tonado and tornado curve
 
 }
@@ -51,19 +65,27 @@ MainWindow::~MainWindow()
   delete m_curve;
 }
 void MainWindow::restart()
-{
-
-  delete m_scene;
-  delete m_curve;
-
-  ngl::Vec3 control1(130.0f,+10.0f,100.0f);
+{ ngl::Vec3 control1(130.0f,+10.0f,100.0f);
   ngl::Vec3 control2(-70.0f,-50.0f,100.0f);
   ngl::Vec3 control3(50.0f,100.0f,100.0f);
-  ngl::Vec3 controlpoints[3]={control1,control2,control3};
-  m_curve= new TornadoCurve(300,controlpoints,400);
-  Tornado *tornado1 = new Tornado(400,m_curve);
+
+  m_scene->restart();
 
 
-  m_scene=new NGL_Context(this, tornado1);
-  m_ui->s_mainWindowGridLayout->addWidget(m_scene,0,0,1,1);
+  //ngl::Vec3 controlpoints[3]={control1,control2,control3};
+ // m_curve= new TornadoCurve(300,controlpoints,400);
+
+
+
 }
+
+
+void MainWindow::saveImage()
+{ //std::cout<<"Calling save image\n";
+  GLuint buffer;
+  glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
+  glReadPixels(0, 0, m_scene->getWidth(), m_scene->getHeight(), GL_RGB, GL_UNSIGNED_BYTE, m_scene->m_pixels);
+
+}
+
+

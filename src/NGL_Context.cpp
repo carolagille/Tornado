@@ -1,4 +1,4 @@
-#include <QMouseEvent>
+
 #include <QGuiApplication> //includes all the event inter face related stuff
 #include "NGL_Context.h"
 #include "Tornado.h"
@@ -11,15 +11,13 @@
 #include <Magick++.h>
 #include <sstream>
 
-
-
-
-
+#include "MainWindow.h"
 
 NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_parent)
 {
-  setFocus();
- static const GLuint FORMAT_NBYTES = 4;
+    setFocus();
+    this->resize(_parent->size());
+    static const GLuint FORMAT_NBYTES = 4;
     m_texure="textures/point.tif" ;
     m_pixels=NULL;
     m_tornado=_tornado;
@@ -123,6 +121,7 @@ void NGL_Context::updatePoints()
 
 void NGL_Context::resizeGL(QResizeEvent *_event)
 {
+
     m_width=_event->size().width()*devicePixelRatio();
     m_height=_event->size().height()*devicePixelRatio();
     m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
@@ -132,6 +131,7 @@ void NGL_Context::resizeGL(int _w, int _h)
 {
     m_width=_w*devicePixelRatio();
     m_height=_h*devicePixelRatio();
+    //std::cout<<"height:"<<m_height<<"width:"<<m_width<<"\n";
     m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
 }
 
@@ -404,8 +404,13 @@ void NGL_Context::down()
 }
 
 void NGL_Context::saveImage()
-{   std::cout<<"Calling save image\n";
-    glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
+{
+
+    ((MainWindow*)parentWidget())->saveImage();
+    //GLuint buffer;
+
+    //glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
+    //glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
     Magick::Blob b( m_pixels, 3 * m_width * m_height );
     Magick::Image i( m_width,
                      m_height,
@@ -441,3 +446,55 @@ void NGL_Context::setTexure(QString _texureName)
   m_texure=_texureName;
   loadTexture();
 }
+
+int NGL_Context::getHeight()
+{
+  return m_height;
+}
+
+int NGL_Context::getWidth()
+{
+  return m_width;
+}
+void NGL_Context::restart()
+{
+  m_zoom=500;
+  m_angleX=0;
+  m_angleZ=0;
+  m_gridCenter=100;
+
+  ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
+  ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
+  // store to vp for later use
+  m_vp=view*perspective;
+  //.m_vao.
+  //GLuint m_vao2;
+
+
+  m_time=0;
+  m_render=0;
+  m_particleSize=4;
+  emit resetParticleSize(m_particleSize);
+  m_particleSubSysSize=4;
+  emit resetParticleSysSize(m_particleSubSysSize);
+  m_texure="textures/point.tif" ;
+  emit resetTexure(m_texure);
+
+  m_tornado->restart();
+
+
+}
+/*void NGL_Context::wheelEvent(QWheelEvent *_event)
+{
+
+  if(_event->delta() > 0)
+  {
+   m_zoom+=50;
+  }
+  else if(_event->delta() <0 )
+  {
+    m_zoom-=50;
+  }
+  update();
+}
+*/
