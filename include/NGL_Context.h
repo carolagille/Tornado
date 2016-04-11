@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QOpenGLWidget>
 #include <QMouseEvent>
+#include <ngl/Text.h>
 class NGL_Context : public QOpenGLWidget
 {
 Q_OBJECT
@@ -29,6 +30,8 @@ signals:
   void resetParticleSize(int _newValue);
   void resetParticleSysSize(int _newValue);
   void resetTexure(QString _newValue);
+private slots:
+  void writeImage();
 public:
     NGL_Context(QWidget *_parent ,Tornado *_tornado);
     ~NGL_Context();
@@ -65,7 +68,7 @@ private:
     int m_particleSize;
     int m_particleSubSysSize;
     QString m_texure;
-
+    std::unique_ptr<ngl::Text> m_text;
 
     GLuint m_textureName;
 

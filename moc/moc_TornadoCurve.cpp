@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TornadoCurve_t {
-    QByteArrayData data[16];
-    char stringdata0[230];
+    QByteArrayData data[17];
+    char stringdata0[244];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,7 +44,8 @@ QT_MOC_LITERAL(11, 148, 18), // "setControllPoint3X"
 QT_MOC_LITERAL(12, 167, 18), // "setControllPoint3Z"
 QT_MOC_LITERAL(13, 186, 13), // "setCurveCount"
 QT_MOC_LITERAL(14, 200, 15), // "setPickUpRadius"
-QT_MOC_LITERAL(15, 216, 13) // "setPickUpTime"
+QT_MOC_LITERAL(15, 216, 13), // "setPickUpTime"
+QT_MOC_LITERAL(16, 230, 13) // "setStartValue"
 
     },
     "TornadoCurve\0disableCurve2\0\0_state\0"
@@ -53,7 +54,7 @@ QT_MOC_LITERAL(15, 216, 13) // "setPickUpTime"
     "setControllPoint2X\0setControllPoint2Z\0"
     "setControllPoint3X\0setControllPoint3Z\0"
     "setCurveCount\0setPickUpRadius\0"
-    "setPickUpTime"
+    "setPickUpTime\0setStartValue"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +64,7 @@ static const uint qt_meta_data_TornadoCurve[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,27 +72,28 @@ static const uint qt_meta_data_TornadoCurve[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   74,    2, 0x06 /* Public */,
-       4,    1,   77,    2, 0x06 /* Public */,
+       1,    1,   79,    2, 0x06 /* Public */,
+       4,    1,   82,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   80,    2, 0x0a /* Public */,
-       7,    1,   83,    2, 0x0a /* Public */,
-       8,    1,   86,    2, 0x0a /* Public */,
-       9,    1,   89,    2, 0x0a /* Public */,
-      10,    1,   92,    2, 0x0a /* Public */,
-      11,    1,   95,    2, 0x0a /* Public */,
-      12,    1,   98,    2, 0x0a /* Public */,
-      13,    1,  101,    2, 0x0a /* Public */,
-      14,    1,  104,    2, 0x0a /* Public */,
-      15,    1,  107,    2, 0x0a /* Public */,
+       5,    1,   85,    2, 0x0a /* Public */,
+       7,    1,   88,    2, 0x0a /* Public */,
+       8,    1,   91,    2, 0x0a /* Public */,
+       9,    1,   94,    2, 0x0a /* Public */,
+      10,    1,   97,    2, 0x0a /* Public */,
+      11,    1,  100,    2, 0x0a /* Public */,
+      12,    1,  103,    2, 0x0a /* Public */,
+      13,    1,  106,    2, 0x0a /* Public */,
+      14,    1,  109,    2, 0x0a /* Public */,
+      15,    1,  112,    2, 0x0a /* Public */,
+      16,    1,  115,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    3,
     QMetaType::Void, QMetaType::Bool,    3,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Float,    6,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
@@ -100,6 +102,7 @@ static const uint qt_meta_data_TornadoCurve[] = {
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Double,    6,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int,    6,
 
        0        // eod
@@ -113,7 +116,7 @@ void TornadoCurve::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->disableCurve2((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 1: _t->disableCurve3((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 2: _t->setHeight((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 2: _t->setHeight((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->setControllPoint1X((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->setControllPoint1Z((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->setControllPoint2X((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -123,6 +126,7 @@ void TornadoCurve::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->setCurveCount((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->setPickUpRadius((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 11: _t->setPickUpTime((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->setStartValue((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -168,13 +172,13 @@ int TornadoCurve::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

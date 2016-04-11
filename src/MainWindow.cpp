@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   m_scene=new NGL_Context(this, tornado1);
   m_ui->s_mainWindowGridLayout->addWidget(m_scene,0,0,1,2);
   QRect size=m_ui->s_mainWindowGridLayout->cellRect(0,0);
-  std::cout<<size.height()<<","<<size.width()<<"\n";
+
 
 
   connect(m_ui->m_RenderButton,SIGNAL(clicked()),m_scene,SLOT(renderOnOff()));
@@ -42,13 +42,19 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   connect(m_ui->RotateUp,SIGNAL(clicked(bool)),m_scene,SLOT(rotateUp()));
   connect(m_ui->zoomIn,SIGNAL(clicked(bool)),m_scene,SLOT(zoomIn()));
   connect(m_ui->zoomOut,SIGNAL(clicked(bool)),m_scene,SLOT(zoomOut()));
-  connect(m_ui->CurveCount,SIGNAL(valueChanged(int)),tornado1->m_curve,SLOT(setCurveCount(int)));
+  connect(m_ui->CurveCount,SIGNAL(valueChanged(int)),m_curve,SLOT(setCurveCount(int)));
   connect(m_ui->radiusMin,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMin(double)));
   connect(m_ui->radiusMax,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMax(double)));
-
+  connect(m_ui->PickUpTime,SIGNAL(valueChanged(int)),m_curve,SLOT(setPickUpTime(int)));
+  connect(m_ui->PickUpRadius,SIGNAL(valueChanged(double)),m_curve,SLOT(setPickUpRadius(double)));
+  connect(m_ui->startValue,SIGNAL(valueChanged(int)),m_curve,SLOT(setStartValue(int)));
+  connect(m_ui->CloudHeight,SIGNAL(valueChanged(int)),tornado1,SLOT(setCloudHeight(int)));
+  connect(m_ui->MovementSelection,SIGNAL(activated(int)),tornado1,SLOT(setParticleMoveState(int)));
   connect(m_scene,SIGNAL(resetParticleSize(int)),m_ui->ParticleSize,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetParticleSysSize(int)),m_ui->ParticleSystemSize,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetTexure(QString)),m_ui->texureSlot,SLOT(setText(QString)));
+
+
 
   connect(tornado1->m_curve,SIGNAL(disableCurve2(bool)),m_ui->Point2X,SLOT(setEnabled(bool)));
   connect(tornado1->m_curve,SIGNAL(disableCurve2(bool)),m_ui->Point2Z,SLOT(setEnabled(bool)));
@@ -82,9 +88,7 @@ void MainWindow::restart()
 
 void MainWindow::saveImage()
 { //std::cout<<"Calling save image\n";
-  GLuint buffer;
-  glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
-  glReadPixels(0, 0, m_scene->getWidth(), m_scene->getHeight(), GL_RGB, GL_UNSIGNED_BYTE, m_scene->m_pixels);
+
 
 }
 

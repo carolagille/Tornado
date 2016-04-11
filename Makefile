@@ -808,7 +808,7 @@ moc/moc_NGL_Context.cpp: /home/i7679783/NGL/include/ngl/Camera.h \
 		/home/i7679783/NGL/include/ngl/Plane.h \
 		/home/i7679783/NGL/include/ngl/AABB.h \
 		/home/i7679783/NGL/include/ngl/BBox.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7679783/NGL/include/ngl/AbstractVAO.h \
 		/home/i7679783/NGL/include/ngl/Transformation.h \
 		/home/i7679783/NGL/include/ngl/NGLassert.h \
 		include/Tornado.h \
@@ -954,7 +954,7 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/home/i7679783/NGL/include/ngl/Plane.h \
 		/home/i7679783/NGL/include/ngl/AABB.h \
 		/home/i7679783/NGL/include/ngl/BBox.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7679783/NGL/include/ngl/AbstractVAO.h \
 		/home/i7679783/NGL/include/ngl/Transformation.h \
 		/home/i7679783/NGL/include/ngl/NGLassert.h \
 		include/Tornado.h \
@@ -1248,7 +1248,7 @@ obj/main.o: src/main.cpp include/TornadoCurve.h \
 		/home/i7679783/NGL/include/ngl/Plane.h \
 		/home/i7679783/NGL/include/ngl/AABB.h \
 		/home/i7679783/NGL/include/ngl/BBox.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7679783/NGL/include/ngl/AbstractVAO.h \
 		/home/i7679783/NGL/include/ngl/Transformation.h \
 		/home/i7679783/NGL/include/ngl/NGLassert.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QOpenGLWidget \
@@ -1771,7 +1771,7 @@ obj/NGL_Context.o: src/NGL_Context.cpp /opt/qt/5.5/gcc_64/include/QtGui/QGuiAppl
 		/home/i7679783/NGL/include/ngl/Plane.h \
 		/home/i7679783/NGL/include/ngl/AABB.h \
 		/home/i7679783/NGL/include/ngl/BBox.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7679783/NGL/include/ngl/AbstractVAO.h \
 		/home/i7679783/NGL/include/ngl/Transformation.h \
 		/home/i7679783/NGL/include/ngl/NGLassert.h \
 		include/Tornado.h \
@@ -1786,12 +1786,14 @@ obj/NGL_Context.o: src/NGL_Context.cpp /opt/qt/5.5/gcc_64/include/QtGui/QGuiAppl
 		/home/i7679783/NGL/include/ngl/NGLInit.h \
 		/home/i7679783/NGL/include/ngl/Singleton.h \
 		/home/i7679783/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7679783/NGL/include/ngl/ShaderLib.h \
 		/home/i7679783/NGL/include/ngl/Colour.h \
 		/home/i7679783/NGL/include/ngl/Shader.h \
 		/home/i7679783/NGL/include/ngl/ShaderProgram.h \
 		/home/i7679783/NGL/include/ngl/Util.h \
 		/home/i7679783/NGL/include/ngl/Mat3.h \
+		/home/i7679783/NGL/include/ngl/Image.h \
 		include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1931,7 +1933,7 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/home/i7679783/NGL/include/ngl/Plane.h \
 		/home/i7679783/NGL/include/ngl/AABB.h \
 		/home/i7679783/NGL/include/ngl/BBox.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7679783/NGL/include/ngl/AbstractVAO.h \
 		/home/i7679783/NGL/include/ngl/Transformation.h \
 		/home/i7679783/NGL/include/ngl/NGLassert.h \
 		include/Tornado.h \
@@ -1943,70 +1945,7 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
-		ui_MainWindow.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/QVariant \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QAction \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qaction.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QCheckBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qcheckbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QDoubleSpinBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qspinbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qvalidator.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QFormLayout \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qformlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QLayout \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QGridLayout \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QGroupBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qframe.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QLabel \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlabel.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QLineEdit \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlineedit.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtextcursor.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtextformat.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QPushButton \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QScrollArea \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qscrollarea.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QSpacerItem \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QSpinBox \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QVBoxLayout
+		ui_MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MainWindow.o src/MainWindow.cpp
 
 obj/moc_TornadoCurve.o: moc/moc_TornadoCurve.cpp 

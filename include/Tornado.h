@@ -14,6 +14,9 @@ public slots:
   void setHeight(int _changeValue);
   void setRadiusMin(double _changeValue);
   void setRadiusMax(double _changeValue);
+  void setCloudHeight(int _value);
+  void setParticleMoveState(int _changeValue);
+
 public:
     Tornado(TornadoCurve* _curve);
     ~Tornado();
@@ -42,6 +45,7 @@ private:
     int m_particleCount;
     std::vector<ngl::Vec3> m_storeParticlePos;
     std::vector<ngl::Vec3> m_storeParticleSysList;
+    int m_particleMoveState;
 
 
 

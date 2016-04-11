@@ -1,16 +1,16 @@
 #include "Particle.h"
 
-Particle::Particle(ngl::Vec4 _rgba, ngl::Vec3 _center, float _radius)
+Particle::Particle( ngl::Vec3 _center, float _radius,ngl::Vec2 _lifeRange)
 {   //Constructor
 
     //std::cout<<"Particle created\n";
     m_position=ngl::Vec3(0.0f,0.0f,0.0f);
 
-    m_rgba=(_rgba);
+
 
 
     std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(10,70);
+    std::uniform_int_distribution<int> distribution(_lifeRange[0],_lifeRange[1]);
 
     m_lifetime= distribution(generator);
 
@@ -27,32 +27,17 @@ Particle::~Particle()
 }
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
 {
-    if (m_counter<=0)
-    {
-        m_newPosition=place(_newCenter,_boundingBox);
-        m_counter=6;
-    }
-    else if (m_counter>0){m_counter--;}
-    //m_velocity.normalize();
-    ngl::Vec3 vecToNewPos = (1.0/(float)m_counter)*(m_newPosition-m_position);
-    vecToNewPos = (m_newPosition-m_position);
-    //vecToNewPos.normalize();
-    m_velocity=0.2*(_newCenter-_center)+vecToNewPos+(1.0-(1/(float)m_counter))*m_velocity;
-    m_velocity=vecToNewPos+(1.0-(1/(float)m_counter))*m_velocity;
-    m_velocity.normalize();
-    m_position+=m_velocity;
-    ngl::Vec3 distance(_newCenter-m_position);
-    /*if (distance.length()>=_boundingBox)
-    {
-        distance.normalize();
-        m_position+=distance;
-    }
-*/
+
+
+    m_position=place(_newCenter,_boundingBox);
+
+     m_age++;
 
 }
 
 void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,ngl::Vec3 _tornadoCenter)
 {
+
     //This function calculates the movement of one particle by testing its position relative to the particle System center and
     //the tornado center and calculates the according movment
     /*In case the particle is out side of the bounding box it is attracted to the center of the Particle system

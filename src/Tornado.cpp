@@ -18,6 +18,7 @@ Tornado::Tornado(TornadoCurve *_curve)
     m_radiusDiffrence=2;
     m_particleCount=1;
     m_particleState=0;
+    m_particleMoveState=0;
 
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -107,7 +108,7 @@ void Tornado::update()
 
         m_storeParticleSysList.push_back(point);
         //m_storeParticleSysList.push_back((10.0f,10.0f,10.0f));
-        m_storeParticlePos = m_particleSystemList[i]->move(point,m_storeParticlePos,center);
+        m_storeParticlePos = m_particleSystemList[i]->move(point,m_storeParticlePos,center,m_particleMoveState);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {
@@ -191,6 +192,27 @@ void Tornado::setRadiusMin(double _changeValue)
 void Tornado::setRadiusMax(double _changeValue)
 {
   m_radiusRange[1]=_changeValue;
+}
+
+
+
+void Tornado::setCloudHeight(int _value)
+{
+
+  for(int i =0;i<(int)m_particleSystemList.size();++i)
+  {
+
+    m_particleSystemList[i]->setCloudHeight(_value);
+
+  }
+
+}
+
+void Tornado::setParticleMoveState(int _changeValue)
+{
+  std::cout<<_changeValue<<"\n";
+
+  m_particleMoveState=_changeValue;
 }
 
 void Tornado::restart()

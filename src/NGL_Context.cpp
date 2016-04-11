@@ -10,13 +10,14 @@
 #include <fstream>
 #include <Magick++.h>
 #include <sstream>
-
+#include <ngl/Image.h>
 #include "MainWindow.h"
-
+#include <QImage>
 NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_parent)
 {
     setFocus();
     this->resize(_parent->size());
+    connect(this,SIGNAL(frameSwapped()),this,SLOT(writeImage()));
     static const GLuint FORMAT_NBYTES = 4;
     m_texure="textures/point.tif" ;
     m_pixels=NULL;
@@ -125,6 +126,7 @@ void NGL_Context::resizeGL(QResizeEvent *_event)
     m_width=_event->size().width()*devicePixelRatio();
     m_height=_event->size().height()*devicePixelRatio();
     m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
+    m_text->setScreenSize(width(),height());
 }
 
 void NGL_Context::resizeGL(int _w, int _h)
@@ -133,6 +135,7 @@ void NGL_Context::resizeGL(int _w, int _h)
     m_height=_h*devicePixelRatio();
     //std::cout<<"height:"<<m_height<<"width:"<<m_width<<"\n";
     m_pixels =(GLubyte*) realloc(m_pixels,4 * m_width * m_height);
+    m_text->setScreenSize(width(),height());
 }
 
 void NGL_Context::initializeGL()
@@ -145,7 +148,7 @@ void NGL_Context::initializeGL()
 
     ngl::NGLInit::instance(); //creates one instance of init
     //to prevent you from creating lot of bog instances of smomething that just needs to be used once
-    glClearColor(1.0f,1.0f,1.0f,1.0f); //white background
+    glClearColor(0.0f,0.0f,0.0f,0.0f); //white background
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
@@ -204,7 +207,10 @@ void NGL_Context::initializeGL()
 
     //creating a point??
     createPoints();
-
+    shader->setShaderParam4f("Colour",1,1,1,1);
+    m_text.reset( new ngl::Text(QFont("Courier",18)));
+    m_text->setColour(1,1,0);
+    m_text->setScreenSize(width(),height());
     glPointSize(5);
     startTimer(20);
  }
@@ -318,7 +324,7 @@ void NGL_Context::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
     //change colour to black
     shader->use("nglColourShader");
-    shader->setShaderParam4f("Colour",0.0f,0.0f,0.0f,1.0f);
+    shader->setShaderParam4f("Colour",1.0f,1.0f,1.0f,1.0f);
 
     transformGrid.setRotation(90+m_angleX,0,m_angleZ);
     transformGrid.setScale(20,20,20);
@@ -329,6 +335,12 @@ void NGL_Context::paintGL()
     prim->draw("plane");
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 //End Grid
+
+    m_text->setColour(1,0,0);
+    // now render the text using the QT renderText helper function
+    QString text=QString("frame %1").arg(m_time);
+    m_text->renderText(m_width-160,(m_height-25),text);
+
     if(m_render)
     {
       saveImage();
@@ -404,24 +416,36 @@ void NGL_Context::down()
 }
 
 void NGL_Context::saveImage()
-{
+{//boost format
+    std::ostringstream filename;
 
-    ((MainWindow*)parentWidget())->saveImage();
+
+
+    filename<<"renders/tornado"<<m_time;//<<".jpg";
+    QString qfilename= QString::fromStdString(filename.str());
+    std::cout<<"working\n";
+    QImage image=QOpenGLWidget::grabFramebuffer();
+
+    image.save(qfilename);
+
+
+//    glBindFramebuffer(GL_FRAMEBUFFER,defaultFramebufferObject());
+//    ngl::Image::saveFrameBufferToFile(filename.str(),0,0,m_width,m_height,ngl::Image::ImageModes::RGB);
+
+    //((MainWindow*)parentWidget())->saveImage();
     //GLuint buffer;
 
     //glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
-    //glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
-    Magick::Blob b( m_pixels, 3 * m_width * m_height );
-    Magick::Image i( m_width,
-                     m_height,
-                     "RGB",
-                     Magick::CharPixel,
-                     m_pixels);
+//    //glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
+//    Magick::Blob b( m_pixels, 3 * m_width * m_height );
+//    Magick::Image i( m_width,
+//                     m_height,
+//                     "RGB",
+//                     Magick::CharPixel,
+//                     m_pixels);
 
-    std::ostringstream filename;
-    filename<<"renders/tornado"<<m_time<<".jpg";
-
-    i.write(filename.str());
+//
+//    i.write(filename.str());
 
 
 
@@ -430,7 +454,7 @@ void NGL_Context::saveImage()
 
 void NGL_Context::renderOnOff()
 {
-  std::cout<<"changing render\n";
+
   m_render==0 ? m_render=1 : m_render=0;
 }
 void NGL_Context::changeParticleSize(int value)
@@ -456,6 +480,10 @@ int NGL_Context::getWidth()
 {
   return m_width;
 }
+
+
+
+
 void NGL_Context::restart()
 {
   m_zoom=500;
@@ -484,6 +512,19 @@ void NGL_Context::restart()
 
 
 }
+
+void NGL_Context::writeImage()
+
+{
+    QImage image=QOpenGLWidget::grabFramebuffer();
+
+    image.save("image.png");
+
+}
+
+
+
+
 /*void NGL_Context::wheelEvent(QWheelEvent *_event)
 {
 

@@ -5,7 +5,7 @@
 class TornadoCurve:public QObject
 {Q_OBJECT
  public slots:
-    void setHeight(float _changeValue);
+    void setHeight(int _changeValue);
     void setControllPoint1X(int _changeValue);
     void setControllPoint1Z(int _changeValue);
     void setControllPoint2X(int _changeValue);
@@ -15,6 +15,8 @@ class TornadoCurve:public QObject
     void setCurveCount(int _changeValue);
     void setPickUpRadius(double _changeValue);
     void setPickUpTime(int _changeValue);
+    void setStartValue(int _changeValue);
+
  signals:
     void disableCurve2(bool _state);
     void disableCurve3(bool _state);
@@ -53,6 +55,8 @@ private:
     float m_speedUp;
     int m_pickUpTime;
     float m_pickUpRadius;
+    int m_startValue;
+
 };
 
 
