@@ -241,3 +241,22 @@ void Tornado::restart()
   m_particleCount=1;
   m_particleState=0;
 }
+void Tornado::setParticleTimeRangeMin(int _changeValue)
+{
+  for(int i =0;i<(int)m_particleSystemList.size();++i)
+  {
+
+    m_particleSystemList[i]->setlifeTimeRange(_changeValue,0);
+
+  }
+}
+
+void Tornado::setParticleTimeRangeMax(int _changeValue)
+{
+  for(int i =0;i<(int)m_particleSystemList.size();++i)
+  {
+
+    m_particleSystemList[i]->setlifeTimeRange(_changeValue,1);
+
+  }
+}

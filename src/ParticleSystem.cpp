@@ -149,3 +149,8 @@ void ParticleSystem::setCloudHeight(int _changeValue)
 {
   m_cloudHeight=_changeValue;
 }
+
+void ParticleSystem::setlifeTimeRange(int _changeValue,int _minMax)
+{
+  m_lifeTimeRange[_minMax]=_changeValue;
+}

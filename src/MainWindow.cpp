@@ -50,6 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWi
   connect(m_ui->startValue,SIGNAL(valueChanged(int)),m_curve,SLOT(setStartValue(int)));
   connect(m_ui->CloudHeight,SIGNAL(valueChanged(int)),tornado1,SLOT(setCloudHeight(int)));
   connect(m_ui->MovementSelection,SIGNAL(activated(int)),tornado1,SLOT(setParticleMoveState(int)));
+  connect(m_ui->minLifetime,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleTimeRangeMin(int)));
+  connect(m_ui->maxLifeTime,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleTimeRangeMax(int)));
+  connect(m_ui->BG_red,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourR(double)));
+  connect(m_ui->BG_green,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourG(double)));
+  connect(m_ui->BG_blue,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourB(double)));
+
   connect(m_scene,SIGNAL(resetParticleSize(int)),m_ui->ParticleSize,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetParticleSysSize(int)),m_ui->ParticleSystemSize,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetTexure(QString)),m_ui->texureSlot,SLOT(setText(QString)));

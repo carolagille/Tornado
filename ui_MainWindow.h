@@ -82,15 +82,19 @@ public:
     QSpinBox *ParticleSize;
     QGroupBox *groupBox_6;
     QGridLayout *gridLayout_6;
-    QPushButton *Left;
-    QPushButton *Up;
-    QPushButton *Right;
-    QPushButton *Down;
-    QPushButton *RotateDown;
-    QPushButton *zoomIn;
-    QPushButton *zoomOut;
     QPushButton *RotateUp;
+    QPushButton *zoomOut;
+    QPushButton *zoomIn;
+    QPushButton *Right;
+    QPushButton *RotateDown;
+    QPushButton *Left;
+    QLabel *label_18;
+    QDoubleSpinBox *BG_green;
+    QDoubleSpinBox *BG_red;
+    QPushButton *Up;
     QSpacerItem *horizontalSpacer_4;
+    QPushButton *Down;
+    QDoubleSpinBox *BG_blue;
     QGroupBox *groupBox_7;
     QGridLayout *gridLayout_7;
     QGroupBox *groupBox_8;
@@ -140,7 +144,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-48, -474, 453, 1196));
+        scrollAreaWidgetContents->setGeometry(QRect(-26, -474, 453, 1233));
         gridLayout_9 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         groupBox = new QGroupBox(scrollAreaWidgetContents);
@@ -347,49 +351,78 @@ public:
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         gridLayout_6 = new QGridLayout(groupBox_6);
         gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
-        Left = new QPushButton(groupBox_6);
-        Left->setObjectName(QStringLiteral("Left"));
+        RotateUp = new QPushButton(groupBox_6);
+        RotateUp->setObjectName(QStringLiteral("RotateUp"));
 
-        gridLayout_6->addWidget(Left, 1, 0, 1, 1);
-
-        Up = new QPushButton(groupBox_6);
-        Up->setObjectName(QStringLiteral("Up"));
-
-        gridLayout_6->addWidget(Up, 0, 2, 1, 1);
-
-        Right = new QPushButton(groupBox_6);
-        Right->setObjectName(QStringLiteral("Right"));
-
-        gridLayout_6->addWidget(Right, 1, 3, 1, 1);
-
-        Down = new QPushButton(groupBox_6);
-        Down->setObjectName(QStringLiteral("Down"));
-
-        gridLayout_6->addWidget(Down, 2, 2, 1, 1);
-
-        RotateDown = new QPushButton(groupBox_6);
-        RotateDown->setObjectName(QStringLiteral("RotateDown"));
-
-        gridLayout_6->addWidget(RotateDown, 2, 0, 1, 1);
-
-        zoomIn = new QPushButton(groupBox_6);
-        zoomIn->setObjectName(QStringLiteral("zoomIn"));
-
-        gridLayout_6->addWidget(zoomIn, 0, 3, 1, 1);
+        gridLayout_6->addWidget(RotateUp, 2, 3, 1, 1);
 
         zoomOut = new QPushButton(groupBox_6);
         zoomOut->setObjectName(QStringLiteral("zoomOut"));
 
         gridLayout_6->addWidget(zoomOut, 0, 0, 1, 1);
 
-        RotateUp = new QPushButton(groupBox_6);
-        RotateUp->setObjectName(QStringLiteral("RotateUp"));
+        zoomIn = new QPushButton(groupBox_6);
+        zoomIn->setObjectName(QStringLiteral("zoomIn"));
 
-        gridLayout_6->addWidget(RotateUp, 2, 3, 1, 1);
+        gridLayout_6->addWidget(zoomIn, 0, 3, 1, 1);
+
+        Right = new QPushButton(groupBox_6);
+        Right->setObjectName(QStringLiteral("Right"));
+
+        gridLayout_6->addWidget(Right, 1, 3, 1, 1);
+
+        RotateDown = new QPushButton(groupBox_6);
+        RotateDown->setObjectName(QStringLiteral("RotateDown"));
+
+        gridLayout_6->addWidget(RotateDown, 2, 0, 1, 1);
+
+        Left = new QPushButton(groupBox_6);
+        Left->setObjectName(QStringLiteral("Left"));
+
+        gridLayout_6->addWidget(Left, 1, 0, 1, 1);
+
+        label_18 = new QLabel(groupBox_6);
+        label_18->setObjectName(QStringLiteral("label_18"));
+
+        gridLayout_6->addWidget(label_18, 3, 0, 1, 1);
+
+        BG_green = new QDoubleSpinBox(groupBox_6);
+        BG_green->setObjectName(QStringLiteral("BG_green"));
+        BG_green->setMaximum(1);
+        BG_green->setSingleStep(0.05);
+        BG_green->setValue(1);
+
+        gridLayout_6->addWidget(BG_green, 3, 2, 1, 1);
+
+        BG_red = new QDoubleSpinBox(groupBox_6);
+        BG_red->setObjectName(QStringLiteral("BG_red"));
+        BG_red->setMaximum(1);
+        BG_red->setSingleStep(0.05);
+        BG_red->setValue(1);
+
+        gridLayout_6->addWidget(BG_red, 3, 1, 1, 1);
+
+        Up = new QPushButton(groupBox_6);
+        Up->setObjectName(QStringLiteral("Up"));
+
+        gridLayout_6->addWidget(Up, 0, 1, 1, 2);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_6->addItem(horizontalSpacer_4, 1, 2, 1, 1);
+        gridLayout_6->addItem(horizontalSpacer_4, 1, 1, 1, 2);
+
+        Down = new QPushButton(groupBox_6);
+        Down->setObjectName(QStringLiteral("Down"));
+
+        gridLayout_6->addWidget(Down, 2, 1, 1, 2);
+
+        BG_blue = new QDoubleSpinBox(groupBox_6);
+        BG_blue->setObjectName(QStringLiteral("BG_blue"));
+        BG_blue->setMaximum(1);
+        BG_blue->setSingleStep(0.05);
+        BG_blue->setValue(1);
+
+        gridLayout_6->addWidget(BG_blue, 3, 3, 1, 1);
 
 
         verticalLayout->addWidget(groupBox_6);
@@ -566,15 +599,16 @@ public:
         label_7->setText(QApplication::translate("MainWindow", "Particle Size", 0));
         label_8->setText(QApplication::translate("MainWindow", "Texure", 0));
         texureSlot->setText(QApplication::translate("MainWindow", "textures/point.tif", 0));
-        groupBox_6->setTitle(QApplication::translate("MainWindow", "GroupBox", 0));
-        Left->setText(QApplication::translate("MainWindow", "Left", 0));
-        Up->setText(QApplication::translate("MainWindow", "Up", 0));
-        Right->setText(QApplication::translate("MainWindow", "Right", 0));
-        Down->setText(QApplication::translate("MainWindow", "Down", 0));
-        RotateDown->setText(QApplication::translate("MainWindow", "Rotate Down", 0));
-        zoomIn->setText(QApplication::translate("MainWindow", "Zoom In", 0));
-        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
+        groupBox_6->setTitle(QApplication::translate("MainWindow", "Window Controlls", 0));
         RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
+        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
+        zoomIn->setText(QApplication::translate("MainWindow", "Zoom In", 0));
+        Right->setText(QApplication::translate("MainWindow", "Right", 0));
+        RotateDown->setText(QApplication::translate("MainWindow", "Rotate Down", 0));
+        Left->setText(QApplication::translate("MainWindow", "Left", 0));
+        label_18->setText(QApplication::translate("MainWindow", "Background Colour", 0));
+        Up->setText(QApplication::translate("MainWindow", "Up", 0));
+        Down->setText(QApplication::translate("MainWindow", "Down", 0));
         groupBox_7->setTitle(QApplication::translate("MainWindow", "Advanced Controlls", 0));
         groupBox_8->setTitle(QApplication::translate("MainWindow", "Particle", 0));
         label_17->setText(QApplication::translate("MainWindow", "Movement Type", 0));

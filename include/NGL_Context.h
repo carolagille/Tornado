@@ -26,6 +26,9 @@ public slots:
   void down();
   void zoomIn();
   void zoomOut();
+  void setBGColourR(double _changeValue);
+  void setBGColourG(double _changeValue);
+  void setBGColourB(double _changeValue);
 signals:
   void resetParticleSize(int _newValue);
   void resetParticleSysSize(int _newValue);
@@ -49,6 +52,7 @@ public:
     int getWidth();
     void restart();
 
+
 private:
     void resizeGL(QResizeEvent *_event); //overloaded function that is automatically called when the window is resized
     void resizeGL(int _w,int _h);
@@ -56,7 +60,7 @@ private:
     int m_height;
     ngl::Mat4 m_vp;
     Tornado *m_tornado;
-    ngl::Vec3 m_tornadoPosition;
+
     GLuint m_vao;//my vertex array object that stores the points position
     GLuint m_vao2;
     int m_zoom;
@@ -69,7 +73,7 @@ private:
     int m_particleSubSysSize;
     QString m_texure;
     std::unique_ptr<ngl::Text> m_text;
-
+    ngl::Vec3 m_bgColour;
     GLuint m_textureName;
 
   /*void mouseMoveEvent ( QMouseEvent * _event );

@@ -8,7 +8,7 @@
 #include <ngl/Util.h>
 #include <stdlib.h>
 #include <fstream>
-#include <Magick++.h>
+//#include <Magick++.h>
 #include <sstream>
 #include <ngl/Image.h>
 #include "MainWindow.h"
@@ -27,7 +27,7 @@ NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_pa
     m_pixels =(GLubyte*) malloc(4 * m_width * m_height);
     m_particleSize=4;
     m_particleSubSysSize=4;
-
+    m_bgColour= ngl::Vec3 (1.0f,1.0f,1.0f);
 
 }
 
@@ -144,11 +144,11 @@ void NGL_Context::initializeGL()
     m_angleX=0;
     m_angleZ=0;
     m_gridCenter=100;
-    m_tornadoPosition=(0.0f,0.0f,0.0f);
+
 
     ngl::NGLInit::instance(); //creates one instance of init
     //to prevent you from creating lot of bog instances of smomething that just needs to be used once
-    glClearColor(0.0f,0.0f,0.0f,0.0f); //white background
+    glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
@@ -303,18 +303,6 @@ void NGL_Context::paintGL()
     glBindVertexArray(0);
     //case Qt::Key_P: m_tornado->particlesOnOff();break;
 
-    glPointSize(m_particleSize);
-    ;
-    //Particles0.545f,0.513f,0.470f,1.0f
-    //shader->use("nglColourShader");
-    shader->use("MyShader");
-    shader->setRegisteredUniformFromMat4("MVP",MVP);
-    //shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
-    glBindVertexArray(m_vao2);
-
-    glDrawArrays(GL_POINTS,0,m_tornado->getFullParticleCount());
-
-    glBindVertexArray(0);
 
 
 
@@ -324,7 +312,7 @@ void NGL_Context::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
     //change colour to black
     shader->use("nglColourShader");
-    shader->setShaderParam4f("Colour",1.0f,1.0f,1.0f,1.0f);
+    shader->setShaderParam4f("Colour",0.5f,0.5f,0.5f,1.0f);
 
     transformGrid.setRotation(90+m_angleX,0,m_angleZ);
     transformGrid.setScale(20,20,20);
@@ -335,6 +323,31 @@ void NGL_Context::paintGL()
     prim->draw("plane");
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 //End Grid
+
+
+
+
+
+
+    glPointSize(m_particleSize);
+
+    //Particles0.545f,0.513f,0.470f,1.0f
+    //shader->use("nglColourShader");
+    shader->use("MyShader");
+    shader->setRegisteredUniformFromMat4("MVP",MVP);
+    //shader->setShaderParam4f("Colour",0.545f,0.513f,0.470f,1.0f);
+    glBindVertexArray(m_vao2);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glDrawArrays(GL_POINTS,0,m_tornado->getFullParticleCount());
+
+    glBindVertexArray(0);
+
+    glDisable(GL_BLEND);
+
+
 
     m_text->setColour(1,0,0);
     // now render the text using the QT renderText helper function
@@ -523,7 +536,23 @@ void NGL_Context::writeImage()
 }
 
 
+void NGL_Context::setBGColourR(double _changeValue)
+{
+  m_bgColour[0]=_changeValue;
+  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
+}
 
+void NGL_Context::setBGColourG(double _changeValue)
+{
+  m_bgColour[1]=_changeValue;
+  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
+}
+
+void NGL_Context::setBGColourB(double _changeValue)
+{
+  m_bgColour[2]=_changeValue;
+  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
+}
 
 /*void NGL_Context::wheelEvent(QWheelEvent *_event)
 {

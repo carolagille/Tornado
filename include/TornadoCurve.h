@@ -17,6 +17,7 @@ class TornadoCurve:public QObject
     void setPickUpTime(int _changeValue);
     void setStartValue(int _changeValue);
 
+
  signals:
     void disableCurve2(bool _state);
     void disableCurve3(bool _state);

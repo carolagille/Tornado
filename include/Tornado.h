@@ -16,6 +16,8 @@ public slots:
   void setRadiusMax(double _changeValue);
   void setCloudHeight(int _value);
   void setParticleMoveState(int _changeValue);
+  void setParticleTimeRangeMin(int _changeValue);
+  void setParticleTimeRangeMax(int _changeValue);
 
 public:
     Tornado(TornadoCurve* _curve);

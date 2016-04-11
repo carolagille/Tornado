@@ -21,6 +21,7 @@ public:
     int getParticleCount();
     void switchParticles(int value);
     void setCloudHeight(int _changeValue);
+    void setlifeTimeRange(int _changeValue, int _minMax);
 private:
 
     float m_boundingBox;//for a sphere shape as a fuzzy object (maybe make this a class for diffrent shapes later)
