@@ -12,7 +12,8 @@ uniform mat4 MVP;
 //tells the programm which slot on the graphics card to use
 //inputs a position that is stored in inPosition
 
+
 void main()
 { //we can change the position in here but i don't want to change it
-    gl_Position = MVP *vec4(inPosition,1.0);
+    gl_Position = MVP*vec4(inPosition,1.0);
 }

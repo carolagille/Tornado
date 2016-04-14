@@ -109,7 +109,37 @@ void NGL_Context::updatePoints()
 
     //Second VAO
 
+    ngl::Transformation transform;
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
+    ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
+    m_vp=view*perspective;
+    transform.setRotation(m_angleX,0,m_angleZ);
+    ngl::Mat4 MVP =transform.getMatrix()*m_vp;
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0,0,m_width,m_height);
+
+    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+    shader->use("nglColourShader");
+    // set the colour to red
+
+
+    shader->setRegisteredUniformFromMat4("MVP",MVP);
+
+
     std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
+    /*for(int i=0;i<pointsParticle.size();i++)
+    {
+      ngl::Vec4 positionAlpha= MVP*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
+
+      std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
+
+      pointsParticle[i][0]=positionAlpha[0];
+      pointsParticle[i][1]=positionAlpha[1];
+      pointsParticle[i][2]=positionAlpha[2];
+    }*/
+    std::sort(pointsParticle.begin(),pointsParticle.end(),NGL_Context::depthSort);
 
     glBindVertexArray(m_vao2);
     // now copy the data/
@@ -153,7 +183,7 @@ void NGL_Context::initializeGL()
     glEnable(GL_MULTISAMPLE);
 
     ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
-    ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
+    ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
 
@@ -275,8 +305,10 @@ void NGL_Context::paintGL()
     glBindTexture(GL_TEXTURE_2D,m_textureName);
     ngl::Transformation transform;
     ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
-    ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
+    ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
     m_vp=view*perspective;
+    transform.setRotation(m_angleX,0,m_angleZ);
+    ngl::Mat4 MVP =transform.getMatrix()*m_vp;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,m_width,m_height);
@@ -286,9 +318,7 @@ void NGL_Context::paintGL()
     shader->use("nglColourShader");
     // set the colour to red
 
-    transform.setRotation(m_angleX,0,m_angleZ);
 
-    ngl::Mat4 MVP =transform.getMatrix()*m_vp;
     shader->setRegisteredUniformFromMat4("MVP",MVP);
 
 
@@ -552,6 +582,13 @@ void NGL_Context::setBGColourB(double _changeValue)
 {
   m_bgColour[2]=_changeValue;
   glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
+}
+
+bool NGL_Context::depthSort(ngl::Vec3 _a, ngl::Vec3 _b)
+{
+  ngl::Vec3 a;
+  ngl::Vec3 b;
+  return a.m_x+1000<b.m_x+1000;
 }
 
 /*void NGL_Context::wheelEvent(QWheelEvent *_event)

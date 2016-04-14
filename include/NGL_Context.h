@@ -51,6 +51,7 @@ public:
     int getHeight();
     int getWidth();
     void restart();
+    static bool depthSort(ngl::Vec3 _a, ngl::Vec3 _b);
 
 
 private:

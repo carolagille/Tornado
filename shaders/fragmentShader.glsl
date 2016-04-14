@@ -12,6 +12,8 @@ void main()
 
     fragColour = texture(tex, gl_PointCoord);
 
+    //fragColour = vec4(1.0, 0.0, 0.0, 1.0);
+
     //if (fragColour.r>=0.8 && fragColour.g>=0.8 && fragColour.b>=0.8)
     //if (fragColour.r<=0.1 && fragColour.g<=0.1 && fragColour.b<=0.1)
     //   {
