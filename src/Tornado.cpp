@@ -19,6 +19,11 @@ Tornado::Tornado(TornadoCurve *_curve)
     m_particleCount=1;
     m_particleState=0;
     m_particleMoveState=0;
+    m_cloudHeight=15;
+    m_particleProdutionRate=1;
+    m_particleLifeRange[0]=100;
+    m_particleLifeRange[1]=170;
+
 
     //m_particleSystemList = std::vector<ParticleSystem*> ();
     std::cout<< "Tornado created\n";
@@ -63,7 +68,7 @@ void Tornado::createParticleSystem()
 
 
 
-            m_particleSystemList.push_back(std::unique_ptr<ParticleSystem>(new ParticleSystem(radius,offset,m_particleState)));
+            m_particleSystemList.push_back(std::unique_ptr<ParticleSystem>(new ParticleSystem(radius,offset,m_particleState,m_cloudHeight,m_particleProdutionRate,m_particleLifeRange)));
 
             std::vector<ngl::Vec3> particlePoint;
 
@@ -198,6 +203,7 @@ void Tornado::setRadiusMax(double _changeValue)
 
 void Tornado::setCloudHeight(int _value)
 {
+  m_cloudHeight=_value;
 
   for(int i =0;i<(int)m_particleSystemList.size();++i)
   {
@@ -214,12 +220,24 @@ void Tornado::setParticleMoveState(int _changeValue)
 
   m_particleMoveState=_changeValue;
 }
+void Tornado::setParticleProductionRate(int _value)
+{
+  m_particleProdutionRate=_value;
+
+  for(int i =0;i<(int)m_particleSystemList.size();++i)
+  {
+
+    m_particleSystemList[i]->setProductionRate(_value);
+
+  }
+
+}
 
 void Tornado::restart()
 {
 
   m_particleSystemList.clear();
-  m_particleCount=1;
+
   m_particleSystemCount=0;
 
   m_frame=0;
@@ -231,18 +249,37 @@ void Tornado::restart()
 
   m_frame=0;
   m_particleSystemTreshold=20000;
+  emit resetParticleSysTreshold(m_particleSystemTreshold);
   m_maxProductionRate=2;
+  emit resetProductionRate(m_maxProductionRate);
 
   m_radiusRange[0]=4.0;
   m_radiusRange[1]=8.0;
+  emit resetRadiusMax(m_radiusRange[1]);
+  emit resetRadiusMin(m_radiusRange[0]);
+
   m_maxHeight=400;
   m_radiusChange=10.0;
   m_radiusDiffrence=2;
   m_particleCount=1;
-  m_particleState=0;
+  emit resetParticleCount(m_particleCount);
+  m_particleState=false;
+  emit resetparticlesOnOff(m_particleState);
+  m_cloudHeight=15;
+  emit resetCloudHeight(m_cloudHeight);
+  m_particleProdutionRate=1;
+  emit resetParticleProductionRate(m_particleProdutionRate);
+  m_particleMoveState=0;
+  emit resetParticleMoveState(m_particleMoveState);
+  m_particleLifeRange[0]=100;
+  emit resetParticleTimeRangeMin(m_particleLifeRange[0]);
+  m_particleLifeRange[1]=170;
+  emit resetParticleTimeRangeMax(m_particleLifeRange[1]);
+
 }
 void Tornado::setParticleTimeRangeMin(int _changeValue)
 {
+  m_particleLifeRange[0]=_changeValue;
   for(int i =0;i<(int)m_particleSystemList.size();++i)
   {
 
@@ -253,10 +290,21 @@ void Tornado::setParticleTimeRangeMin(int _changeValue)
 
 void Tornado::setParticleTimeRangeMax(int _changeValue)
 {
+  m_particleLifeRange[1]=_changeValue;
   for(int i =0;i<(int)m_particleSystemList.size();++i)
   {
 
     m_particleSystemList[i]->setlifeTimeRange(_changeValue,1);
 
   }
+}
+
+void Tornado::setParticleSysTreshold(int _value)
+{
+  m_particleSystemTreshold=_value;
+}
+
+void Tornado::setProductionRate(int _value)
+{
+  m_maxProductionRate=_value;
 }

@@ -2,39 +2,10 @@
 #include <iostream>
 #include <math.h>
 
-TornadoCurve::TornadoCurve() //Default Constructor
+
+TornadoCurve::TornadoCurve(int _changeRate)
 {
-  std::cout << "default constructor" << std::endl;
-    m_changeRate = 10000;
 
-    m_curveResult[0]=(0.0f);
-    m_curveResult[1]=(0.0f);
-
-    m_tracker=0;
-    m_resultPoint=ngl::Vec3(0.0f,0.0f,0.0f);
-
-    m_curveCount=3;
-    m_minHeight=0.0;
-    m_maxHeight=ngl::Vec3(0.0f,0.0f,200.0f);
-     // needs to be calculated when actually using the curves
-    m_midPoint=(0.0f);
-    m_frame=0;
-
-    m_controlPoints[0]=(100.0f);
-    m_controlPoints[1]=(100.0f);
-    m_controlPoints[2]=ngl::Vec3(100.0f,100.0f,(float)(m_maxHeight[2]/2.0));
-    m_speed=5;
-    m_speedUp=5;
-    m_timeUp=m_maxHeight[2]*m_speed;
-    m_radiusGrowth=75.0;
-    m_pickUpTime=100;
-    m_pickUpRadius=10.0;
-    m_startValue=2;
-
-}
-
-TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float _maxHeight)
-{
 
     m_changeRate = _changeRate;
 
@@ -45,20 +16,21 @@ TornadoCurve::TornadoCurve(int _changeRate, ngl::Vec3 _allcontrolPoints[], float
     m_tracker=0;
     m_resultPoint=(0.0f);
     m_curveCount=3;
-    m_minHeight=0.0;
 
-    m_maxHeight=ngl::Vec3(0.0f,0.0f,_maxHeight);
+
+    m_maxHeight=ngl::Vec3(0.0f,0.0f,400);
     m_speed=2;
+
     m_speedUp=2;
 
-    m_timeUp=_maxHeight*m_speedUp; // needs to be calculated when actually using the curves
+    m_timeUp=m_maxHeight[2]*m_speedUp; // needs to be calculated when actually using the curves
     m_midPoint=(0.0f);
     m_frame=0;
 
 
-    m_controlPoints[0]=ngl::Vec3(_allcontrolPoints[0][0],_allcontrolPoints[0][1],(float)(m_maxHeight[2]/2.0));
-    m_controlPoints[1]=ngl::Vec3(_allcontrolPoints[1][0],_allcontrolPoints[1][1],(float)(m_maxHeight[2]/2.0));
-    m_controlPoints[2]=ngl::Vec3(_allcontrolPoints[2][0],_allcontrolPoints[2][1],(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[0]=ngl::Vec3(130.0f,10.0f,(float)m_maxHeight[2]/2.0);
+    m_controlPoints[1]=ngl::Vec3(-70.0f,-50.0f,(float)(m_maxHeight[2]/2.0));
+    m_controlPoints[2]=ngl::Vec3(50.0f,100.0f,(float)(m_maxHeight[2]/2.0));
 
     m_radiusGrowth=55.0;
     m_pickUpTime=100;
@@ -81,7 +53,7 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _p
     }
 
 
-    m_curveResult[_curveNum][_position] = m_minHeight * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight[_position] * (pow(t,2.0));
+    m_curveResult[_curveNum][_position] = 0 * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight[_position] * (pow(t,2.0));
 
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
 
@@ -202,10 +174,9 @@ void TornadoCurve::changeRadiusGrowth(float _changeValue)
     m_radiusGrowth+=_changeValue;
 }
 
-void TornadoCurve::changeSpeedUp(float _changeValue)
+void TornadoCurve::setSpeedUp(double _changeValue)
 {
-    m_speedUp+=_changeValue;
-    if (m_speedUp<=0){m_speedUp=0.1;}
+    m_speedUp=_changeValue;
 
     m_timeUp=m_maxHeight[2]*m_speedUp;
 }
@@ -291,4 +262,45 @@ void TornadoCurve::setStartValue(int _changeValue)
 {
 
   m_startValue=_changeValue;
+}
+void TornadoCurve::setRadiusGrowth(double _changeValue)
+{
+  m_radiusGrowth=_changeValue;
+}
+
+
+void TornadoCurve::reset()
+{
+  m_curveCount=3;
+  emit resetCurveCount(m_curveCount);
+
+  m_controlPoints[0]=ngl::Vec3(130.0f,10.0f,(float)m_maxHeight[2]/2.0);
+  emit resetControllPoint1X(m_controlPoints[0][0]);
+  emit resetControllPoint1Z(m_controlPoints[0][1]);
+
+  m_controlPoints[1]=ngl::Vec3(-70.0f,-50.0f,(float)(m_maxHeight[2]/2.0));
+  emit resetControllPoint2X(m_controlPoints[1][0]);
+  emit resetControllPoint2Z(m_controlPoints[1][1]);
+
+  m_controlPoints[2]=ngl::Vec3(50.0f,100.0f,(float)(m_maxHeight[2]/2.0));
+  emit resetControllPoint3X(m_controlPoints[2][0]);
+  emit resetControllPoint3Z(m_controlPoints[2][1]);
+
+  m_maxHeight[2]=400;
+  emit resetHeight(m_maxHeight[2]);
+
+  m_pickUpTime=100;
+  emit resetPickUpTime(m_pickUpTime);
+  m_pickUpRadius=10.0;
+  emit resetPickUpRadius(m_pickUpRadius);
+
+  m_startValue=2;
+  emit resetStartValue(m_startValue);
+
+  m_speedUp=2;
+  emit resetSpeedUp(m_speedUp);
+
+  m_radiusGrowth=55.0;
+  emit resetRadiusGrowth(m_radiusGrowth);
+
 }

@@ -8,7 +8,7 @@
 #include <ngl/Util.h>
 #include <stdlib.h>
 #include <fstream>
-//#include <Magick++.h>
+#include <Magick++.h>
 #include <sstream>
 #include <ngl/Image.h>
 #include "MainWindow.h"
@@ -17,17 +17,18 @@ NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_pa
 {
     setFocus();
     this->resize(_parent->size());
-    connect(this,SIGNAL(frameSwapped()),this,SLOT(writeImage()));
+
     static const GLuint FORMAT_NBYTES = 4;
-    m_texure="textures/point.tif" ;
+    m_texureName="textures/particles.png" ;
     m_pixels=NULL;
     m_tornado=_tornado;
     m_time=0;
     m_render=0;
     m_pixels =(GLubyte*) malloc(4 * m_width * m_height);
-    m_particleSize=4;
+    m_particleSize=15;
     m_particleSubSysSize=4;
     m_bgColour= ngl::Vec3 (1.0f,1.0f,1.0f);
+    m_depthSortState=false;
 
 }
 
@@ -119,27 +120,47 @@ void NGL_Context::updatePoints()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,m_width,m_height);
 
-    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    //ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
-    shader->use("nglColourShader");
+    //shader->use("nglColourShader");
     // set the colour to red
 
 
-    shader->setRegisteredUniformFromMat4("MVP",MVP);
+    //shader->setRegisteredUniformFromMat4("MVP",MVP);
 
-
+    ngl::Mat4 MV=transform.getMatrix()*m_vp;
     std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
     /*for(int i=0;i<pointsParticle.size();i++)
     {
-      ngl::Vec4 positionAlpha= MVP*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
+      ngl::Vec4 positionAlpha= MV*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
 
-      std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
+      //std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
 
       pointsParticle[i][0]=positionAlpha[0];
       pointsParticle[i][1]=positionAlpha[1];
       pointsParticle[i][2]=positionAlpha[2];
-    }*/
-    std::sort(pointsParticle.begin(),pointsParticle.end(),NGL_Context::depthSort);
+    }
+
+
+    MV=MV.inverse();
+    for(int i=0;i<pointsParticle.size();i++)
+    {
+      ngl::Vec4 positionAlpha= MV*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
+
+      //std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
+
+      pointsParticle[i][0]=positionAlpha[0];
+      pointsParticle[i][1]=positionAlpha[1];
+      pointsParticle[i][2]=positionAlpha[2];
+    }
+*/
+
+    if(m_depthSortState)
+    {
+      std::sort(pointsParticle.begin(),pointsParticle.end(),NGL_Context::depthSort);
+    }
+
+
 
     glBindVertexArray(m_vao2);
     // now copy the data/
@@ -186,6 +207,7 @@ void NGL_Context::initializeGL()
     ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
+
 
 
     // create my shader
@@ -251,7 +273,7 @@ void NGL_Context::initializeGL()
 
 void NGL_Context::loadTexture()
 {
-  glGenTextures(1, &m_textureName);
+  glGenTextures(1, &m_texture);
 
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -260,7 +282,7 @@ void NGL_Context::loadTexture()
 
 
   QImage image;
-  bool loaded=image.load(m_texure);
+  bool loaded=image.load(m_texureName);
   if(loaded == true)
   {
     int width=image.width();
@@ -282,8 +304,8 @@ void NGL_Context::loadTexture()
       }
     }
 
-  glGenTextures(1,&m_textureName);
-  glBindTexture(GL_TEXTURE_2D,m_textureName);
+  glGenTextures(1,&m_texture);
+  glBindTexture(GL_TEXTURE_2D,m_texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 
@@ -301,8 +323,9 @@ void NGL_Context::loadTexture()
 void NGL_Context::paintGL()
 {
 
+    glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f);
     //loadTexture();
-    glBindTexture(GL_TEXTURE_2D,m_textureName);
+    glBindTexture(GL_TEXTURE_2D,m_texture);
     ngl::Transformation transform;
     ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
@@ -361,6 +384,7 @@ void NGL_Context::paintGL()
 
     glPointSize(m_particleSize);
 
+
     //Particles0.545f,0.513f,0.470f,1.0f
     //shader->use("nglColourShader");
     shader->use("MyShader");
@@ -400,26 +424,6 @@ void NGL_Context::timerEvent(QTimerEvent *_event)
 
 }
 
-void NGL_Context::keyPressEvent(QKeyEvent *_event)
-{
-  // that method is called every time the main window recives a key event.
-  // we then switch on the key value and set the camera in the GLWindow
-  switch (_event->key())
-  {
-  // escape key to quit
-  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
-  // turn on wirframe rendering
-
-
-  case Qt::Key_Plus : m_zoom-=50;break;
-
-  case Qt::Key_Minus : break;
-
-  default : break;
-  }
-
-    update();
-}
 void NGL_Context::zoomIn()
 {
   m_zoom-=50;
@@ -460,35 +464,37 @@ void NGL_Context::down()
 
 void NGL_Context::saveImage()
 {//boost format
+
+  std::cout<<"Rendering...\n";
     std::ostringstream filename;
 
 
 
-    filename<<"renders/tornado"<<m_time;//<<".jpg";
-    QString qfilename= QString::fromStdString(filename.str());
+    filename<<"renders/tornado"<<m_time<<".jpg";
+   /* QString qfilename= QString::fromStdString(filename.str());
     std::cout<<"working\n";
     QImage image=QOpenGLWidget::grabFramebuffer();
 
-    image.save(qfilename);
+    image.save(qfilename);*/
 
 
-//    glBindFramebuffer(GL_FRAMEBUFFER,defaultFramebufferObject());
-//    ngl::Image::saveFrameBufferToFile(filename.str(),0,0,m_width,m_height,ngl::Image::ImageModes::RGB);
+    //glBindFramebuffer(GL_FRAMEBUFFER,defaultFramebufferObject());
+    //ngl::Image::saveFrameBufferToFile(filename.str(),0,0,m_width,m_height,ngl::Image::ImageModes::RGB);
 
-    //((MainWindow*)parentWidget())->saveImage();
-    //GLuint buffer;
 
-    //glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
+  //  GLuint buffer;
+
+//    glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
 //    //glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
-//    Magick::Blob b( m_pixels, 3 * m_width * m_height );
-//    Magick::Image i( m_width,
-//                     m_height,
-//                     "RGB",
-//                     Magick::CharPixel,
-//                     m_pixels);
+    Magick::Blob b( m_pixels, 3 * m_width * m_height );
+    Magick::Image i( m_width,
+                    m_height,
+                     "RGB",
+                     Magick::CharPixel,
+                     m_pixels);
 
 //
-//    i.write(filename.str());
+    i.write(filename.str());
 
 
 
@@ -500,17 +506,17 @@ void NGL_Context::renderOnOff()
 
   m_render==0 ? m_render=1 : m_render=0;
 }
-void NGL_Context::changeParticleSize(int value)
+void NGL_Context::changeParticleSize(int _value)
 {
-  m_particleSize=value;
+  m_particleSize=_value;
 }
-void NGL_Context::changeParticleSubSys(int value)
+void NGL_Context::changeParticleSubSys(int _value)
 {
-  m_particleSubSysSize=value;
+  m_particleSubSysSize=_value;
 }
 void NGL_Context::setTexure(QString _texureName)
 {
-  m_texure=_texureName;
+  m_texureName=_texureName;
   loadTexture();
 }
 
@@ -525,6 +531,39 @@ int NGL_Context::getWidth()
 }
 
 
+
+
+
+
+void NGL_Context::setBGColourR(double _value)
+{
+  m_bgColour[0]=_value;
+
+
+}
+
+void NGL_Context::setBGColourG(double _value)
+{
+  m_bgColour[1]=_value;
+
+}
+
+void NGL_Context::setBGColourB(double _value)
+{
+
+  m_bgColour[2]=_value;
+
+}
+
+bool NGL_Context::depthSort(ngl::Vec3 _a, ngl::Vec3 _b)
+{
+
+  return (_a.m_x)<(_b.m_x);// && (_a.m_x)<(_b.m_x);
+}
+void NGL_Context::setDepthsortValue(bool _value)
+{
+  m_depthSortState=_value;
+}
 
 
 void NGL_Context::restart()
@@ -544,64 +583,22 @@ void NGL_Context::restart()
 
   m_time=0;
   m_render=0;
-  m_particleSize=4;
+  m_particleSize=15;
   emit resetParticleSize(m_particleSize);
   m_particleSubSysSize=4;
   emit resetParticleSysSize(m_particleSubSysSize);
-  m_texure="textures/point.tif" ;
-  emit resetTexure(m_texure);
+  m_texureName="textures/particles.png" ;
+  loadTexture();
+  emit resetTexure(m_texureName);
+  m_depthSortState=false;
+  emit resetDepthsortValue(m_depthSortState);
 
+  m_bgColour= ngl::Vec3( 1.0,1.0,1.0);
+  emit resetBGColourR(m_bgColour[0]);
+  emit resetBGColourG(m_bgColour[1]);
+  emit resetBGColourB(m_bgColour[2]);
+  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f);
   m_tornado->restart();
 
 
 }
-
-void NGL_Context::writeImage()
-
-{
-    QImage image=QOpenGLWidget::grabFramebuffer();
-
-    image.save("image.png");
-
-}
-
-
-void NGL_Context::setBGColourR(double _changeValue)
-{
-  m_bgColour[0]=_changeValue;
-  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
-}
-
-void NGL_Context::setBGColourG(double _changeValue)
-{
-  m_bgColour[1]=_changeValue;
-  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
-}
-
-void NGL_Context::setBGColourB(double _changeValue)
-{
-  m_bgColour[2]=_changeValue;
-  glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f); //white background
-}
-
-bool NGL_Context::depthSort(ngl::Vec3 _a, ngl::Vec3 _b)
-{
-  ngl::Vec3 a;
-  ngl::Vec3 b;
-  return a.m_x+1000<b.m_x+1000;
-}
-
-/*void NGL_Context::wheelEvent(QWheelEvent *_event)
-{
-
-  if(_event->delta() > 0)
-  {
-   m_zoom+=50;
-  }
-  else if(_event->delta() <0 )
-  {
-    m_zoom-=50;
-  }
-  update();
-}
-*/

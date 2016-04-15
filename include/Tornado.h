@@ -18,7 +18,21 @@ public slots:
   void setParticleMoveState(int _changeValue);
   void setParticleTimeRangeMin(int _changeValue);
   void setParticleTimeRangeMax(int _changeValue);
-
+  void setParticleSysTreshold(int _value);
+  void setProductionRate(int _value);
+  void setParticleProductionRate(int _value);
+signals:
+  void resetRadiusMin(double _changeValue);
+  void resetRadiusMax(double _changeValue);
+  void resetparticlesOnOff(bool state);
+  void resetParticleCount(int value);
+  void resetCloudHeight(int _value);
+  void resetParticleSysTreshold(int _value);
+  void resetProductionRate(int _value);
+  void resetParticleProductionRate(int _value);
+  void resetParticleMoveState(int _changeValue);
+  void resetParticleTimeRangeMin(int _changeValue);
+  void resetParticleTimeRangeMax(int _changeValue);
 public:
     Tornado(TornadoCurve* _curve);
     ~Tornado();
@@ -48,6 +62,9 @@ private:
     std::vector<ngl::Vec3> m_storeParticlePos;
     std::vector<ngl::Vec3> m_storeParticleSysList;
     int m_particleMoveState;
+    int m_cloudHeight;
+    int m_particleProdutionRate;
+    int m_particleLifeRange[2];
 
 
 

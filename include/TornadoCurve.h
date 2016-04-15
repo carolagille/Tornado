@@ -16,15 +16,31 @@ class TornadoCurve:public QObject
     void setPickUpRadius(double _changeValue);
     void setPickUpTime(int _changeValue);
     void setStartValue(int _changeValue);
+    void setSpeedUp(double _changeValue);
+    void reset();
+    void setRadiusGrowth(double _changeValue);
 
 
  signals:
     void disableCurve2(bool _state);
     void disableCurve3(bool _state);
+    void resetCurveCount(int _value);
+    void resetControllPoint1X(int _value);
+    void resetControllPoint1Z(int _value);
+    void resetControllPoint2X(int _value);
+    void resetControllPoint2Z(int _value);
+    void resetControllPoint3X(int _value);
+    void resetControllPoint3Z(int _value);
+    void resetHeight(int _value);
+    void resetPickUpRadius(double _changeValue);
+    void resetPickUpTime(int _changeValue);
+    void resetStartValue(int _changeValue);
+    void resetSpeedUp(double _changeValue);
+    void resetRadiusGrowth(double _changeValue);
+
 
  public:
-    TornadoCurve();
-     TornadoCurve(int _changeRate, ngl::Vec3 _controlPoint[3], float _maxHeight);
+     TornadoCurve(int _changeRate);
      void guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _position, int _curveNum); // make this a class????, creates guide curves by interpolating between start and end and a control curve
      void interpolate(int _particleTime);//interpolates between the diffrent guide curves
      void spiral (int _radius, int _particleTime, int _offset);// using the interpolating result this creates a spiral
@@ -32,7 +48,7 @@ class TornadoCurve:public QObject
      ngl::Vec3 getPoint();
      void frameChange(int _frame);
      void changeRadiusGrowth(float _changeValue);
-     void changeSpeedUp(float _changeValue);
+
      void restart();
      ngl::Vec3 getMidPoint();
      void changeSpeed(float _changeValue);
@@ -45,7 +61,7 @@ private:
     int m_tracker; // this keeps track of the curve thats active
     ngl::Vec3 m_resultPoint; // this point is the point calculated by the whole tornado curve class and represents the point where the particle should be
     float m_curveCount; // represents the amount of guid curves used
-    float m_minHeight; // minumum height for the guide curve maybe make this a vector
+
     ngl::Vec3 m_maxHeight; // max height for the guide curve maybe make this a vector so that it represetn an end point
     float m_timeUp; // represents how long it takes the particle to reach the max height can also be used as lifetime of particle
     ngl::Vec3 m_midPoint; // stores the midpoint calculated by the interpolation function by interpolating between two guide curve points

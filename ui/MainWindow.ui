@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>renderstatus</class>
+ <widget class="QMainWindow" name="renderstatus">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1217</width>
-    <height>771</height>
+    <width>1299</width>
+    <height>931</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,21 +58,34 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>-26</x>
-         <y>-474</y>
-         <width>453</width>
-         <height>1233</height>
+         <x>-13</x>
+         <y>-412</y>
+         <width>569</width>
+         <height>1257</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_9">
+        <item row="1" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>GroupBox</string>
+           <string>Tornado Creator</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QGroupBox" name="groupBox_5">
+            <widget class="QGroupBox" name="TornadoBox">
              <property name="title">
               <string>Tornado</string>
              </property>
@@ -275,14 +288,21 @@
               <string>Particle System</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="2" column="1">
+              <item row="2" column="3">
                <widget class="QSpinBox" name="ParticleCount">
                 <property name="minimum">
                  <number>1</number>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>Particle Count</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
                <widget class="QCheckBox" name="particleOnOff">
                 <property name="text">
                  <string>Particles</string>
@@ -290,26 +310,22 @@
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Particle Count</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
                <widget class="QLabel" name="label_10">
                 <property name="text">
                  <string>Particle System Size</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
+              <item row="2" column="1">
                <widget class="QSpinBox" name="ParticleSystemSize">
                 <property name="minimum">
                  <number>1</number>
                 </property>
                 <property name="maximum">
                  <number>100</number>
+                </property>
+                <property name="value">
+                 <number>4</number>
                 </property>
                </widget>
               </item>
@@ -322,34 +338,47 @@
               <string>Particle</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="ParticleSize">
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+                <property name="value">
+                 <number>15</number>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Texture</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
                <widget class="QLabel" name="label_7">
                 <property name="text">
                  <string>Particle Size</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_8">
+              <item row="1" column="2">
+               <widget class="QCheckBox" name="DephtTest">
                 <property name="text">
-                 <string>Texure</string>
+                 <string>Depth Sort</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0" colspan="2">
+              <item row="5" column="1" colspan="2">
                <widget class="QLineEdit" name="texureSlot">
                 <property name="text">
-                 <string>textures/point.tif</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSpinBox" name="ParticleSize">
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>200</number>
+                 <string>textures/particles.png</string>
                 </property>
                </widget>
               </item>
@@ -405,7 +434,7 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="label_18">
+               <widget class="QLabel" name="BGCol_label">
                 <property name="text">
                  <string>Background Colour</string>
                 </property>
@@ -481,7 +510,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_7">
+            <widget class="QGroupBox" name="advancedControlls">
              <property name="title">
               <string>Advanced Controlls</string>
              </property>
@@ -514,6 +543,9 @@
                    <property name="maximum">
                     <number>999</number>
                    </property>
+                   <property name="value">
+                    <number>100</number>
+                   </property>
                   </widget>
                  </item>
                  <item row="1" column="2">
@@ -523,6 +555,9 @@
                    </property>
                    <property name="maximum">
                     <number>1000</number>
+                   </property>
+                   <property name="value">
+                    <number>170</number>
                    </property>
                   </widget>
                  </item>
@@ -555,6 +590,19 @@
                  <string>Tornado</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_2">
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="ParticleSysTreshold">
+                   <property name="maximum">
+                    <number>100000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>20000</number>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_15">
                    <property name="text">
@@ -623,8 +671,65 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="3">
+                  <widget class="QSpinBox" name="ProductionRate">
+                   <property name="value">
+                    <number>2</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>Production Rate</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_21">
+                   <property name="text">
+                    <string>Particle System Treshold</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_23">
+                   <property name="text">
+                    <string>Upwards Speed</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QLabel" name="label_24">
+                   <property name="text">
+                    <string>Radius Growth</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QDoubleSpinBox" name="RadiusGrowth">
+                   <property name="maximum">
+                    <double>200.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>55.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QDoubleSpinBox" name="SpeedUp">
+                   <property name="minimum">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>2.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
-                <zorder>label_13</zorder>
                 <zorder>label_13</zorder>
                 <zorder>PickUpTime</zorder>
                 <zorder>startValue</zorder>
@@ -633,6 +738,14 @@
                 <zorder>label_16</zorder>
                 <zorder>PickUpRadius</zorder>
                 <zorder>CloudHeight</zorder>
+                <zorder>label_21</zorder>
+                <zorder>ParticleSysTreshold</zorder>
+                <zorder>label_22</zorder>
+                <zorder>ProductionRate</zorder>
+                <zorder>label_23</zorder>
+                <zorder>label_24</zorder>
+                <zorder>RadiusGrowth</zorder>
+                <zorder>SpeedUp</zorder>
                </widget>
               </item>
               <item row="2" column="0">
@@ -640,7 +753,22 @@
                 <property name="title">
                  <string>Particle System</string>
                 </property>
-                <zorder>groupBox_10</zorder>
+                <layout class="QGridLayout" name="gridLayout_10">
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="ParticleProduction">
+                   <property name="value">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_20">
+                   <property name="text">
+                    <string>Particle Production Rate</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
@@ -687,7 +815,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1217</width>
+     <width>1299</width>
      <height>27</height>
     </rect>
    </property>

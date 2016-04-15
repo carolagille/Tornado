@@ -33,7 +33,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_renderstatus
 {
 public:
     QWidget *centralwidget;
@@ -43,9 +43,10 @@ public:
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_9;
+    QSpacerItem *verticalSpacer_2;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
-    QGroupBox *groupBox_5;
+    QGroupBox *TornadoBox;
     QGridLayout *gridLayout_5;
     QSpinBox *Height;
     QGroupBox *groupBox_2;
@@ -70,16 +71,17 @@ public:
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_3;
     QSpinBox *ParticleCount;
-    QCheckBox *particleOnOff;
     QLabel *label_6;
+    QCheckBox *particleOnOff;
     QLabel *label_10;
     QSpinBox *ParticleSystemSize;
     QGroupBox *groupBox_4;
     QGridLayout *gridLayout_4;
-    QLabel *label_7;
-    QLabel *label_8;
-    QLineEdit *texureSlot;
     QSpinBox *ParticleSize;
+    QLabel *label_8;
+    QLabel *label_7;
+    QCheckBox *DephtTest;
+    QLineEdit *texureSlot;
     QGroupBox *groupBox_6;
     QGridLayout *gridLayout_6;
     QPushButton *RotateUp;
@@ -88,14 +90,14 @@ public:
     QPushButton *Right;
     QPushButton *RotateDown;
     QPushButton *Left;
-    QLabel *label_18;
+    QLabel *BGCol_label;
     QDoubleSpinBox *BG_green;
     QDoubleSpinBox *BG_red;
     QPushButton *Up;
     QSpacerItem *horizontalSpacer_4;
     QPushButton *Down;
     QDoubleSpinBox *BG_blue;
-    QGroupBox *groupBox_7;
+    QGroupBox *advancedControlls;
     QGridLayout *gridLayout_7;
     QGroupBox *groupBox_8;
     QGridLayout *gridLayout_8;
@@ -106,6 +108,7 @@ public:
     QComboBox *MovementSelection;
     QGroupBox *groupBox_10;
     QGridLayout *gridLayout_2;
+    QSpinBox *ParticleSysTreshold;
     QLabel *label_15;
     QLabel *label_16;
     QLabel *label_14;
@@ -114,20 +117,30 @@ public:
     QLabel *label_13;
     QDoubleSpinBox *PickUpRadius;
     QSpinBox *CloudHeight;
+    QSpinBox *ProductionRate;
+    QLabel *label_22;
+    QLabel *label_21;
+    QLabel *label_23;
+    QLabel *label_24;
+    QDoubleSpinBox *RadiusGrowth;
+    QDoubleSpinBox *SpeedUp;
     QGroupBox *groupBox_9;
+    QGridLayout *gridLayout_10;
+    QSpinBox *ParticleProduction;
+    QLabel *label_20;
     QSpacerItem *verticalSpacer;
     QPushButton *m_restartButton;
     QPushButton *m_RenderButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *renderstatus)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->setEnabled(true);
-        MainWindow->resize(1217, 771);
-        centralwidget = new QWidget(MainWindow);
+        if (renderstatus->objectName().isEmpty())
+            renderstatus->setObjectName(QStringLiteral("renderstatus"));
+        renderstatus->setEnabled(true);
+        renderstatus->resize(1299, 931);
+        centralwidget = new QWidget(renderstatus);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         s_mainWindowGridLayout = new QGridLayout(centralwidget);
         s_mainWindowGridLayout->setObjectName(QStringLiteral("s_mainWindowGridLayout"));
@@ -144,18 +157,22 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-26, -474, 453, 1233));
+        scrollAreaWidgetContents->setGeometry(QRect(-13, -412, 569, 1257));
         gridLayout_9 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_9->addItem(verticalSpacer_2, 1, 0, 1, 1);
+
         groupBox = new QGroupBox(scrollAreaWidgetContents);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        groupBox_5 = new QGroupBox(groupBox);
-        groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
-        gridLayout_5 = new QGridLayout(groupBox_5);
+        TornadoBox = new QGroupBox(groupBox);
+        TornadoBox->setObjectName(QStringLiteral("TornadoBox"));
+        gridLayout_5 = new QGridLayout(TornadoBox);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        Height = new QSpinBox(groupBox_5);
+        Height = new QSpinBox(TornadoBox);
         Height->setObjectName(QStringLiteral("Height"));
         Height->setMaximum(100000);
         Height->setSingleStep(10);
@@ -163,7 +180,7 @@ public:
 
         gridLayout_5->addWidget(Height, 2, 1, 1, 2);
 
-        groupBox_2 = new QGroupBox(groupBox_5);
+        groupBox_2 = new QGroupBox(TornadoBox);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         gridLayout = new QGridLayout(groupBox_2);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
@@ -256,24 +273,24 @@ public:
 
         gridLayout_5->addWidget(groupBox_2, 1, 0, 1, 3);
 
-        label_9 = new QLabel(groupBox_5);
+        label_9 = new QLabel(TornadoBox);
         label_9->setObjectName(QStringLiteral("label_9"));
 
         gridLayout_5->addWidget(label_9, 2, 0, 1, 1);
 
-        radiusMin = new QDoubleSpinBox(groupBox_5);
+        radiusMin = new QDoubleSpinBox(TornadoBox);
         radiusMin->setObjectName(QStringLiteral("radiusMin"));
         radiusMin->setMaximum(100);
         radiusMin->setValue(4);
 
         gridLayout_5->addWidget(radiusMin, 3, 1, 1, 1);
 
-        label_11 = new QLabel(groupBox_5);
+        label_11 = new QLabel(TornadoBox);
         label_11->setObjectName(QStringLiteral("label_11"));
 
         gridLayout_5->addWidget(label_11, 3, 0, 1, 1);
 
-        radiusMax = new QDoubleSpinBox(groupBox_5);
+        radiusMax = new QDoubleSpinBox(TornadoBox);
         radiusMax->setObjectName(QStringLiteral("radiusMax"));
         radiusMax->setMaximum(100);
         radiusMax->setValue(8);
@@ -281,7 +298,7 @@ public:
         gridLayout_5->addWidget(radiusMax, 3, 2, 1, 1);
 
 
-        verticalLayout->addWidget(groupBox_5);
+        verticalLayout->addWidget(TornadoBox);
 
         groupBox_3 = new QGroupBox(groupBox);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
@@ -291,29 +308,30 @@ public:
         ParticleCount->setObjectName(QStringLiteral("ParticleCount"));
         ParticleCount->setMinimum(1);
 
-        gridLayout_3->addWidget(ParticleCount, 2, 1, 1, 1);
-
-        particleOnOff = new QCheckBox(groupBox_3);
-        particleOnOff->setObjectName(QStringLiteral("particleOnOff"));
-
-        gridLayout_3->addWidget(particleOnOff, 1, 0, 1, 1);
+        gridLayout_3->addWidget(ParticleCount, 2, 3, 1, 1);
 
         label_6 = new QLabel(groupBox_3);
         label_6->setObjectName(QStringLiteral("label_6"));
 
-        gridLayout_3->addWidget(label_6, 2, 0, 1, 1);
+        gridLayout_3->addWidget(label_6, 2, 2, 1, 1);
+
+        particleOnOff = new QCheckBox(groupBox_3);
+        particleOnOff->setObjectName(QStringLiteral("particleOnOff"));
+
+        gridLayout_3->addWidget(particleOnOff, 0, 0, 1, 1);
 
         label_10 = new QLabel(groupBox_3);
         label_10->setObjectName(QStringLiteral("label_10"));
 
-        gridLayout_3->addWidget(label_10, 5, 0, 1, 1);
+        gridLayout_3->addWidget(label_10, 2, 0, 1, 1);
 
         ParticleSystemSize = new QSpinBox(groupBox_3);
         ParticleSystemSize->setObjectName(QStringLiteral("ParticleSystemSize"));
         ParticleSystemSize->setMinimum(1);
         ParticleSystemSize->setMaximum(100);
+        ParticleSystemSize->setValue(4);
 
-        gridLayout_3->addWidget(ParticleSystemSize, 6, 0, 1, 1);
+        gridLayout_3->addWidget(ParticleSystemSize, 2, 1, 1, 1);
 
 
         verticalLayout->addWidget(groupBox_3);
@@ -322,27 +340,34 @@ public:
         groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
         gridLayout_4 = new QGridLayout(groupBox_4);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        label_7 = new QLabel(groupBox_4);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        ParticleSize = new QSpinBox(groupBox_4);
+        ParticleSize->setObjectName(QStringLiteral("ParticleSize"));
+        ParticleSize->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        ParticleSize->setMinimum(1);
+        ParticleSize->setMaximum(200);
+        ParticleSize->setValue(15);
 
-        gridLayout_4->addWidget(label_7, 0, 0, 1, 1);
+        gridLayout_4->addWidget(ParticleSize, 1, 1, 1, 1);
 
         label_8 = new QLabel(groupBox_4);
         label_8->setObjectName(QStringLiteral("label_8"));
 
-        gridLayout_4->addWidget(label_8, 1, 0, 1, 1);
+        gridLayout_4->addWidget(label_8, 5, 0, 1, 1);
+
+        label_7 = new QLabel(groupBox_4);
+        label_7->setObjectName(QStringLiteral("label_7"));
+
+        gridLayout_4->addWidget(label_7, 1, 0, 1, 1);
+
+        DephtTest = new QCheckBox(groupBox_4);
+        DephtTest->setObjectName(QStringLiteral("DephtTest"));
+
+        gridLayout_4->addWidget(DephtTest, 1, 2, 1, 1);
 
         texureSlot = new QLineEdit(groupBox_4);
         texureSlot->setObjectName(QStringLiteral("texureSlot"));
 
-        gridLayout_4->addWidget(texureSlot, 2, 0, 1, 2);
-
-        ParticleSize = new QSpinBox(groupBox_4);
-        ParticleSize->setObjectName(QStringLiteral("ParticleSize"));
-        ParticleSize->setMinimum(1);
-        ParticleSize->setMaximum(200);
-
-        gridLayout_4->addWidget(ParticleSize, 0, 1, 1, 1);
+        gridLayout_4->addWidget(texureSlot, 5, 1, 1, 2);
 
 
         verticalLayout->addWidget(groupBox_4);
@@ -381,10 +406,10 @@ public:
 
         gridLayout_6->addWidget(Left, 1, 0, 1, 1);
 
-        label_18 = new QLabel(groupBox_6);
-        label_18->setObjectName(QStringLiteral("label_18"));
+        BGCol_label = new QLabel(groupBox_6);
+        BGCol_label->setObjectName(QStringLiteral("BGCol_label"));
 
-        gridLayout_6->addWidget(label_18, 3, 0, 1, 1);
+        gridLayout_6->addWidget(BGCol_label, 3, 0, 1, 1);
 
         BG_green = new QDoubleSpinBox(groupBox_6);
         BG_green->setObjectName(QStringLiteral("BG_green"));
@@ -427,11 +452,11 @@ public:
 
         verticalLayout->addWidget(groupBox_6);
 
-        groupBox_7 = new QGroupBox(groupBox);
-        groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
-        gridLayout_7 = new QGridLayout(groupBox_7);
+        advancedControlls = new QGroupBox(groupBox);
+        advancedControlls->setObjectName(QStringLiteral("advancedControlls"));
+        gridLayout_7 = new QGridLayout(advancedControlls);
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        groupBox_8 = new QGroupBox(groupBox_7);
+        groupBox_8 = new QGroupBox(advancedControlls);
         groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
         gridLayout_8 = new QGridLayout(groupBox_8);
         gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
@@ -449,6 +474,7 @@ public:
         minLifetime->setObjectName(QStringLiteral("minLifetime"));
         minLifetime->setMinimum(1);
         minLifetime->setMaximum(999);
+        minLifetime->setValue(100);
 
         gridLayout_8->addWidget(minLifetime, 1, 1, 1, 1);
 
@@ -456,6 +482,7 @@ public:
         maxLifeTime->setObjectName(QStringLiteral("maxLifeTime"));
         maxLifeTime->setMinimum(2);
         maxLifeTime->setMaximum(1000);
+        maxLifeTime->setValue(170);
 
         gridLayout_8->addWidget(maxLifeTime, 1, 2, 1, 1);
 
@@ -469,10 +496,18 @@ public:
 
         gridLayout_7->addWidget(groupBox_8, 3, 0, 1, 1);
 
-        groupBox_10 = new QGroupBox(groupBox_7);
+        groupBox_10 = new QGroupBox(advancedControlls);
         groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
         gridLayout_2 = new QGridLayout(groupBox_10);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        ParticleSysTreshold = new QSpinBox(groupBox_10);
+        ParticleSysTreshold->setObjectName(QStringLiteral("ParticleSysTreshold"));
+        ParticleSysTreshold->setMaximum(100000);
+        ParticleSysTreshold->setSingleStep(100);
+        ParticleSysTreshold->setValue(20000);
+
+        gridLayout_2->addWidget(ParticleSysTreshold, 2, 1, 1, 1);
+
         label_15 = new QLabel(groupBox_10);
         label_15->setObjectName(QStringLiteral("label_15"));
 
@@ -521,7 +556,47 @@ public:
 
         gridLayout_2->addWidget(CloudHeight, 1, 3, 1, 1);
 
-        label_13->raise();
+        ProductionRate = new QSpinBox(groupBox_10);
+        ProductionRate->setObjectName(QStringLiteral("ProductionRate"));
+        ProductionRate->setValue(2);
+
+        gridLayout_2->addWidget(ProductionRate, 2, 3, 1, 1);
+
+        label_22 = new QLabel(groupBox_10);
+        label_22->setObjectName(QStringLiteral("label_22"));
+
+        gridLayout_2->addWidget(label_22, 2, 2, 1, 1);
+
+        label_21 = new QLabel(groupBox_10);
+        label_21->setObjectName(QStringLiteral("label_21"));
+
+        gridLayout_2->addWidget(label_21, 2, 0, 1, 1);
+
+        label_23 = new QLabel(groupBox_10);
+        label_23->setObjectName(QStringLiteral("label_23"));
+
+        gridLayout_2->addWidget(label_23, 3, 0, 1, 1);
+
+        label_24 = new QLabel(groupBox_10);
+        label_24->setObjectName(QStringLiteral("label_24"));
+
+        gridLayout_2->addWidget(label_24, 3, 2, 1, 1);
+
+        RadiusGrowth = new QDoubleSpinBox(groupBox_10);
+        RadiusGrowth->setObjectName(QStringLiteral("RadiusGrowth"));
+        RadiusGrowth->setMaximum(200);
+        RadiusGrowth->setValue(55);
+
+        gridLayout_2->addWidget(RadiusGrowth, 3, 3, 1, 1);
+
+        SpeedUp = new QDoubleSpinBox(groupBox_10);
+        SpeedUp->setObjectName(QStringLiteral("SpeedUp"));
+        SpeedUp->setMinimum(0.01);
+        SpeedUp->setSingleStep(0.1);
+        SpeedUp->setValue(2);
+
+        gridLayout_2->addWidget(SpeedUp, 3, 1, 1, 1);
+
         label_13->raise();
         PickUpTime->raise();
         startValue->raise();
@@ -530,17 +605,37 @@ public:
         label_16->raise();
         PickUpRadius->raise();
         CloudHeight->raise();
+        label_21->raise();
+        ParticleSysTreshold->raise();
+        label_22->raise();
+        ProductionRate->raise();
+        label_23->raise();
+        label_24->raise();
+        RadiusGrowth->raise();
+        SpeedUp->raise();
 
         gridLayout_7->addWidget(groupBox_10, 0, 0, 1, 1);
 
-        groupBox_9 = new QGroupBox(groupBox_7);
+        groupBox_9 = new QGroupBox(advancedControlls);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
-        groupBox_10->raise();
+        gridLayout_10 = new QGridLayout(groupBox_9);
+        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
+        ParticleProduction = new QSpinBox(groupBox_9);
+        ParticleProduction->setObjectName(QStringLiteral("ParticleProduction"));
+        ParticleProduction->setValue(1);
+
+        gridLayout_10->addWidget(ParticleProduction, 1, 1, 1, 1);
+
+        label_20 = new QLabel(groupBox_9);
+        label_20->setObjectName(QStringLiteral("label_20"));
+
+        gridLayout_10->addWidget(label_20, 1, 0, 1, 1);
+
 
         gridLayout_7->addWidget(groupBox_9, 2, 0, 1, 1);
 
 
-        verticalLayout->addWidget(groupBox_7);
+        verticalLayout->addWidget(advancedControlls);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -563,75 +658,81 @@ public:
 
         s_mainWindowGridLayout->addWidget(scrollArea, 0, 2, 1, 1);
 
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
+        renderstatus->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(renderstatus);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1217, 27));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
+        menubar->setGeometry(QRect(0, 0, 1299, 27));
+        renderstatus->setMenuBar(menubar);
+        statusbar = new QStatusBar(renderstatus);
         statusbar->setObjectName(QStringLiteral("statusbar"));
-        MainWindow->setStatusBar(statusbar);
+        renderstatus->setStatusBar(statusbar);
 
-        retranslateUi(MainWindow);
+        retranslateUi(renderstatus);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(renderstatus);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *renderstatus)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        groupBox->setTitle(QApplication::translate("MainWindow", "GroupBox", 0));
-        groupBox_5->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "ControlPoints", 0));
-        label_4->setText(QApplication::translate("MainWindow", "Point2", 0));
-        label_2->setText(QApplication::translate("MainWindow", "X", 0));
-        label_12->setText(QApplication::translate("MainWindow", "Curves", 0));
-        label_5->setText(QApplication::translate("MainWindow", "Point3", 0));
-        label->setText(QApplication::translate("MainWindow", "Point1", 0));
-        label_3->setText(QApplication::translate("MainWindow", "Y", 0));
-        label_9->setText(QApplication::translate("MainWindow", "Tornado Height", 0));
-        label_11->setText(QApplication::translate("MainWindow", "Radius Range", 0));
-        groupBox_3->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
-        particleOnOff->setText(QApplication::translate("MainWindow", "Particles", 0));
-        label_6->setText(QApplication::translate("MainWindow", "Particle Count", 0));
-        label_10->setText(QApplication::translate("MainWindow", "Particle System Size", 0));
-        groupBox_4->setTitle(QApplication::translate("MainWindow", "Particle", 0));
-        label_7->setText(QApplication::translate("MainWindow", "Particle Size", 0));
-        label_8->setText(QApplication::translate("MainWindow", "Texure", 0));
-        texureSlot->setText(QApplication::translate("MainWindow", "textures/point.tif", 0));
-        groupBox_6->setTitle(QApplication::translate("MainWindow", "Window Controlls", 0));
-        RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
-        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
-        zoomIn->setText(QApplication::translate("MainWindow", "Zoom In", 0));
-        Right->setText(QApplication::translate("MainWindow", "Right", 0));
-        RotateDown->setText(QApplication::translate("MainWindow", "Rotate Down", 0));
-        Left->setText(QApplication::translate("MainWindow", "Left", 0));
-        label_18->setText(QApplication::translate("MainWindow", "Background Colour", 0));
-        Up->setText(QApplication::translate("MainWindow", "Up", 0));
-        Down->setText(QApplication::translate("MainWindow", "Down", 0));
-        groupBox_7->setTitle(QApplication::translate("MainWindow", "Advanced Controlls", 0));
-        groupBox_8->setTitle(QApplication::translate("MainWindow", "Particle", 0));
-        label_17->setText(QApplication::translate("MainWindow", "Movement Type", 0));
-        label_19->setText(QApplication::translate("MainWindow", "Life Time Range", 0));
+        renderstatus->setWindowTitle(QApplication::translate("renderstatus", "MainWindow", 0));
+        groupBox->setTitle(QApplication::translate("renderstatus", "Tornado Creator", 0));
+        TornadoBox->setTitle(QApplication::translate("renderstatus", "Tornado", 0));
+        groupBox_2->setTitle(QApplication::translate("renderstatus", "ControlPoints", 0));
+        label_4->setText(QApplication::translate("renderstatus", "Point2", 0));
+        label_2->setText(QApplication::translate("renderstatus", "X", 0));
+        label_12->setText(QApplication::translate("renderstatus", "Curves", 0));
+        label_5->setText(QApplication::translate("renderstatus", "Point3", 0));
+        label->setText(QApplication::translate("renderstatus", "Point1", 0));
+        label_3->setText(QApplication::translate("renderstatus", "Y", 0));
+        label_9->setText(QApplication::translate("renderstatus", "Tornado Height", 0));
+        label_11->setText(QApplication::translate("renderstatus", "Radius Range", 0));
+        groupBox_3->setTitle(QApplication::translate("renderstatus", "Particle System", 0));
+        label_6->setText(QApplication::translate("renderstatus", "Particle Count", 0));
+        particleOnOff->setText(QApplication::translate("renderstatus", "Particles", 0));
+        label_10->setText(QApplication::translate("renderstatus", "Particle System Size", 0));
+        groupBox_4->setTitle(QApplication::translate("renderstatus", "Particle", 0));
+        label_8->setText(QApplication::translate("renderstatus", "Texture", 0));
+        label_7->setText(QApplication::translate("renderstatus", "Particle Size", 0));
+        DephtTest->setText(QApplication::translate("renderstatus", "Depth Sort", 0));
+        texureSlot->setText(QApplication::translate("renderstatus", "textures/particles.png", 0));
+        groupBox_6->setTitle(QApplication::translate("renderstatus", "Window Controlls", 0));
+        RotateUp->setText(QApplication::translate("renderstatus", "Rotate Up", 0));
+        zoomOut->setText(QApplication::translate("renderstatus", "Zoom Out", 0));
+        zoomIn->setText(QApplication::translate("renderstatus", "Zoom In", 0));
+        Right->setText(QApplication::translate("renderstatus", "Right", 0));
+        RotateDown->setText(QApplication::translate("renderstatus", "Rotate Down", 0));
+        Left->setText(QApplication::translate("renderstatus", "Left", 0));
+        BGCol_label->setText(QApplication::translate("renderstatus", "Background Colour", 0));
+        Up->setText(QApplication::translate("renderstatus", "Up", 0));
+        Down->setText(QApplication::translate("renderstatus", "Down", 0));
+        advancedControlls->setTitle(QApplication::translate("renderstatus", "Advanced Controlls", 0));
+        groupBox_8->setTitle(QApplication::translate("renderstatus", "Particle", 0));
+        label_17->setText(QApplication::translate("renderstatus", "Movement Type", 0));
+        label_19->setText(QApplication::translate("renderstatus", "Life Time Range", 0));
         MovementSelection->clear();
         MovementSelection->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Tornado Center Attraction", 0)
-         << QApplication::translate("MainWindow", "Random Points", 0)
+         << QApplication::translate("renderstatus", "Tornado Center Attraction", 0)
+         << QApplication::translate("renderstatus", "Random Points", 0)
         );
-        groupBox_10->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
-        label_15->setText(QApplication::translate("MainWindow", "Starting Value", 0));
-        label_16->setText(QApplication::translate("MainWindow", "Cloud Height", 0));
-        label_14->setText(QApplication::translate("MainWindow", "Pick Up Radius", 0));
-        label_13->setText(QApplication::translate("MainWindow", "Pick Up Time", 0));
-        groupBox_9->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
-        m_restartButton->setText(QApplication::translate("MainWindow", "Reset", 0));
-        m_RenderButton->setText(QApplication::translate("MainWindow", "Render", 0));
+        groupBox_10->setTitle(QApplication::translate("renderstatus", "Tornado", 0));
+        label_15->setText(QApplication::translate("renderstatus", "Starting Value", 0));
+        label_16->setText(QApplication::translate("renderstatus", "Cloud Height", 0));
+        label_14->setText(QApplication::translate("renderstatus", "Pick Up Radius", 0));
+        label_13->setText(QApplication::translate("renderstatus", "Pick Up Time", 0));
+        label_22->setText(QApplication::translate("renderstatus", "Production Rate", 0));
+        label_21->setText(QApplication::translate("renderstatus", "Particle System Treshold", 0));
+        label_23->setText(QApplication::translate("renderstatus", "Upwards Speed", 0));
+        label_24->setText(QApplication::translate("renderstatus", "Radius Growth", 0));
+        groupBox_9->setTitle(QApplication::translate("renderstatus", "Particle System", 0));
+        label_20->setText(QApplication::translate("renderstatus", "Particle Production Rate", 0));
+        m_restartButton->setText(QApplication::translate("renderstatus", "Reset", 0));
+        m_RenderButton->setText(QApplication::translate("renderstatus", "Render", 0));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class renderstatus: public Ui_renderstatus {};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -10,22 +10,23 @@ isEqual(QT_MAJOR_VERSION, 5) {
 
 MOC_DIR=moc
 CONFIG-=app_bundle
-SOURCES+=$$PWD/src/TornadoCurve.cpp \
-         $$PWD/src/main.cpp \
+SOURCES+=src/TornadoCurve.cpp \
+         src/main.cpp \
     src/Particle.cpp \
     src/ParticleSystem.cpp \
     src/Tornado.cpp \
     src/NGL_Context.cpp \
     src/MainWindow.cpp
-OBJECTS_DIR= $$PWD/obj
 
-HEADERS+=$$PWD/include/TornadoCurve.h \
+
+HEADERS+=include/TornadoCurve.h \
     include/Particle.h \
     include/ParticleSystem.h \
     include/Tornado.h \
     include/NGL_Context.h \
-    include/Shaders.h \
     include/MainWindow.h
+
+OBJECTS_DIR= $$PWD/obj
 
 INCLUDEPATH+=$$PWD/include
 
@@ -33,17 +34,6 @@ DESTDIR=./
 
 CONFIG += console
 
-
-#QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
-#LIBS+=$$system(Magick++-config --ldflags --libs )
-#macx:CONFIG+=c++11
-
-#macx:INCLUDEPATH+=/usr/local/include/ImageMagick-6/
-
-#macx:INCLUDEPATH+=/usr/local/include
-#macx:LIBS+= -L/usr/local/lib/ -lMagick++-6.Q16 -lc++
-
-#macx:QMAKE_CXXFLAGS+= -std=c++11 -stdlib=libc++
 
 QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
 LIBS+=$$system(Magick++-config --ldflags --libs )
@@ -58,16 +48,16 @@ OTHER_FILES+= README.mp \
 
 !equals(PWD, $${OUT_PWD}){
         copydata.commands = echo "creating destination dirs" ;
-        # now make a dir
+
         copydata.commands += mkdir -p $$OUT_PWD/shaders ;
         copydata.commands += echo "copying files" ;
-        # then copy the files
+
         copydata.commands += $(COPY_DIR) $$PWD/shaders/* $$OUT_PWD/shaders/ ;
-        # now make sure the first target is built before copy
+
         first.depends = $(first) copydata
         export(first.depends)
         export(copydata.commands)
-        # now add it as an extra target
+
         QMAKE_EXTRA_TARGETS += first copydata
 }
 

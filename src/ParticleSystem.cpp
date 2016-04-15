@@ -27,7 +27,7 @@ m_radius(5)
 
 }
 
-ParticleSystem::ParticleSystem(float _radius, float _offset,int treshold):
+ParticleSystem::ParticleSystem(float _radius, float _offset, int treshold, int _cloudHeight, int _productionRate,int _lifetimeRange[2]):
 m_offset(_offset),
 m_radius(_radius)
 {
@@ -40,10 +40,10 @@ m_radius(_radius)
 
     m_age = 0;
 
-    m_cloudHeight=15;
-    m_lifeTimeRange=ngl::Vec2(100,170);
+    m_cloudHeight=_cloudHeight;
+    m_lifeTimeRange=ngl::Vec2(_lifetimeRange[0],_lifetimeRange[1]);
     m_particleTreshold=treshold;
-    m_maxProductionRate=1;
+    m_maxProductionRate=_productionRate;
     m_particleCount=0;
 
     createParticles();
@@ -153,4 +153,9 @@ void ParticleSystem::setCloudHeight(int _changeValue)
 void ParticleSystem::setlifeTimeRange(int _changeValue,int _minMax)
 {
   m_lifeTimeRange[_minMax]=_changeValue;
+}
+
+void ParticleSystem::setProductionRate(int _value)
+{
+  m_maxProductionRate=_value;
 }

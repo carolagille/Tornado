@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Tornado1.0.0
-DISTDIR = /home/i7679783/Tornado/obj/Tornado1.0.0
+DISTDIR = /home/i7679783/TornadoBackup/Tornado/obj/Tornado1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/qt/5.5/gcc_64 -Wl,-rpath,/home/i7679783/NGL/lib -Wl,-rpath,/opt/qt/5.5/gcc_64/lib
 LIBS          = $(SUBLIBS) -lMagick++ -lMagickCore -L/usr/local/lib -L/home/i7679783/NGL/lib -l NGL -ltiff -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -75,7 +75,6 @@ DIST          = .qmake.stash \
 		include/ParticleSystem.h \
 		include/Tornado.h \
 		include/NGL_Context.h \
-		include/Shaders.h \
 		include/MainWindow.h src/TornadoCurve.cpp \
 		src/main.cpp \
 		src/Particle.cpp \
@@ -404,7 +403,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/TornadoCurve.h include/Particle.h include/ParticleSystem.h include/Tornado.h include/NGL_Context.h include/Shaders.h include/MainWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents include/TornadoCurve.h include/Particle.h include/ParticleSystem.h include/Tornado.h include/NGL_Context.h include/MainWindow.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/TornadoCurve.cpp src/main.cpp src/Particle.cpp src/ParticleSystem.cpp src/Tornado.cpp src/NGL_Context.cpp src/MainWindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/MainWindow.ui $(DISTDIR)/
 
@@ -553,7 +552,7 @@ moc/moc_TornadoCurve.cpp: /home/i7679783/NGL/include/ngl/Vec3.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QObject \
 		include/TornadoCurve.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/Tornado -I/home/i7679783/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/TornadoCurve.h -o moc/moc_TornadoCurve.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/TornadoBackup/Tornado -I/home/i7679783/TornadoBackup/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/TornadoCurve.h -o moc/moc_TornadoCurve.cpp
 
 moc/moc_Tornado.cpp: include/TornadoCurve.h \
 		/home/i7679783/NGL/include/ngl/Vec3.h \
@@ -680,7 +679,7 @@ moc/moc_Tornado.cpp: include/TornadoCurve.h \
 		/home/i7679783/NGL/include/ngl/Vec4.h \
 		/home/i7679783/NGL/include/ngl/Vec2.h \
 		include/Tornado.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/Tornado -I/home/i7679783/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/Tornado.h -o moc/moc_Tornado.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/TornadoBackup/Tornado -I/home/i7679783/TornadoBackup/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/Tornado.h -o moc/moc_Tornado.cpp
 
 moc/moc_NGL_Context.cpp: /home/i7679783/NGL/include/ngl/Camera.h \
 		/home/i7679783/NGL/include/ngl/Types.h \
@@ -820,8 +819,13 @@ moc/moc_NGL_Context.cpp: /home/i7679783/NGL/include/ngl/Camera.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/i7679783/NGL/include/ngl/Text.h \
+		/home/i7679783/NGL/include/ngl/Colour.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		include/NGL_Context.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/Tornado -I/home/i7679783/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/NGL_Context.h -o moc/moc_NGL_Context.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/TornadoBackup/Tornado -I/home/i7679783/TornadoBackup/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/NGL_Context.h -o moc/moc_NGL_Context.cpp
 
 moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -966,8 +970,13 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/i7679783/NGL/include/ngl/Text.h \
+		/home/i7679783/NGL/include/ngl/Colour.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		include/MainWindow.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/Tornado -I/home/i7679783/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/MainWindow.h -o moc/moc_MainWindow.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7679783/TornadoBackup/Tornado -I/home/i7679783/TornadoBackup/Tornado/include -I/home/i7679783/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/MainWindow.h -o moc/moc_MainWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1255,6 +1264,11 @@ obj/main.o: src/main.cpp include/TornadoCurve.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/i7679783/NGL/include/ngl/Text.h \
+		/home/i7679783/NGL/include/ngl/Colour.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1783,12 +1797,15 @@ obj/NGL_Context.o: src/NGL_Context.cpp /opt/qt/5.5/gcc_64/include/QtGui/QGuiAppl
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/i7679783/NGL/include/ngl/Text.h \
+		/home/i7679783/NGL/include/ngl/Colour.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/home/i7679783/NGL/include/ngl/NGLInit.h \
 		/home/i7679783/NGL/include/ngl/Singleton.h \
 		/home/i7679783/NGL/include/ngl/VAOPrimitives.h \
-		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7679783/NGL/include/ngl/ShaderLib.h \
-		/home/i7679783/NGL/include/ngl/Colour.h \
 		/home/i7679783/NGL/include/ngl/Shader.h \
 		/home/i7679783/NGL/include/ngl/ShaderProgram.h \
 		/home/i7679783/NGL/include/ngl/Util.h \
@@ -1798,7 +1815,8 @@ obj/NGL_Context.o: src/NGL_Context.cpp /opt/qt/5.5/gcc_64/include/QtGui/QGuiAppl
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qicon.h
+		/opt/qt/5.5/gcc_64/include/QtGui/qicon.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/QImage
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGL_Context.o src/NGL_Context.cpp
 
 obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
@@ -1945,6 +1963,11 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qopenglwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/i7679783/NGL/include/ngl/Text.h \
+		/home/i7679783/NGL/include/ngl/Colour.h \
+		/home/i7679783/NGL/include/ngl/VertexArrayObject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		ui_MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MainWindow.o src/MainWindow.cpp
 
