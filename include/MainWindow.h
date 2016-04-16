@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "NGL_Context.h"
 #include "TornadoCurve.h"
-
 /// @file NGL_Context.h
 /// @brief this class inherits from QOpenGLWidget
 /// @author Carola Gille
@@ -12,6 +11,7 @@
 /// @date 15/04/16
 /// @class NGL_Context
 /// @brief Our Ngl Scene that is making a window that is used as a widget and displays the scene and the tornado
+
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 {
   Q_OBJECT
 public slots:
-  /// @brief restart function that resets the tornado and ui
+/// @brief restart function that resets the tornado and ui
   void restart();
 
 
@@ -32,15 +32,15 @@ public:
 
   explicit MainWindow(bool _simple, QWidget *parent = 0);
 
-  ///@brief destructor
+///@brief destructor
   ~MainWindow();
 
 private:
-  /// @brief pointer to the Tornado Curve object
+/// @brief pointer to the Tornado Curve object
   TornadoCurve *m_curve;
-  ///@brief pointer to the UI
+///@brief pointer to the UI
   Ui::MainWindow *m_ui;
-  ///@brief pointer to the NGL Scene
+///@brief pointer to the NGL Scene
   NGL_Context *m_scene;
 
 

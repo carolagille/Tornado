@@ -27,7 +27,7 @@ m_radius(5)
 
 }
 
-ParticleSystem::ParticleSystem(float _radius, float _offset, int treshold, int _cloudHeight, int _productionRate,int _lifetimeRange[2]):
+ParticleSystem::ParticleSystem(float _radius, float _offset, int _treshold, int _cloudHeight, int _productionRate, int _lifetimeRange[2]):
 m_offset(_offset),
 m_radius(_radius)
 {
@@ -42,7 +42,7 @@ m_radius(_radius)
 
     m_cloudHeight=_cloudHeight;
     m_lifeTimeRange=ngl::Vec2(_lifetimeRange[0],_lifetimeRange[1]);
-    m_particleTreshold=treshold;
+    m_particleTreshold=_treshold;
     m_maxProductionRate=_productionRate;
     m_particleCount=0;
 
@@ -88,7 +88,7 @@ std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position, std::vector<ngl
       }
       else
       {
-        m_particleList[i]->move(_position,m_position,m_boundingBox);
+        m_particleList[i]->move(_position,m_boundingBox);
        }
         //m_particleList[i]->move(ngl::Vec3(30.0,0.0,0.0),ngl::Vec3(30.0,0.0,0.0),m_boundingBox,ngl::Vec3(0.0,0.0,0.0));
 

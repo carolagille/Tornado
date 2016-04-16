@@ -16,9 +16,8 @@ Particle::Particle( ngl::Vec3 _center, float _radius,ngl::Vec2 _lifeRange)
 
     m_age=0;
     m_velocity=ngl::Vec3(0.0f,0.0f,0.0f);
-    m_counter=0;
+
     m_position=place(_center,_radius);
-    m_newPosition =ngl::Vec3(0.0f,0.0f,0.0f);
 }
 
 Particle::~Particle()

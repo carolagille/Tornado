@@ -3,13 +3,28 @@
 #include "Particle.h"
 #include <memory>
 
+
+/// @file ParticleSystem.h
+/// @brief
+/// @author Carola Gille
+/// @version 1.0
+/// @date 15/04/16
+/// @class ParticleSystem
+/// @brief Particle System Class that defines a particle system holding a list of particle objects
+
+
 class ParticleSystem
-//PArticle system Class which creates a colletion of particles that are born live and die over time, they hover around the particle systems center and
-// create their own movement. The particle system erases it self when it reaches the top of the tornadoe and is moved along a curve defined int the
-//Tornado class.
 {
 public:
-    ParticleSystem(float _radius, float _offset, int treshold,int _cloudHeight,int _productionRate,int _lifetimeRange[2]); // constructor takes in the radius from the Tornado class
+    ///@brief Constructor that had input values to allow more control over the particle system
+    /// @param _radius the radius that is used by the tornado curve class to calculate the radius its rotating around the tornado
+    /// @param _offset offset value that is used by the tornado curve to offset the starting position of the rotation
+    /// @param _treshold sets a value that hold the treshold so the max particle value of this particle system
+    /// @param _cloudHeight defines the height of the cloud that is created a t the top of the tornado
+    /// it is used to check when the particle system is meant to be killed
+    /// increasing the height will automatically make the cloud wider as it keeps growing outwards
+    /// @param _productionRate
+    ParticleSystem(float _radius, float _offset, int _treshold,int _cloudHeight,int _productionRate,int _lifetimeRange[2]); // constructor takes in the radius from the Tornado class
     ParticleSystem();
     ~ParticleSystem();
     void createParticles(); //creates Particle if the Treshold isn't reached yet

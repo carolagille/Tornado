@@ -45,13 +45,14 @@ public:
     ///@brief gets the particles position
     ngl::Vec3 getPoints();
 private:
+    ///@brief stores the particles position
     ngl::Vec3 m_position;
+    ///@brief stores the particles lifetime
     int m_lifetime;
+    ///@brief saves the particles age
     int m_age;
+    ///@brief saves the velocity of the particle
     ngl::Vec3 m_velocity;
-
-    int m_counter;
-    ngl::Vec3 m_newPosition;
 
 };
 
