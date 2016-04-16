@@ -5,6 +5,14 @@
 #include "NGL_Context.h"
 #include "TornadoCurve.h"
 
+/// @file NGL_Context.h
+/// @brief this class inherits from QOpenGLWidget
+/// @author Carola Gille
+/// @version 1.0
+/// @date 15/04/16
+/// @class NGL_Context
+/// @brief Our Ngl Scene that is making a window that is used as a widget and displays the scene and the tornado
+
 namespace Ui {
 class MainWindow;
 }

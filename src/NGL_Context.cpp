@@ -8,7 +8,7 @@
 #include <ngl/Util.h>
 #include <stdlib.h>
 #include <fstream>
-#include <Magick++.h>
+//#include <Magick++.h>
 #include <sstream>
 #include <ngl/Image.h>
 #include "MainWindow.h"

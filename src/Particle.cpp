@@ -25,7 +25,7 @@ Particle::~Particle()
 {
     //std::cout<<"Destructor Particle called"<<std::endl;
 }
-void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox)
+void Particle::move(ngl::Vec3 _newCenter,  float _boundingBox)
 {
 
 

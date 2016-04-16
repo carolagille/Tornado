@@ -6,17 +6,43 @@
 #include <iostream>
 #include <random>
 
+/// @file Particle.h
+/// @brief
+/// @author Carola Gille
+/// @version 1.0
+/// @date 15/04/16
+/// @class Particle
+/// @brief Particle Class that defines one single particle
+
+
 class Particle
-//Particle Class that creates a Partcile and a point representation of it. It moves with its particles origin and creats and in and out movement by
-// getting attracted and pushed away from its particle systems center
 {
 public:
-    Particle(ngl::Vec3 _center, float _radius,ngl::Vec2 _lifeRange);//Constructor get given a random radius and rgba value
+    ///@brief Particle Constructor
+    /// @param _center takes in the center of the particle system
+    /// @param _radius defining the radius that the particle can be placed in
+    /// @param _lifeRange sets the life time of the particle
+    Particle(ngl::Vec3 _center, float _radius,ngl::Vec2 _lifeRange);
+    ///@brief Particle Destructor
     ~Particle();
-    int checkLife(); //checkes if the Particle should be killed or not
-    void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox, ngl::Vec3 _tornadoCenter); //moving the particle based on a flock system kind of movement
-    void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox);
-    ngl::Vec3 place(ngl::Vec3 _center, float _boundingBox); //called when constructed to place the particle near its particles origin
+    ///@brief checks if the particle life has exeeded and returns 1 if if did
+    int checkLife();
+    ///@brief moving function that moves the particle based on attraction to
+    /// the tornado center and the particle system movement
+    /// @param _newCenter is the particles systems new center
+    /// @param _center old center of particle system to calculate the velocity
+    /// @param _boundingBox gives the bounding box that the particle can move in
+    /// @param _tornadoCenter takes in the tornadoes center
+    void move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox, ngl::Vec3 _tornadoCenter);
+    /// @brief moving function that moves the particle to a random point in the bounding box
+    /// @param _newCenter passes the new center of the particle system
+    /// @param _boundinBox defines the boundingBox in which the particle can be placed
+    void move(ngl::Vec3 _newCenter, float _boundingBox);
+    /// @brief places the particle in a boundbox around a center
+    /// @param _center takes in the particle systems center
+    /// @param _boundingBox takes in the bounding box in which the particle can be placed
+    ngl::Vec3 place(ngl::Vec3 _center, float _boundingBox);
+    ///@brief gets the particles position
     ngl::Vec3 getPoints();
 private:
     ngl::Vec3 m_position;
