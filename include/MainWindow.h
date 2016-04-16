@@ -27,8 +27,8 @@ public slots:
 
 public:
   /// @brief constructor for our main window class
-  /// @param _simple bool value that controlls the interface layout 0=advanced UI 1=simple UI
-  /// @param [in] parent the parent widget to the class
+  /// @param[in] _simple bool value that controlls the interface layout 0=advanced UI 1=simple UI
+  /// @param[in] parent the parent widget to the class
 
   explicit MainWindow(bool _simple, QWidget *parent = 0);
 

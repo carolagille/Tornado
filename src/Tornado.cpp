@@ -110,10 +110,10 @@ void Tornado::update()
         m_curve->spiral(m_particleSystemList[i]->m_radius,particleAge, m_particleSystemList[i]->m_offset);
         ngl::Vec3 point = m_curve->getPoint();
         //point=ngl::Vec3(30.0f,0.0f,0.0f);
-
+        center= m_curve->getMidPoint();
         m_storeParticleSysList.push_back(point);
         //m_storeParticleSysList.push_back((10.0f,10.0f,10.0f));
-        m_storeParticlePos = m_particleSystemList[i]->move(point,m_storeParticlePos,center,m_particleMoveState);
+        m_particleSystemList[i]->move(point,&m_storeParticlePos,center,m_particleMoveState);
         int out=m_particleSystemList[i]->checkKill(m_maxHeight);
         if (out==1)
         {
@@ -170,7 +170,7 @@ void Tornado::particlesOnOff(bool state=0)
     for(int i =0;i<(int)m_storeParticleSysList.size();++i)
     {
 
-      m_particleSystemList[i]->switchParticles(m_particleState);
+      m_particleSystemList[i]->setParticles(m_particleState);
 
     }
 }
@@ -183,7 +183,7 @@ void Tornado::changeParticleCount(int value)
   for(int i =0;i<(int)m_storeParticleSysList.size();++i)
   {
 
-    m_particleSystemList[i]->switchParticles(m_particleState);
+    m_particleSystemList[i]->setParticles(m_particleState);
 
   }
   }

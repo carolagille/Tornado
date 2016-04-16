@@ -76,7 +76,7 @@ void ParticleSystem::createParticles()
     }
 }
 
-std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position, std::vector<ngl::Vec3> _particlePos, ngl::Vec3 _center, int _particleMoveState)
+void ParticleSystem::move(ngl::Vec3 _position, std::vector<ngl::Vec3>* _particlePosList, ngl::Vec3 _center, int _particleMoveState)
 {
 
     createParticles();
@@ -94,7 +94,7 @@ std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position, std::vector<ngl
 
         ngl::Vec3 position(m_particleList[i]->getPoints());
         //std::cout<<"position:"<< position[0]<<position[1]<<position[2]<<"\n";
-        _particlePos.push_back(position);
+        _particlePosList->push_back(position);
         //std::cout<<"listSIze"<<_particlePos.size()<<"\n";
 
         int out=m_particleList[i]->checkLife();
@@ -118,7 +118,7 @@ std::vector<ngl::Vec3> ParticleSystem::move(ngl::Vec3 _position, std::vector<ngl
 
     //insert Curve function stuff here
     m_age++;
-    return _particlePos;
+
 }
 
 
@@ -140,9 +140,9 @@ int ParticleSystem::getParticleCount()
 {
     return m_particleCount;
 }
-void ParticleSystem::switchParticles(int value)
+void ParticleSystem::setParticles(int _value)
 {
-    m_particleTreshold=value;
+    m_particleTreshold=_value;
 
 }
 void ParticleSystem::setCloudHeight(int _changeValue)

@@ -27,17 +27,17 @@ public slots:
   void renderOnOff();
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the particle size
-  ///@param _value the value to set
+  ///@param[in] _value the value to set
   //----------------------------------------------------------------------------------------------------------------------
   void changeParticleSize(int _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the particle system size
-  ///@param _value the value to set
+  ///@param[in] _value the value to set
   //----------------------------------------------------------------------------------------------------------------------
   void changeParticleSubSys(int _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the texure name
-  ///@param _texureName the QString to set
+  ///@param[in] _texureName the QString to set
   //----------------------------------------------------------------------------------------------------------------------
   void setTexure(QString _texureName);
   //----------------------------------------------------------------------------------------------------------------------
@@ -74,67 +74,67 @@ public slots:
   void zoomOut();
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the red value of the background colour
-  ///@param _value the value its setting
+  ///@param[in] _value the value its setting
   //----------------------------------------------------------------------------------------------------------------------
   void setBGColourR(double _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the green value of the background colour
-  ///@param _value the value its setting
+  ///@param[in] _value the value its setting
   //----------------------------------------------------------------------------------------------------------------------
   void setBGColourG(double _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that sets the blue value of the background colour
-  ///@param _value the value its setting
+  ///@param[in] _value the value its setting
   //----------------------------------------------------------------------------------------------------------------------
   void setBGColourB(double _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief slot that turn depth testing on and off
-  ///@param _value that set on and off
+  ///@param[in] _value that set on and off
   //----------------------------------------------------------------------------------------------------------------------
   void setDepthsortValue(bool _value);
 
 signals:
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetParticleSize(int _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetParticleSysSize(int _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when string is reset
-  ///@param _value the string it is emiting
+  ///@param[in] _value the string it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetTexure(QString _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetDepthsortValue(bool _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetBGColourR(double _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetBGColourG(double _value);
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief emit a signal when value is reset
-  ///@param _value the value it is emiting
+  ///@param[in] _value the value it is emiting
   //----------------------------------------------------------------------------------------------------------------------
   void resetBGColourB(double _value);
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
   ///@brief Constructor of NGL_Context
-  ///@param _parent the parent Window to create the GL context
-  ///@param _tornado pointer to tornado object to access data
+  ///@param[in] _parent the parent Window to create the GL context
+  ///@param[in] _tornado pointer to tornado object to access data
   //----------------------------------------------------------------------------------------------------------------------
     NGL_Context(QWidget *_parent ,Tornado *_tornado);
     //----------------------------------------------------------------------------------------------------------------------
@@ -162,7 +162,7 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief gets called everytime the timer increases and calls
     /// all update functions
-    /// @param _event timer event value
+    /// @param[in] _event timer event value
     //----------------------------------------------------------------------------------------------------------------------
     void timerEvent(QTimerEvent *_event);
     //----------------------------------------------------------------------------------------------------------------------
@@ -187,9 +187,10 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     void restart();
     //----------------------------------------------------------------------------------------------------------------------
-    ///@brief compares two points regarding their x value and return ture if a is bigger than b
-    /// @param _a first comparison value
-    /// @param _b second comparison value
+    ///@brief compares two points regarding their x value
+    /// @param[in] _a first comparison value
+    /// @param[in] _b second comparison value
+    /// @param[out] returns 1 if a is bigger than b
     //----------------------------------------------------------------------------------------------------------------------
     static bool depthSort(ngl::Vec3 _a, ngl::Vec3 _b);
 

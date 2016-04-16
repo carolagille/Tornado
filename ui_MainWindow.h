@@ -33,7 +33,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_renderstatus
+class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
@@ -134,13 +134,13 @@ public:
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *renderstatus)
+    void setupUi(QMainWindow *MainWindow)
     {
-        if (renderstatus->objectName().isEmpty())
-            renderstatus->setObjectName(QStringLiteral("renderstatus"));
-        renderstatus->setEnabled(true);
-        renderstatus->resize(1299, 931);
-        centralwidget = new QWidget(renderstatus);
+        if (MainWindow->objectName().isEmpty())
+            MainWindow->setObjectName(QStringLiteral("MainWindow"));
+        MainWindow->setEnabled(true);
+        MainWindow->resize(1299, 931);
+        centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         s_mainWindowGridLayout = new QGridLayout(centralwidget);
         s_mainWindowGridLayout->setObjectName(QStringLiteral("s_mainWindowGridLayout"));
@@ -157,7 +157,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-13, -412, 569, 1257));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 569, 1257));
         gridLayout_9 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -658,81 +658,81 @@ public:
 
         s_mainWindowGridLayout->addWidget(scrollArea, 0, 2, 1, 1);
 
-        renderstatus->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(renderstatus);
+        MainWindow->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 1299, 27));
-        renderstatus->setMenuBar(menubar);
-        statusbar = new QStatusBar(renderstatus);
+        MainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
-        renderstatus->setStatusBar(statusbar);
+        MainWindow->setStatusBar(statusbar);
 
-        retranslateUi(renderstatus);
+        retranslateUi(MainWindow);
 
-        QMetaObject::connectSlotsByName(renderstatus);
+        QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *renderstatus)
+    void retranslateUi(QMainWindow *MainWindow)
     {
-        renderstatus->setWindowTitle(QApplication::translate("renderstatus", "MainWindow", 0));
-        groupBox->setTitle(QApplication::translate("renderstatus", "Tornado Creator", 0));
-        TornadoBox->setTitle(QApplication::translate("renderstatus", "Tornado", 0));
-        groupBox_2->setTitle(QApplication::translate("renderstatus", "ControlPoints", 0));
-        label_4->setText(QApplication::translate("renderstatus", "Point2", 0));
-        label_2->setText(QApplication::translate("renderstatus", "X", 0));
-        label_12->setText(QApplication::translate("renderstatus", "Curves", 0));
-        label_5->setText(QApplication::translate("renderstatus", "Point3", 0));
-        label->setText(QApplication::translate("renderstatus", "Point1", 0));
-        label_3->setText(QApplication::translate("renderstatus", "Y", 0));
-        label_9->setText(QApplication::translate("renderstatus", "Tornado Height", 0));
-        label_11->setText(QApplication::translate("renderstatus", "Radius Range", 0));
-        groupBox_3->setTitle(QApplication::translate("renderstatus", "Particle System", 0));
-        label_6->setText(QApplication::translate("renderstatus", "Particle Count", 0));
-        particleOnOff->setText(QApplication::translate("renderstatus", "Particles", 0));
-        label_10->setText(QApplication::translate("renderstatus", "Particle System Size", 0));
-        groupBox_4->setTitle(QApplication::translate("renderstatus", "Particle", 0));
-        label_8->setText(QApplication::translate("renderstatus", "Texture", 0));
-        label_7->setText(QApplication::translate("renderstatus", "Particle Size", 0));
-        DephtTest->setText(QApplication::translate("renderstatus", "Depth Sort", 0));
-        texureSlot->setText(QApplication::translate("renderstatus", "textures/particles.png", 0));
-        groupBox_6->setTitle(QApplication::translate("renderstatus", "Window Controlls", 0));
-        RotateUp->setText(QApplication::translate("renderstatus", "Rotate Up", 0));
-        zoomOut->setText(QApplication::translate("renderstatus", "Zoom Out", 0));
-        zoomIn->setText(QApplication::translate("renderstatus", "Zoom In", 0));
-        Right->setText(QApplication::translate("renderstatus", "Right", 0));
-        RotateDown->setText(QApplication::translate("renderstatus", "Rotate Down", 0));
-        Left->setText(QApplication::translate("renderstatus", "Left", 0));
-        BGCol_label->setText(QApplication::translate("renderstatus", "Background Colour", 0));
-        Up->setText(QApplication::translate("renderstatus", "Up", 0));
-        Down->setText(QApplication::translate("renderstatus", "Down", 0));
-        advancedControlls->setTitle(QApplication::translate("renderstatus", "Advanced Controlls", 0));
-        groupBox_8->setTitle(QApplication::translate("renderstatus", "Particle", 0));
-        label_17->setText(QApplication::translate("renderstatus", "Movement Type", 0));
-        label_19->setText(QApplication::translate("renderstatus", "Life Time Range", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Tornado Creator", 0));
+        TornadoBox->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "ControlPoints", 0));
+        label_4->setText(QApplication::translate("MainWindow", "Point2", 0));
+        label_2->setText(QApplication::translate("MainWindow", "X", 0));
+        label_12->setText(QApplication::translate("MainWindow", "Curves", 0));
+        label_5->setText(QApplication::translate("MainWindow", "Point3", 0));
+        label->setText(QApplication::translate("MainWindow", "Point1", 0));
+        label_3->setText(QApplication::translate("MainWindow", "Y", 0));
+        label_9->setText(QApplication::translate("MainWindow", "Tornado Height", 0));
+        label_11->setText(QApplication::translate("MainWindow", "Radius Range", 0));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
+        label_6->setText(QApplication::translate("MainWindow", "Particle Count", 0));
+        particleOnOff->setText(QApplication::translate("MainWindow", "Particles", 0));
+        label_10->setText(QApplication::translate("MainWindow", "Particle System Size", 0));
+        groupBox_4->setTitle(QApplication::translate("MainWindow", "Particle", 0));
+        label_8->setText(QApplication::translate("MainWindow", "Texture", 0));
+        label_7->setText(QApplication::translate("MainWindow", "Particle Size", 0));
+        DephtTest->setText(QApplication::translate("MainWindow", "Depth Sort", 0));
+        texureSlot->setText(QApplication::translate("MainWindow", "textures/particles.png", 0));
+        groupBox_6->setTitle(QApplication::translate("MainWindow", "Window Controlls", 0));
+        RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
+        zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));
+        zoomIn->setText(QApplication::translate("MainWindow", "Zoom In", 0));
+        Right->setText(QApplication::translate("MainWindow", "Right", 0));
+        RotateDown->setText(QApplication::translate("MainWindow", "Rotate Down", 0));
+        Left->setText(QApplication::translate("MainWindow", "Left", 0));
+        BGCol_label->setText(QApplication::translate("MainWindow", "Background Colour", 0));
+        Up->setText(QApplication::translate("MainWindow", "Up", 0));
+        Down->setText(QApplication::translate("MainWindow", "Down", 0));
+        advancedControlls->setTitle(QApplication::translate("MainWindow", "Advanced Controlls", 0));
+        groupBox_8->setTitle(QApplication::translate("MainWindow", "Particle", 0));
+        label_17->setText(QApplication::translate("MainWindow", "Movement Type", 0));
+        label_19->setText(QApplication::translate("MainWindow", "Life Time Range", 0));
         MovementSelection->clear();
         MovementSelection->insertItems(0, QStringList()
-         << QApplication::translate("renderstatus", "Tornado Center Attraction", 0)
-         << QApplication::translate("renderstatus", "Random Points", 0)
+         << QApplication::translate("MainWindow", "Tornado Center Attraction", 0)
+         << QApplication::translate("MainWindow", "Random Points", 0)
         );
-        groupBox_10->setTitle(QApplication::translate("renderstatus", "Tornado", 0));
-        label_15->setText(QApplication::translate("renderstatus", "Starting Value", 0));
-        label_16->setText(QApplication::translate("renderstatus", "Cloud Height", 0));
-        label_14->setText(QApplication::translate("renderstatus", "Pick Up Radius", 0));
-        label_13->setText(QApplication::translate("renderstatus", "Pick Up Time", 0));
-        label_22->setText(QApplication::translate("renderstatus", "Production Rate", 0));
-        label_21->setText(QApplication::translate("renderstatus", "Particle System Treshold", 0));
-        label_23->setText(QApplication::translate("renderstatus", "Upwards Speed", 0));
-        label_24->setText(QApplication::translate("renderstatus", "Radius Growth", 0));
-        groupBox_9->setTitle(QApplication::translate("renderstatus", "Particle System", 0));
-        label_20->setText(QApplication::translate("renderstatus", "Particle Production Rate", 0));
-        m_restartButton->setText(QApplication::translate("renderstatus", "Reset", 0));
-        m_RenderButton->setText(QApplication::translate("renderstatus", "Render", 0));
+        groupBox_10->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
+        label_15->setText(QApplication::translate("MainWindow", "Starting Value", 0));
+        label_16->setText(QApplication::translate("MainWindow", "Cloud Height", 0));
+        label_14->setText(QApplication::translate("MainWindow", "Pick Up Radius", 0));
+        label_13->setText(QApplication::translate("MainWindow", "Pick Up Time", 0));
+        label_22->setText(QApplication::translate("MainWindow", "Production Rate", 0));
+        label_21->setText(QApplication::translate("MainWindow", "Particle System Treshold", 0));
+        label_23->setText(QApplication::translate("MainWindow", "Upwards Speed", 0));
+        label_24->setText(QApplication::translate("MainWindow", "Radius Growth", 0));
+        groupBox_9->setTitle(QApplication::translate("MainWindow", "Particle System", 0));
+        label_20->setText(QApplication::translate("MainWindow", "Particle Production Rate", 0));
+        m_restartButton->setText(QApplication::translate("MainWindow", "Reset", 0));
+        m_RenderButton->setText(QApplication::translate("MainWindow", "Render", 0));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class renderstatus: public Ui_renderstatus {};
+    class MainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

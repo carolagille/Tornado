@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>renderstatus</class>
- <widget class="QMainWindow" name="renderstatus">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -58,8 +58,8 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>-13</x>
-         <y>-412</y>
+         <x>0</x>
+         <y>0</y>
          <width>569</width>
          <height>1257</height>
         </rect>

@@ -65,7 +65,7 @@ void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,
 
     else if(_boundingBox<particleParticleSys.length()<0.6*_boundingBox)
     {
-        //m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
+       // m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
         m_velocity=m_velocity;
     }
 
