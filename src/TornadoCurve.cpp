@@ -174,9 +174,9 @@ void TornadoCurve::changeRadiusGrowth(float _changeValue)
     m_radiusGrowth+=_changeValue;
 }
 
-void TornadoCurve::setSpeedUp(double _changeValue)
+void TornadoCurve::setSpeedUp(double _value)
 {
-    m_speedUp=_changeValue;
+    m_speedUp=_value;
 
     m_timeUp=m_maxHeight[2]*m_speedUp;
 }
@@ -188,47 +188,47 @@ void TornadoCurve::changeSpeed(float _changeValue)
     m_timeUp=m_maxHeight[2]*m_speedUp;
 }
 
-void TornadoCurve::setHeight(int _changeValue)
+void TornadoCurve::setHeight(int _value)
 {
-    m_maxHeight[2]=(float)_changeValue;
+    m_maxHeight[2]=(float)_value;
     std::cout<<"Height"<<m_maxHeight[2]<<"\n";
     m_timeUp=m_maxHeight[2]*m_speedUp;
 }
-void TornadoCurve::setControllPoint1X(int _changeValue)
+void TornadoCurve::setControllPoint1X(int _value)
 {
-  m_controlPoints[0][0]=_changeValue;
+  m_controlPoints[0][0]=_value;
   std::cout<<"changing controll point\n";
 
 }
-void TornadoCurve::setControllPoint1Z(int _changeValue)
+void TornadoCurve::setControllPoint1Z(int _value)
 {
-  m_controlPoints[0][1]=_changeValue;
+  m_controlPoints[0][1]=_value;
 
 }
-void TornadoCurve::setControllPoint2X(int _changeValue)
+void TornadoCurve::setControllPoint2X(int _value)
 {
-  m_controlPoints[1][0]=_changeValue;
+  m_controlPoints[1][0]=_value;
 
 }
-void TornadoCurve::setControllPoint2Z(int _changeValue)
+void TornadoCurve::setControllPoint2Z(int _value)
 {
-  m_controlPoints[1][1]=_changeValue;
+  m_controlPoints[1][1]=_value;
 
 }
-void TornadoCurve::setControllPoint3X(int _changeValue)
+void TornadoCurve::setControllPoint3X(int _value)
 {
-  m_controlPoints[2][0]=_changeValue;
+  m_controlPoints[2][0]=_value;
 
 }
-void TornadoCurve::setControllPoint3Z(int _changeValue)
+void TornadoCurve::setControllPoint3Z(int _value)
 {
-  m_controlPoints[2][1]=_changeValue;
+  m_controlPoints[2][1]=_value;
 
 }
 
-void TornadoCurve::setCurveCount(int _changeValue)
+void TornadoCurve::setCurveCount(int _value)
 {
-  m_curveCount=_changeValue;
+  m_curveCount=_value;
   if(m_curveCount==2)
   {
     emit disableCurve3(false);
@@ -247,25 +247,25 @@ void TornadoCurve::setCurveCount(int _changeValue)
   }
 
 }
-void TornadoCurve::setPickUpRadius(double _changeValue)
+void TornadoCurve::setPickUpRadius(double _value)
 {
-  m_pickUpRadius= _changeValue;
+  m_pickUpRadius= _value;
 
 }
 
-void TornadoCurve::setPickUpTime(int _changeValue)
+void TornadoCurve::setPickUpTime(int _value)
 {
-  m_pickUpTime=_changeValue;
+  m_pickUpTime=_value;
 }
 
-void TornadoCurve::setStartValue(int _changeValue)
+void TornadoCurve::setStartValue(int _value)
 {
 
-  m_startValue=_changeValue;
+  m_startValue=_value;
 }
-void TornadoCurve::setRadiusGrowth(double _changeValue)
+void TornadoCurve::setRadiusGrowth(double _value)
 {
-  m_radiusGrowth=_changeValue;
+  m_radiusGrowth=_value;
 }
 
 

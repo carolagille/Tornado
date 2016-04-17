@@ -54,22 +54,36 @@ public:
     /// @param [out] return the particleCount variable of the particleSystem class
     int getParticleCount();
     ///@brief sets the particle treshold
-    /// @param[in] value to set it
+    /// @param[in] _value value to set it
     void setParticles(int _value);
-    void setCloudHeight(int _changeValue);
-    void setlifeTimeRange(int _changeValue, int _minMax);
+    ///@brief sets the cloud height variable
+    /// @param[in] _value value to set
+    void setCloudHeight(int _value);
+    ///@brief sets the life time maximum or minumum variable
+    /// @param[in] _value value to set
+    /// @param[in] _minMax indicates if the minumum or maximum is set 0 = min , 1=max
+    void setlifeTimeRange(int _value, int _minMax);
+    ///@brief sets the production rate that controlls how many particles are produced every frame
+    /// @param _value value that sets the production rate
     void setProductionRate(int _value);
 private:
-
-    float m_boundingBox;//for a sphere shape as a fuzzy object (maybe make this a class for diffrent shapes later)
+    ///@brief value that defines the bounding box of the particle system
+    float m_boundingBox;
+    ///@brief saves the particle systems position
     ngl::Vec3 m_position;
+    ///@brief particle systems age
     int m_age;
-
+///@brief particle Treshold that controlls how many particle the particle system can hold
     int m_particleTreshold;
+    ///@brief maximum amount of particles that can be produce at each frame
     int m_maxProductionRate;
+    ///@brief holding the current particle count
     int m_particleCount;
-    std::vector<std::unique_ptr<Particle>> m_particleList; // list to store the particles
+    ///@brief holding a list of the particle objects
+    std::vector<std::unique_ptr<Particle>> m_particleList;
+    ///@brief controlls the height of the cloud at the top of the tornado
     int m_cloudHeight;
+    ///@brief holds the life time range that the particles lifetime gets picked from
     ngl::Vec2 m_lifeTimeRange;
 
 

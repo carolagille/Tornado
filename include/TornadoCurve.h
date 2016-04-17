@@ -1,41 +1,124 @@
 #ifndef TORNADOCURVE_H__
 #define TORNADOCURVE_H__
+
 #include <ngl/Vec3.h>
 #include <QObject>
+
+/// @file Tornado.h
+/// @brief inherites from QObject
+/// @author Carola Gille
+/// @version 1.0
+/// @date 15/04/16
+/// @class Tornado
+/// @brief Tornado Class that holds the particles systems
+
+
 class TornadoCurve:public QObject
 {Q_OBJECT
  public slots:
-    void setHeight(int _changeValue);
-    void setControllPoint1X(int _changeValue);
-    void setControllPoint1Z(int _changeValue);
-    void setControllPoint2X(int _changeValue);
-    void setControllPoint2Z(int _changeValue);
-    void setControllPoint3X(int _changeValue);
-    void setControllPoint3Z(int _changeValue);
-    void setCurveCount(int _changeValue);
-    void setPickUpRadius(double _changeValue);
-    void setPickUpTime(int _changeValue);
-    void setStartValue(int _changeValue);
-    void setSpeedUp(double _changeValue);
+    ///@brief slot that sets the height value
+    /// @param _value value to set
+    void setHeight(int _value);
+    ///@brief slot that sets the X value of the first point
+    /// @param _value value to set
+    void setControllPoint1X(int _value);
+    ///@brief slot that sets the Z value of the first point
+    /// @param _value value to set
+    void setControllPoint1Z(int _value);
+    ///@brief slot that sets the X value of the second point
+    /// @param _value value to set
+    void setControllPoint2X(int _value);
+    ///@brief slot that sets the Z value of the second point
+    /// @param _value value to set
+    void setControllPoint2Z(int _value);
+    ///@brief slot that sets the X value of the third point
+    ///@param _value value to set
+    void setControllPoint3X(int _value);
+    ///@brief slot that sets the Z value of the third point
+    /// @param _value value to set
+    void setControllPoint3Z(int _value);
+    ///@brief slot that sets Curve count and enable curves based on that
+    /// @param[in] _value value to set
+    void setCurveCount(int _value);
+    ///@brief slot that sets the radius of the tornado base
+    /// @param[in] _value value to set
+    void setPickUpRadius(double _value);
+    ///@brief slot that sets the time it takes to pick up particles from the ground
+    /// @param[in] _value value to set
+    void setPickUpTime(int _value);
+    ///@brief slot that sets the value of what how much the tonrado should be offsetted
+    /// offsetting it more will create a larger starting radius
+    /// offsetting it less will create a smaller starting radius
+    /// @param[in] _value value to set
+    void setStartValue(int _value);
+    ///@brief slot that sets the upwards speed value
+    /// @param[in] _value value to set
+    void setSpeedUp(double _value);
+    ///@brief slot that resets all values
     void reset();
-    void setRadiusGrowth(double _changeValue);
+    ///@brief slot that sets the amount that the radius growthes while going upwards
+    /// @param[in] _value value to set
+    void setRadiusGrowth(double _value);
 
 
  signals:
+    ///@brief emmits the state of the curve that than disables or enables the second curve
+    /// @param[in]_state state to emmit
     void disableCurve2(bool _state);
+    ///@brief emmits the state of the curve that than disables or enables the third curve
+    /// @param[in]_state state to emmit
     void disableCurve3(bool _state);
+    ///@brief emmits the curve count value
+    /// used by the curve count field in the ui
+    /// @param[in]_value value that is emmitted
     void resetCurveCount(int _value);
+    ///@brief emmits the X value of the first control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint1X(int _value);
+    ///@brief emmits the Z value of the first control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint1Z(int _value);
+    ///@brief emmits the X value of the second control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint2X(int _value);
+    ///@brief emmits the Z value of the second control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint2Z(int _value);
+    ///@brief emmits the X value of the third control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint3X(int _value);
+    ///@brief emmits the Z value of the third control point
+    /// used by the control points field in the ui
+    /// @param[in]_value value that is emmitted
     void resetControllPoint3Z(int _value);
+    ///@brief emmits the maximum height of the Tornado
+    /// used by the max height field in the ui
+    /// @param[in]_value value that is emmitted
     void resetHeight(int _value);
+    ///@brief emmits the radius that the tornado picks particles from
+    /// used by the pick up radius field in the ui
+    /// @param[in]_value value that is emmitted
     void resetPickUpRadius(double _changeValue);
+    ///@brief emmits the time it takes to pick up the particles from the ground
+    /// used by the pick up time field in the ui
+    /// @param[in]_value value that is emmitted
     void resetPickUpTime(int _changeValue);
+    ///@brief emmits the offset for the starting value of the tornado
+    /// used by the start value field in the ui
+    /// @param[in]_value value that is emmitted
     void resetStartValue(int _changeValue);
+    ///@brief emmits the speed up value
+    /// used by the speed up field in the ui
+    /// @param[in]_value value that is emmitted
     void resetSpeedUp(double _changeValue);
+    ///@brief emmits the radius growth value
+    /// used by the radius growth field in the ui
+    /// @param[in]_value value that is emmitted
     void resetRadiusGrowth(double _changeValue);
 
 
@@ -48,8 +131,6 @@ class TornadoCurve:public QObject
      ngl::Vec3 getPoint();
      void frameChange(int _frame);
      void changeRadiusGrowth(float _changeValue);
-
-     void restart();
      ngl::Vec3 getMidPoint();
      void changeSpeed(float _changeValue);
 

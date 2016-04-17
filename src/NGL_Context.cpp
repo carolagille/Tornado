@@ -471,7 +471,7 @@ void NGL_Context::saveImage()
 
 
     filename<<"renders/tornado"<<m_time<<".jpg";
-   /* QString qfilename= QString::fromStdString(filename.str());
+   / * QString qfilename= QString::fromStdString(filename.str());
     std::cout<<"working\n";
     QImage image=QOpenGLWidget::grabFramebuffer();
 
@@ -566,7 +566,7 @@ void NGL_Context::setDepthsortValue(bool _value)
 }
 
 
-void NGL_Context::restart()
+void NGL_Context::reset()
 {
   m_zoom=500;
   m_angleX=0;
@@ -598,7 +598,7 @@ void NGL_Context::restart()
   emit resetBGColourG(m_bgColour[1]);
   emit resetBGColourB(m_bgColour[2]);
   glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f);
-  m_tornado->restart();
+  m_tornado->reset();
 
 
 }

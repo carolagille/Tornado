@@ -21,8 +21,8 @@ class MainWindow : public QMainWindow
 {
   Q_OBJECT
 public slots:
-/// @brief restart function that resets the tornado and ui
-  void restart();
+/// @brief reset function that resets the tornado and ui
+  void reset();
 
 
 public:

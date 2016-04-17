@@ -148,24 +148,21 @@ int Tornado::getParticleSysCount()
     return m_particleSystemCount;
 }
 
-void Tornado::save()
-{
 
-}
 
-void Tornado::setHeight(int _changeValue)
+void Tornado::setHeight(int _value)
 {
-    m_maxHeight=_changeValue;
+    m_maxHeight=_value;
 }
 int Tornado::getFullParticleCount()
 {
 
     return m_storeParticlePos.size();
 }
-void Tornado::particlesOnOff(bool state=0)
+void Tornado::particlesOnOff(bool _state=0)
 {
-    if (state==true){m_particleState=m_particleCount;}
-    else if (state==false){m_particleState=0;}
+    if (_state==true){m_particleState=m_particleCount;}
+    else if (_state==false){m_particleState=0;}
 
     for(int i =0;i<(int)m_storeParticleSysList.size();++i)
     {
@@ -174,9 +171,9 @@ void Tornado::particlesOnOff(bool state=0)
 
     }
 }
-void Tornado::changeParticleCount(int value)
+void Tornado::setParticleCount(int _value)
 {
-  m_particleCount=value;
+  m_particleCount=_value;
   if(m_particleState>0)
   {
    m_particleState=m_particleCount;
@@ -189,14 +186,14 @@ void Tornado::changeParticleCount(int value)
   }
 }
 
-void Tornado::setRadiusMin(double _changeValue)
+void Tornado::setRadiusMin(double _value)
 {
   std::cout<<"changing Radius\n";
-  m_radiusRange[0]=_changeValue;
+  m_radiusRange[0]=_value;
 }
-void Tornado::setRadiusMax(double _changeValue)
+void Tornado::setRadiusMax(double _value)
 {
-  m_radiusRange[1]=_changeValue;
+  m_radiusRange[1]=_value;
 }
 
 
@@ -214,11 +211,11 @@ void Tornado::setCloudHeight(int _value)
 
 }
 
-void Tornado::setParticleMoveState(int _changeValue)
+void Tornado::setParticleMoveState(int _value)
 {
-  std::cout<<_changeValue<<"\n";
+  std::cout<<_value<<"\n";
 
-  m_particleMoveState=_changeValue;
+  m_particleMoveState=_value;
 }
 void Tornado::setParticleProductionRate(int _value)
 {
@@ -233,7 +230,7 @@ void Tornado::setParticleProductionRate(int _value)
 
 }
 
-void Tornado::restart()
+void Tornado::reset()
 {
 
   m_particleSystemList.clear();
@@ -277,13 +274,13 @@ void Tornado::restart()
   emit resetParticleTimeRangeMax(m_particleLifeRange[1]);
 
 }
-void Tornado::setParticleTimeRangeMin(int _changeValue)
+void Tornado::setParticleTimeRangeMin(int _value)
 {
-  m_particleLifeRange[0]=_changeValue;
+  m_particleLifeRange[0]=_value;
   for(int i =0;i<(int)m_particleSystemList.size();++i)
   {
 
-    m_particleSystemList[i]->setlifeTimeRange(_changeValue,0);
+    m_particleSystemList[i]->setlifeTimeRange(_value,0);
 
   }
 }

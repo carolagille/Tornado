@@ -29,9 +29,9 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
   connect(m_ui->zoomOut,SIGNAL(clicked(bool)),m_scene,SLOT(zoomOut()));
 
   connect(m_ui->m_RenderButton,SIGNAL(clicked()),m_scene,SLOT(renderOnOff()));
-  connect(m_ui->m_restartButton,SIGNAL(clicked()),this,SLOT(restart()));
+  connect(m_ui->m_restartButton,SIGNAL(clicked()),this,SLOT(reset()));
 
-  connect(m_ui->ParticleCount,SIGNAL(valueChanged(int)),tornado1, SLOT(changeParticleCount(int)));
+  connect(m_ui->ParticleCount,SIGNAL(valueChanged(int)),tornado1, SLOT(ParticleCount(int)));
   connect(m_ui->particleOnOff,SIGNAL(toggled(bool)),tornado1,SLOT(particlesOnOff(bool)));
   connect(m_ui->ParticleSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSize(int)));
   connect(m_ui->ParticleSystemSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSubSys(int)));
@@ -140,9 +140,9 @@ MainWindow::~MainWindow()
   delete m_scene;
   delete m_curve;
 }
-void MainWindow::restart()
+void MainWindow::reset()
 {
-  m_scene->restart();
+  m_scene->reset();
   m_curve->reset();
 
 }

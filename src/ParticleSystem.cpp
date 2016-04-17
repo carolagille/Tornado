@@ -145,14 +145,14 @@ void ParticleSystem::setParticles(int _value)
     m_particleTreshold=_value;
 
 }
-void ParticleSystem::setCloudHeight(int _changeValue)
+void ParticleSystem::setCloudHeight(int _value)
 {
-  m_cloudHeight=_changeValue;
+  m_cloudHeight=_value;
 }
 
-void ParticleSystem::setlifeTimeRange(int _changeValue,int _minMax)
+void ParticleSystem::setlifeTimeRange(int _value, int _minMax)
 {
-  m_lifeTimeRange[_minMax]=_changeValue;
+  m_lifeTimeRange[_minMax]=_value;
 }
 
 void ParticleSystem::setProductionRate(int _value)

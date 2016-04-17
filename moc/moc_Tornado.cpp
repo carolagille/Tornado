@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Tornado.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'Tornado.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.0. It"
+#error "This file was generated using the moc from 5.5.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Tornado_t {
     QByteArrayData data[29];
-    char stringdata0[497];
+    char stringdata0[495];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,47 +32,47 @@ static const qt_meta_stringdata_Tornado_t qt_meta_stringdata_Tornado = {
 QT_MOC_LITERAL(0, 0, 7), // "Tornado"
 QT_MOC_LITERAL(1, 8, 14), // "resetRadiusMin"
 QT_MOC_LITERAL(2, 23, 0), // ""
-QT_MOC_LITERAL(3, 24, 12), // "_changeValue"
-QT_MOC_LITERAL(4, 37, 14), // "resetRadiusMax"
-QT_MOC_LITERAL(5, 52, 19), // "resetparticlesOnOff"
-QT_MOC_LITERAL(6, 72, 5), // "state"
-QT_MOC_LITERAL(7, 78, 18), // "resetParticleCount"
-QT_MOC_LITERAL(8, 97, 5), // "value"
-QT_MOC_LITERAL(9, 103, 16), // "resetCloudHeight"
-QT_MOC_LITERAL(10, 120, 6), // "_value"
-QT_MOC_LITERAL(11, 127, 24), // "resetParticleSysTreshold"
-QT_MOC_LITERAL(12, 152, 19), // "resetProductionRate"
-QT_MOC_LITERAL(13, 172, 27), // "resetParticleProductionRate"
-QT_MOC_LITERAL(14, 200, 22), // "resetParticleMoveState"
-QT_MOC_LITERAL(15, 223, 25), // "resetParticleTimeRangeMin"
-QT_MOC_LITERAL(16, 249, 25), // "resetParticleTimeRangeMax"
-QT_MOC_LITERAL(17, 275, 14), // "particlesOnOff"
-QT_MOC_LITERAL(18, 290, 19), // "changeParticleCount"
-QT_MOC_LITERAL(19, 310, 9), // "setHeight"
-QT_MOC_LITERAL(20, 320, 12), // "setRadiusMin"
-QT_MOC_LITERAL(21, 333, 12), // "setRadiusMax"
-QT_MOC_LITERAL(22, 346, 14), // "setCloudHeight"
-QT_MOC_LITERAL(23, 361, 20), // "setParticleMoveState"
-QT_MOC_LITERAL(24, 382, 23), // "setParticleTimeRangeMin"
-QT_MOC_LITERAL(25, 406, 23), // "setParticleTimeRangeMax"
-QT_MOC_LITERAL(26, 430, 22), // "setParticleSysTreshold"
-QT_MOC_LITERAL(27, 453, 17), // "setProductionRate"
-QT_MOC_LITERAL(28, 471, 25) // "setParticleProductionRate"
+QT_MOC_LITERAL(3, 24, 6), // "_value"
+QT_MOC_LITERAL(4, 31, 14), // "resetRadiusMax"
+QT_MOC_LITERAL(5, 46, 19), // "resetparticlesOnOff"
+QT_MOC_LITERAL(6, 66, 5), // "state"
+QT_MOC_LITERAL(7, 72, 18), // "resetParticleCount"
+QT_MOC_LITERAL(8, 91, 16), // "resetCloudHeight"
+QT_MOC_LITERAL(9, 108, 24), // "resetParticleSysTreshold"
+QT_MOC_LITERAL(10, 133, 19), // "resetProductionRate"
+QT_MOC_LITERAL(11, 153, 27), // "resetParticleProductionRate"
+QT_MOC_LITERAL(12, 181, 22), // "resetParticleMoveState"
+QT_MOC_LITERAL(13, 204, 25), // "resetParticleTimeRangeMin"
+QT_MOC_LITERAL(14, 230, 25), // "resetParticleTimeRangeMax"
+QT_MOC_LITERAL(15, 256, 14), // "particlesOnOff"
+QT_MOC_LITERAL(16, 271, 6), // "_state"
+QT_MOC_LITERAL(17, 278, 16), // "setParticleCount"
+QT_MOC_LITERAL(18, 295, 9), // "setHeight"
+QT_MOC_LITERAL(19, 305, 12), // "setRadiusMin"
+QT_MOC_LITERAL(20, 318, 12), // "setRadiusMax"
+QT_MOC_LITERAL(21, 331, 14), // "setCloudHeight"
+QT_MOC_LITERAL(22, 346, 20), // "setParticleMoveState"
+QT_MOC_LITERAL(23, 367, 23), // "setParticleTimeRangeMin"
+QT_MOC_LITERAL(24, 391, 23), // "setParticleTimeRangeMax"
+QT_MOC_LITERAL(25, 415, 12), // "_changeValue"
+QT_MOC_LITERAL(26, 428, 22), // "setParticleSysTreshold"
+QT_MOC_LITERAL(27, 451, 17), // "setProductionRate"
+QT_MOC_LITERAL(28, 469, 25) // "setParticleProductionRate"
 
     },
-    "Tornado\0resetRadiusMin\0\0_changeValue\0"
+    "Tornado\0resetRadiusMin\0\0_value\0"
     "resetRadiusMax\0resetparticlesOnOff\0"
-    "state\0resetParticleCount\0value\0"
-    "resetCloudHeight\0_value\0"
+    "state\0resetParticleCount\0resetCloudHeight\0"
     "resetParticleSysTreshold\0resetProductionRate\0"
     "resetParticleProductionRate\0"
     "resetParticleMoveState\0resetParticleTimeRangeMin\0"
     "resetParticleTimeRangeMax\0particlesOnOff\0"
-    "changeParticleCount\0setHeight\0"
+    "_state\0setParticleCount\0setHeight\0"
     "setRadiusMin\0setRadiusMax\0setCloudHeight\0"
     "setParticleMoveState\0setParticleTimeRangeMin\0"
-    "setParticleTimeRangeMax\0setParticleSysTreshold\0"
-    "setProductionRate\0setParticleProductionRate"
+    "setParticleTimeRangeMax\0_changeValue\0"
+    "setParticleSysTreshold\0setProductionRate\0"
+    "setParticleProductionRate"
 };
 #undef QT_MOC_LITERAL
 
@@ -94,24 +94,24 @@ static const uint qt_meta_data_Tornado[] = {
        4,    1,  132,    2, 0x06 /* Public */,
        5,    1,  135,    2, 0x06 /* Public */,
        7,    1,  138,    2, 0x06 /* Public */,
-       9,    1,  141,    2, 0x06 /* Public */,
-      11,    1,  144,    2, 0x06 /* Public */,
-      12,    1,  147,    2, 0x06 /* Public */,
-      13,    1,  150,    2, 0x06 /* Public */,
-      14,    1,  153,    2, 0x06 /* Public */,
-      15,    1,  156,    2, 0x06 /* Public */,
-      16,    1,  159,    2, 0x06 /* Public */,
+       8,    1,  141,    2, 0x06 /* Public */,
+       9,    1,  144,    2, 0x06 /* Public */,
+      10,    1,  147,    2, 0x06 /* Public */,
+      11,    1,  150,    2, 0x06 /* Public */,
+      12,    1,  153,    2, 0x06 /* Public */,
+      13,    1,  156,    2, 0x06 /* Public */,
+      14,    1,  159,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      17,    1,  162,    2, 0x0a /* Public */,
-      18,    1,  165,    2, 0x0a /* Public */,
-      19,    1,  168,    2, 0x0a /* Public */,
-      20,    1,  171,    2, 0x0a /* Public */,
-      21,    1,  174,    2, 0x0a /* Public */,
-      22,    1,  177,    2, 0x0a /* Public */,
-      23,    1,  180,    2, 0x0a /* Public */,
-      24,    1,  183,    2, 0x0a /* Public */,
-      25,    1,  186,    2, 0x0a /* Public */,
+      15,    1,  162,    2, 0x0a /* Public */,
+      17,    1,  165,    2, 0x0a /* Public */,
+      18,    1,  168,    2, 0x0a /* Public */,
+      19,    1,  171,    2, 0x0a /* Public */,
+      20,    1,  174,    2, 0x0a /* Public */,
+      21,    1,  177,    2, 0x0a /* Public */,
+      22,    1,  180,    2, 0x0a /* Public */,
+      23,    1,  183,    2, 0x0a /* Public */,
+      24,    1,  186,    2, 0x0a /* Public */,
       26,    1,  189,    2, 0x0a /* Public */,
       27,    1,  192,    2, 0x0a /* Public */,
       28,    1,  195,    2, 0x0a /* Public */,
@@ -120,28 +120,28 @@ static const uint qt_meta_data_Tornado[] = {
     QMetaType::Void, QMetaType::Double,    3,
     QMetaType::Void, QMetaType::Double,    3,
     QMetaType::Void, QMetaType::Bool,    6,
-    QMetaType::Void, QMetaType::Int,    8,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Bool,    6,
-    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::Bool,   16,
+    QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Double,    3,
     QMetaType::Void, QMetaType::Double,    3,
-    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Int,   25,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
 
        0        // eod
 };
@@ -164,7 +164,7 @@ void Tornado::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 9: _t->resetParticleTimeRangeMin((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->resetParticleTimeRangeMax((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 11: _t->particlesOnOff((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 12: _t->changeParticleCount((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->setParticleCount((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->setHeight((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->setRadiusMin((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 15: _t->setRadiusMax((*reinterpret_cast< double(*)>(_a[1]))); break;
