@@ -13,10 +13,10 @@
 #include <ngl/Image.h>
 #include "MainWindow.h"
 #include <QImage>
-NGL_Context::NGL_Context(QWidget *_parent, Tornado *_tornado): QOpenGLWidget(_parent)
+NGL_Context::NGL_Context( Tornado *_tornado)
 {
-    setFocus();
-    this->resize(_parent->size());
+    //setFocus();
+    //this->resize(_parent->size());
 
     static const GLuint FORMAT_NBYTES = 4;
     m_texureName="textures/particles.png" ;
@@ -463,15 +463,15 @@ void NGL_Context::down()
 }
 
 void NGL_Context::saveImage()
-{//boost format
+{ //boost format
 
-  std::cout<<"Rendering...\n";
+    std::cout<<"Rendering...\n";
     std::ostringstream filename;
 
 
 
     filename<<"renders/tornado"<<m_time<<".jpg";
-   / * QString qfilename= QString::fromStdString(filename.str());
+   /*QString qfilename= QString::fromStdString(filename.str());
     std::cout<<"working\n";
     QImage image=QOpenGLWidget::grabFramebuffer();
 
@@ -485,7 +485,7 @@ void NGL_Context::saveImage()
   //  GLuint buffer;
 
 //    glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
-//    //glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
+    glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
     Magick::Blob b( m_pixels, 3 * m_width * m_height );
     Magick::Image i( m_width,
                     m_height,
@@ -493,7 +493,7 @@ void NGL_Context::saveImage()
                      Magick::CharPixel,
                      m_pixels);
 
-//
+
     i.write(filename.str());
 
 

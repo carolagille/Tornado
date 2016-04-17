@@ -6,18 +6,19 @@
 #include "Tornado.h"
 #include <QObject>
 #include <QOpenGLWidget>
+#include <QOpenGLWindow>
 #include <QMouseEvent>
 #include <ngl/Text.h>
 
 /// @file NGL_Context.h
-/// @brief this class inherits from QOpenGLWidget
+/// @brief this class inherits from QOpenGLWindow
 /// @author Carola Gille
 /// @version 1.0
 /// @date 15/04/16
 /// @class NGL_Context
-/// @brief Our Ngl Scene that is making a window that is used as a widget and displays the scene and the tornado
+/// @brief Our Ngl Scene that creates making a window
 ///
-class NGL_Context : public QOpenGLWidget
+class NGL_Context : public QOpenGLWindow
 {
 Q_OBJECT
 public slots:
@@ -136,7 +137,7 @@ public:
   ///@param[in] _parent the parent Window to create the GL context
   ///@param[in] _tornado pointer to tornado object to access data
   //----------------------------------------------------------------------------------------------------------------------
-    NGL_Context(QWidget *_parent ,Tornado *_tornado);
+    NGL_Context(Tornado *_tornado);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief destructor
     //----------------------------------------------------------------------------------------------------------------------

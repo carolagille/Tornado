@@ -28,9 +28,9 @@ int main(int argc,char **argv)
   format.setMinorVersion(3);
 #endif
 //stuff???
-  //std::cout<<"\n\n\n line 44\n";
+
   format.setProfile(QSurfaceFormat::CoreProfile);
-  //std::cout<<"\n\n\n line 46\n";
+
   format.setDepthBufferSize(24);
   // this will set the format for all widgets
 
@@ -41,10 +41,11 @@ int main(int argc,char **argv)
   if(argc > 1)
   {
     int simple= argv[1][0]-'0';
-    //std::cout<<simple<<std::endl;
+
     MainWindow window(simple);
 
     window.show();
+    //window.corner()
 
     return a.exec();
   }
@@ -55,13 +56,7 @@ int main(int argc,char **argv)
   }
 
 
-  /*    std::cout<<"\n\n\n line 13\n";
-   -    //Control points
-   -    ngl::Vec3 control1(130.0f,+10.0f,100.0f);
-   -    ngl::Vec3 control2(-70.0f,-50.0f,100.0f);
-   -    ngl::Vec3 control3(50.0f,100.0f,100.0f);
-   -    ngl::Vec3 controlpoints[3]={control1,control2,control3};
-
+  /*
    -    Tornado tornado1(300,controlpoints,400);
    -    //std::cout<<"\n\n\n line 21\n";
    -    QGuiApplication app(argc,argv); //manages your program

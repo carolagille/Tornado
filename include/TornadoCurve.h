@@ -123,9 +123,18 @@ class TornadoCurve:public QObject
 
 
  public:
-     TornadoCurve(int _changeRate);
-     void guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _position, int _curveNum); // make this a class????, creates guide curves by interpolating between start and end and a control curve
-     void interpolate(int _particleTime);//interpolates between the diffrent guide curves
+    ///@brief constructor
+     TornadoCurve();
+     ///@brief calculates the three diffrent curves by interpolating between start and end and a controll point
+     /// it than saves the value of the curve at the given time
+     /// @param _particleTime the time passed from the particle (age of the particle) that is used to calculate one specific point on the curve
+     /// @param _controlPoint controll point of the accroding curve is used as a controll point for the interpolation
+     /// @param _index index number of the position we want to access
+     /// @param _curveNum the index number of the according curve that is calculated
+     void guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _index, int _curveNum);
+     ///@brief interpolates between two curve points calulated by the guide curve function
+     /// @param _particleTime input that
+     void interpolate(int _particleTime);
      void spiral (int _radius, int _particleTime, int _offset);// using the interpolating result this creates a spiral
      void printPoint(); // prints out the point on the curve
      ngl::Vec3 getPoint();

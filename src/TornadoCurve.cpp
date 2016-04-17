@@ -3,11 +3,11 @@
 #include <math.h>
 
 
-TornadoCurve::TornadoCurve(int _changeRate)
+TornadoCurve::TornadoCurve()
 {
 
 
-    m_changeRate = _changeRate;
+    m_changeRate = 300;
 
 
     m_curveResult[0]=(0);
@@ -39,7 +39,7 @@ TornadoCurve::TornadoCurve(int _changeRate)
 }
 
 
-void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _position, int _curveNum)
+void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _index, int _curveNum)
 { // this function calculates a points by interpolating between a minumum and maximum height in respect to a control point
     float t;
     //t=0;
@@ -53,7 +53,7 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _p
     }
 
 
-    m_curveResult[_curveNum][_position] = 0 * (pow((1.0-t), 2.0)) + _controlPoint[_position] * (2.0 * t * (1.0-t)) + m_maxHeight[_position] * (pow(t,2.0));
+    m_curveResult[_curveNum][_index] = 0 * (pow((1.0-t), 2.0)) + _controlPointIndex[_index] * (2.0 * t * (1.0-t)) + m_maxHeight[_index] * (pow(t,2.0));
 
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
 
@@ -81,11 +81,11 @@ void TornadoCurve::interpolate(int _particleTime)
 
 
 
-            for(int j=0; j<=2;j++)
+         for(int j=0; j<=2;j++)
             {
                 guideCurve(_particleTime,m_controlPoints[m_tracker],j,0);
                 guideCurve(_particleTime,m_controlPoints[(m_tracker+1)%(int)m_curveCount],j,1);
-//
+
          float t = (float)(m_frame%(int)m_changeRate)/(float)m_changeRate;
 
          for(int i=0;i<=2;i++)

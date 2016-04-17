@@ -173,6 +173,7 @@ void Tornado::particlesOnOff(bool _state=0)
 }
 void Tornado::setParticleCount(int _value)
 {
+  std::cout<<"changing particles\n";
   m_particleCount=_value;
   if(m_particleState>0)
   {

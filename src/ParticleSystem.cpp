@@ -142,6 +142,7 @@ int ParticleSystem::getParticleCount()
 }
 void ParticleSystem::setParticles(int _value)
 {
+  std::cout<<"particle count"<<m_particleTreshold<<std::endl;
     m_particleTreshold=_value;
 
 }

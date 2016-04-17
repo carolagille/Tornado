@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -38,8 +38,6 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGridLayout *s_mainWindowGridLayout;
-    QSpacerItem *horizontalSpacer_2;
-    QSpacerItem *horizontalSpacer;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_9;
@@ -139,19 +137,11 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(1299, 931);
+        MainWindow->resize(601, 931);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         s_mainWindowGridLayout = new QGridLayout(centralwidget);
         s_mainWindowGridLayout->setObjectName(QStringLiteral("s_mainWindowGridLayout"));
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-        s_mainWindowGridLayout->addItem(horizontalSpacer_2, 0, 1, 1, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-        s_mainWindowGridLayout->addItem(horizontalSpacer, 0, 0, 1, 1);
-
         scrollArea = new QScrollArea(centralwidget);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setWidgetResizable(true);
@@ -656,12 +646,12 @@ public:
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        s_mainWindowGridLayout->addWidget(scrollArea, 0, 2, 1, 1);
+        s_mainWindowGridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1299, 27));
+        menubar->setGeometry(QRect(0, 0, 601, 27));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));

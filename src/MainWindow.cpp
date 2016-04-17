@@ -7,16 +7,11 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 {
   m_ui->setupUi(this);
 
-  m_curve= new TornadoCurve(300);
+  m_curve= new TornadoCurve();
   Tornado *tornado1 = new Tornado(m_curve);
 
 
-  m_scene=new NGL_Context(this, tornado1);
-  m_ui->s_mainWindowGridLayout->addWidget(m_scene,0,0,1,2);
-  //QRect size=m_ui->s_mainWindowGridLayout->cellRect(0,0);
-
- // int simple=_simple-'0';
-  //std::cout<<simple<<std::endl;
+  m_scene=new NGL_Context( tornado1);
 
 
   connect(m_ui->Down,SIGNAL(clicked(bool)),m_scene,SLOT(down()));
@@ -30,8 +25,7 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
   connect(m_ui->m_RenderButton,SIGNAL(clicked()),m_scene,SLOT(renderOnOff()));
   connect(m_ui->m_restartButton,SIGNAL(clicked()),this,SLOT(reset()));
-
-  connect(m_ui->ParticleCount,SIGNAL(valueChanged(int)),tornado1, SLOT(ParticleCount(int)));
+  connect(m_ui->ParticleCount,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleCount(int)));
   connect(m_ui->particleOnOff,SIGNAL(toggled(bool)),tornado1,SLOT(particlesOnOff(bool)));
   connect(m_ui->ParticleSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSize(int)));
   connect(m_ui->ParticleSystemSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSubSys(int)));
@@ -129,6 +123,44 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
   }
 
+
+
+
+
+
+
+
+       QSurfaceFormat format; //manages the buffer stuff
+       format.setSamples(4);
+
+   #if defined( __APPLE__)
+
+     format.setMajorVersion(4);
+     format.setMinorVersion(1);
+   #else
+
+     format.setMajorVersion(4);
+     format.setMinorVersion(3);
+   #endif
+
+     format.setProfile(QSurfaceFormat::CoreProfile);
+
+     format.setDepthBufferSize(24);
+
+
+     m_scene->setFormat(format);//formating  out window and program to the before defined values
+
+     m_scene->resize(1024, 720);
+
+     m_scene->show();
+
+
+
+
+
+
+
+
 }
 
 
@@ -136,6 +168,7 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
 MainWindow::~MainWindow()
 {
+
   delete m_ui;
   delete m_scene;
   delete m_curve;
