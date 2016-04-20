@@ -34,8 +34,7 @@ TornadoCurve::TornadoCurve()
     m_pickUpRadius=10.0;
     m_startValue=2;
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _index, int _curveNum)
 { // this function calculates a points by interpolating between a minumum and maximum height in respect to a control point
     float t;
@@ -57,23 +56,7 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _i
 
 
 }
-
-void TornadoCurve::frameChange(int _frame)
-{
-//changing the frame and the tracker for the curves according to the change rate
-
-
-    if (_frame % (int)m_changeRate == 0)
-    {
-        m_tracker++;
-        m_tracker %= (int)m_curveCount;
-
-    }
-
-    m_frame=_frame;
-
-}
-
+//----------------------------------------------------------------------------------------------------------------------
 void TornadoCurve::interpolate(int _particleTime)
 {
     //interpolates between the points calculated by the guide curve function
@@ -97,8 +80,7 @@ void TornadoCurve::interpolate(int _particleTime)
 
 }
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
 {
   //spiral function that calculates a circle type motion around a midpoint
@@ -135,8 +117,6 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
                     * (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
 
 
-
-
       float normal=(float)m_midPoint[0]\
                   +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) \
                   *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
@@ -161,51 +141,105 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
     }
     else if(_particleTime<m_timeUp)
       {
-      //normal tornado movemnet
+      //normal tornado movement
 
-        m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
-        m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0))) + _offset);
+        m_resultPoint[0]= (float)m_midPoint[0]\
+                          +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) \
+                          *(1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+        m_resultPoint[1]= (float)m_midPoint[1]\
+                          +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) \
+                          *(1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0))) + _offset);
 
+        //upwards movement
         m_resultPoint[2]= (float)_particleTime/m_speedUp ;
     }
     else
     {
+      //cloud movement
+      //takes the same rotation but the upwards movment is reduced
         interpolate(m_timeUp);
-        m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/(float)m_speed)*sin (((float)_particleTime/10.0)+ _offset);
-        m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/(float)m_speed)*cos (((float)_particleTime/10.0) + _offset);
+        m_resultPoint[0]= (float)m_midPoint[0]\
+                          +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue)\
+                          *(1.0/(float)m_speed)*sin (((float)_particleTime/10.0)+ _offset);
+        m_resultPoint[1]= (float)m_midPoint[1]\
+                          +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue)\
+                          *(1.0/(float)m_speed)*cos (((float)_particleTime/10.0) + _offset);
 
         m_resultPoint[2]= m_maxHeight[2]+(_particleTime-m_timeUp)/100;
     }
 
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 void TornadoCurve::printPoint()
 {
     std::cout<< m_resultPoint[0] <<","<< m_resultPoint[1]<<","<< m_resultPoint[2] <<";"<< std::endl;
 
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 TornadoCurve::getPoint()
 {
 
      return m_resultPoint;
+}
+//----------------------------------------------------------------------------------------------------------------------
+void TornadoCurve::frameChange(int _frame)
+{
+//changing the frame and the tracker for the curves according to the change rate
+
+
+    if (_frame % (int)m_changeRate == 0)
+    {
+        m_tracker++;
+        m_tracker %= (int)m_curveCount;
+
+    }
+
+    m_frame=_frame;
 
 }
+//----------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 TornadoCurve::getMidPoint()
 {
     return m_midPoint;
 }
-
-
-void TornadoCurve::setSpeedUp(double _value)
+//----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+//Public Slots
+void TornadoCurve::reset()
 {
-    m_speedUp=_value;
+  m_curveCount=3;
+  emit resetCurveCount(m_curveCount);
 
-    m_timeUp=m_maxHeight[2]*m_speedUp;
+  m_controlPoints[0]=ngl::Vec3(130.0f,10.0f,(float)m_maxHeight[2]/2.0);
+  emit resetControllPoint1X(m_controlPoints[0][0]);
+  emit resetControllPoint1Z(m_controlPoints[0][1]);
+
+  m_controlPoints[1]=ngl::Vec3(-70.0f,-50.0f,(float)(m_maxHeight[2]/2.0));
+  emit resetControllPoint2X(m_controlPoints[1][0]);
+  emit resetControllPoint2Z(m_controlPoints[1][1]);
+
+  m_controlPoints[2]=ngl::Vec3(50.0f,100.0f,(float)(m_maxHeight[2]/2.0));
+  emit resetControllPoint3X(m_controlPoints[2][0]);
+  emit resetControllPoint3Z(m_controlPoints[2][1]);
+
+  m_maxHeight[2]=400;
+  emit resetHeight(m_maxHeight[2]);
+
+  m_pickUpTime=100;
+  emit resetPickUpTime(m_pickUpTime);
+  m_pickUpRadius=10.0;
+  emit resetPickUpRadius(m_pickUpRadius);
+
+  m_startValue=2;
+  emit resetStartValue(m_startValue);
+
+  m_speedUp=2;
+  emit resetSpeedUp(m_speedUp);
+
+  m_radiusGrowth=55.0;
+  emit resetRadiusGrowth(m_radiusGrowth);
+
 }
-
 void TornadoCurve::setHeight(int _value)
 {
     m_maxHeight[2]=(float)_value;
@@ -243,9 +277,9 @@ void TornadoCurve::setControllPoint3Z(int _value)
   m_controlPoints[2][1]=_value;
 
 }
-
 void TornadoCurve::setCurveCount(int _value)
 {
+  //changes the curve count and disables curves that are not in the range of the curve count
   m_curveCount=_value;
   if(m_curveCount==2)
   {
@@ -270,16 +304,20 @@ void TornadoCurve::setPickUpRadius(double _value)
   m_pickUpRadius= _value;
 
 }
-
 void TornadoCurve::setPickUpTime(int _value)
 {
   m_pickUpTime=_value;
 }
-
 void TornadoCurve::setStartValue(int _value)
 {
 
   m_startValue=_value;
+}
+void TornadoCurve::setSpeedUp(double _value)
+{ //needs to recalculate the time up
+    m_speedUp=_value;
+
+    m_timeUp=m_maxHeight[2]*m_speedUp;
 }
 void TornadoCurve::setRadiusGrowth(double _value)
 {
@@ -287,38 +325,3 @@ void TornadoCurve::setRadiusGrowth(double _value)
 }
 
 
-void TornadoCurve::reset()
-{
-  m_curveCount=3;
-  emit resetCurveCount(m_curveCount);
-
-  m_controlPoints[0]=ngl::Vec3(130.0f,10.0f,(float)m_maxHeight[2]/2.0);
-  emit resetControllPoint1X(m_controlPoints[0][0]);
-  emit resetControllPoint1Z(m_controlPoints[0][1]);
-
-  m_controlPoints[1]=ngl::Vec3(-70.0f,-50.0f,(float)(m_maxHeight[2]/2.0));
-  emit resetControllPoint2X(m_controlPoints[1][0]);
-  emit resetControllPoint2Z(m_controlPoints[1][1]);
-
-  m_controlPoints[2]=ngl::Vec3(50.0f,100.0f,(float)(m_maxHeight[2]/2.0));
-  emit resetControllPoint3X(m_controlPoints[2][0]);
-  emit resetControllPoint3Z(m_controlPoints[2][1]);
-
-  m_maxHeight[2]=400;
-  emit resetHeight(m_maxHeight[2]);
-
-  m_pickUpTime=100;
-  emit resetPickUpTime(m_pickUpTime);
-  m_pickUpRadius=10.0;
-  emit resetPickUpRadius(m_pickUpRadius);
-
-  m_startValue=2;
-  emit resetStartValue(m_startValue);
-
-  m_speedUp=2;
-  emit resetSpeedUp(m_speedUp);
-
-  m_radiusGrowth=55.0;
-  emit resetRadiusGrowth(m_radiusGrowth);
-
-}

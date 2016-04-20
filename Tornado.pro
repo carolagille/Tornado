@@ -43,7 +43,7 @@ macx:INCLUDEPATH+=/usr/local/include
 macx:LIBS+= -L/opt/ImageMagick/lib/ -lMagick++-6.Q16 -lc++
 macx:QMAKE_CXXFLAGS+= -std=c++11 -stdlib=libc++
 
-OTHER_FILES+= README.mp \
+OTHER_FILES+= \
               ./shaders/*.glsl
 
 !equals(PWD, $${OUT_PWD}){
