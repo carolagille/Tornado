@@ -5,15 +5,16 @@
 
 MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(new Ui::MainWindow)
 {
+   // setting up the ui
   m_ui->setupUi(this);
 
+  //creating curve instance
   m_curve= new TornadoCurve();
   Tornado *tornado1 = new Tornado(m_curve);
-
-
+ //creating instance of ngl scene creating a new window
   m_scene=new NGL_Context( tornado1);
 
-
+  //connecting simple Ui buttons
   connect(m_ui->Down,SIGNAL(clicked(bool)),m_scene,SLOT(down()));
   connect(m_ui->Up,SIGNAL(clicked(bool)),m_scene,SLOT(up()));
   connect(m_ui->Left,SIGNAL(clicked(bool)),m_scene,SLOT(left()));
@@ -22,7 +23,6 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
   connect(m_ui->RotateUp,SIGNAL(clicked(bool)),m_scene,SLOT(rotateUp()));
   connect(m_ui->zoomIn,SIGNAL(clicked(bool)),m_scene,SLOT(zoomIn()));
   connect(m_ui->zoomOut,SIGNAL(clicked(bool)),m_scene,SLOT(zoomOut()));
-
   connect(m_ui->m_RenderButton,SIGNAL(clicked()),m_scene,SLOT(renderOnOff()));
   connect(m_ui->m_restartButton,SIGNAL(clicked()),this,SLOT(reset()));
   connect(m_ui->ParticleCount,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleCount(int)));
@@ -30,21 +30,19 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
   connect(m_ui->ParticleSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSize(int)));
   connect(m_ui->ParticleSystemSize,SIGNAL(valueChanged(int)),m_scene,SLOT(changeParticleSubSys(int)));
   connect(m_ui->DephtTest,SIGNAL(toggled(bool)),m_scene,SLOT(setDepthsortValue(bool)));
-  connect(m_ui->texureSlot,SIGNAL(textChanged(QString)),m_scene,SLOT(setTexure(QString)));
+  connect(m_ui->textureSlot,SIGNAL(textChanged(QString)),m_scene,SLOT(setTexture(QString)));
 
-
+  // connecting the reset functions to the UI
   connect(m_scene,SIGNAL(resetParticleSize(int)),m_ui->ParticleSize,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetParticleSysSize(int)),m_ui->ParticleSystemSize,SLOT(setValue(int)));
-  connect(m_scene,SIGNAL(resetTexure(QString)),m_ui->texureSlot,SLOT(setText(QString)));
+  connect(m_scene,SIGNAL(resetTexture(QString)),m_ui->textureSlot,SLOT(setText(QString)));
   connect(tornado1,SIGNAL(resetparticlesOnOff(bool)),m_ui->particleOnOff,SLOT(setChecked(bool)));
   connect(tornado1,SIGNAL(resetParticleCount(int)),m_ui->ParticleCount,SLOT(setValue(int)));
   connect(m_scene,SIGNAL(resetDepthsortValue(bool)),m_ui->DephtTest,SLOT(setChecked(bool)));
 
   if (_simple)
   {
-
-
-
+    //hiding the advaced UI controlls
     m_ui->BG_red->hide();
     m_ui->BG_green->hide();
     m_ui->BG_blue->hide();
@@ -56,7 +54,7 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
   else
   {
-
+ //connecting the advanced controlls to the UI
   connect(m_ui->Point1X,SIGNAL(valueChanged(int)),m_curve,SLOT(setControllPoint1X(int)));
   connect(m_ui->Point1Z,SIGNAL(valueChanged(int)),m_curve,SLOT(setControllPoint1Z(int)));
   connect(m_ui->Point2X,SIGNAL(valueChanged(int)),m_curve,SLOT(setControllPoint2X(int)));
@@ -65,8 +63,6 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
   connect(m_ui->Point3Z,SIGNAL(valueChanged(int)),m_curve,SLOT(setControllPoint3Z(int)));
   connect(m_ui->Height,SIGNAL(valueChanged(int)),m_curve,SLOT(setHeight(int)));
   connect(m_ui->Height,SIGNAL(valueChanged(int)),tornado1,SLOT(setHeight(int)));
-
-
   connect(m_ui->CurveCount,SIGNAL(valueChanged(int)),m_curve,SLOT(setCurveCount(int)));
   connect(m_ui->radiusMin,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMin(double)));
   connect(m_ui->radiusMax,SIGNAL(valueChanged(double)),tornado1,SLOT(setRadiusMax(double)));
@@ -80,18 +76,17 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
   connect(m_ui->BG_red,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourR(double)));
   connect(m_ui->BG_green,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourG(double)));
   connect(m_ui->BG_blue,SIGNAL(valueChanged(double)),m_scene,SLOT(setBGColourB(double)));
-
   connect(m_ui->SpeedUp,SIGNAL(valueChanged(double)),m_curve,SLOT(setSpeedUp(double)));
   connect(m_ui->ParticleSysTreshold,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleSysTreshold(int)));
   connect(m_ui->ProductionRate,SIGNAL(valueChanged(int)),tornado1,SLOT(setProductionRate(int)));
   connect(m_ui->RadiusGrowth,SIGNAL(valueChanged(double)),m_curve,SLOT(setRadiusGrowth(double)));
   connect(m_ui->ParticleProduction,SIGNAL(valueChanged(int)),tornado1,SLOT(setParticleProductionRate(int)));
 
+  //connecting the reset functions to the advanced controlls
   connect(m_scene,SIGNAL(resetDepthsortValue(bool)),m_ui->DephtTest,SLOT(setChecked(bool)));
   connect(m_scene,SIGNAL(resetBGColourR(double)),m_ui->BG_red,SLOT(setValue(double)));
   connect(m_scene,SIGNAL(resetBGColourG(double)),m_ui->BG_green,SLOT(setValue(double)));
   connect(m_scene,SIGNAL(resetBGColourB(double)),m_ui->BG_blue,SLOT(setValue(double)));
-
 
   connect(tornado1,SIGNAL(resetRadiusMin(double)),m_ui->radiusMin,SLOT(setValue(double)));
   connect(tornado1,SIGNAL(resetRadiusMax(double)),m_ui->radiusMax,SLOT(setValue(double)));
@@ -123,14 +118,8 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
   }
 
-
-
-
-
-
-
-
-       QSurfaceFormat format; //manages the buffer stuff
+  //setting up the ngl scene window
+       QSurfaceFormat format;
        format.setSamples(4);
 
    #if defined( __APPLE__)
@@ -147,8 +136,7 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
      format.setDepthBufferSize(24);
 
-
-     m_scene->setFormat(format);//formating  out window and program to the before defined values
+     m_scene->setFormat(format);
 
      m_scene->resize(1024, 720);
 
@@ -168,16 +156,16 @@ MainWindow::MainWindow(bool _simple, QWidget *parent) :QMainWindow(parent),m_ui(
 
 MainWindow::~MainWindow()
 {
-
+  //constructor deletes instances of all classes
   delete m_ui;
   delete m_scene;
   delete m_curve;
 }
 void MainWindow::reset()
 {
+    //resetting all values
   m_scene->reset();
   m_curve->reset();
-
 }
 
 

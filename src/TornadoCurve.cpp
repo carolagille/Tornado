@@ -53,7 +53,7 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _i
     }
 
 
-    m_curveResult[_curveNum][_index] = 0 * (pow((1.0-t), 2.0)) + _controlPointIndex[_index] * (2.0 * t * (1.0-t)) + m_maxHeight[_index] * (pow(t,2.0));
+    m_curveResult[_curveNum][_index] = 0 * (pow((1.0-t), 2.0)) + _controlPoint[_index] * (2.0 * t * (1.0-t)) + m_maxHeight[_index] * (pow(t,2.0));
 
     //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
 
@@ -169,21 +169,10 @@ ngl::Vec3 TornadoCurve::getMidPoint()
     return m_midPoint;
 }
 
-void TornadoCurve::changeRadiusGrowth(float _changeValue)
-{
-    m_radiusGrowth+=_changeValue;
-}
 
 void TornadoCurve::setSpeedUp(double _value)
 {
     m_speedUp=_value;
-
-    m_timeUp=m_maxHeight[2]*m_speedUp;
-}
-void TornadoCurve::changeSpeed(float _changeValue)
-{
-    m_speed+=_changeValue;
-    if (m_speed<=0){m_speed=0.1;}
 
     m_timeUp=m_maxHeight[2]*m_speedUp;
 }

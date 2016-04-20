@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -79,7 +79,7 @@ public:
     QLabel *label_8;
     QLabel *label_7;
     QCheckBox *DephtTest;
-    QLineEdit *texureSlot;
+    QLineEdit *textureSlot;
     QGroupBox *groupBox_6;
     QGridLayout *gridLayout_6;
     QPushButton *RotateUp;
@@ -137,7 +137,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(601, 931);
+        MainWindow->resize(582, 948);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         s_mainWindowGridLayout = new QGridLayout(centralwidget);
@@ -147,7 +147,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 569, 1257));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 556, 1220));
         gridLayout_9 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -354,10 +354,10 @@ public:
 
         gridLayout_4->addWidget(DephtTest, 1, 2, 1, 1);
 
-        texureSlot = new QLineEdit(groupBox_4);
-        texureSlot->setObjectName(QStringLiteral("texureSlot"));
+        textureSlot = new QLineEdit(groupBox_4);
+        textureSlot->setObjectName(QStringLiteral("textureSlot"));
 
-        gridLayout_4->addWidget(texureSlot, 5, 1, 1, 2);
+        gridLayout_4->addWidget(textureSlot, 5, 1, 1, 2);
 
 
         verticalLayout->addWidget(groupBox_4);
@@ -651,7 +651,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 601, 27));
+        menubar->setGeometry(QRect(0, 0, 582, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
@@ -667,7 +667,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Tornado Creator", 0));
         TornadoBox->setTitle(QApplication::translate("MainWindow", "Tornado", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "ControlPoints", 0));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "ControllPoints", 0));
         label_4->setText(QApplication::translate("MainWindow", "Point2", 0));
         label_2->setText(QApplication::translate("MainWindow", "X", 0));
         label_12->setText(QApplication::translate("MainWindow", "Curves", 0));
@@ -684,7 +684,7 @@ public:
         label_8->setText(QApplication::translate("MainWindow", "Texture", 0));
         label_7->setText(QApplication::translate("MainWindow", "Particle Size", 0));
         DephtTest->setText(QApplication::translate("MainWindow", "Depth Sort", 0));
-        texureSlot->setText(QApplication::translate("MainWindow", "textures/particles.png", 0));
+        textureSlot->setText(QApplication::translate("MainWindow", "textures/particles.png", 0));
         groupBox_6->setTitle(QApplication::translate("MainWindow", "Window Controlls", 0));
         RotateUp->setText(QApplication::translate("MainWindow", "Rotate Up", 0));
         zoomOut->setText(QApplication::translate("MainWindow", "Zoom Out", 0));

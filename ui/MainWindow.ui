@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>931</height>
+    <width>582</width>
+    <height>948</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,8 +28,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>569</width>
-         <height>1257</height>
+         <width>556</width>
+         <height>1220</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_9">
@@ -74,7 +74,7 @@
               <item row="1" column="0" colspan="3">
                <widget class="QGroupBox" name="groupBox_2">
                 <property name="title">
-                 <string>ControlPoints</string>
+                 <string>ControllPoints</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout">
                  <item row="4" column="0">
@@ -344,7 +344,7 @@
                </widget>
               </item>
               <item row="5" column="1" colspan="2">
-               <widget class="QLineEdit" name="texureSlot">
+               <widget class="QLineEdit" name="textureSlot">
                 <property name="text">
                  <string>textures/particles.png</string>
                 </property>
@@ -783,8 +783,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>601</width>
-     <height>27</height>
+     <width>582</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

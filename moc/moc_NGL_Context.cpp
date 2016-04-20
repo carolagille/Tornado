@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'NGL_Context.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'NGL_Context.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.0. It"
+#error "This file was generated using the moc from 5.5.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NGL_Context_t {
     QByteArrayData data[27];
-    char stringdata0[321];
+    char stringdata0[324];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,36 +34,36 @@ QT_MOC_LITERAL(1, 12, 17), // "resetParticleSize"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 6), // "_value"
 QT_MOC_LITERAL(4, 38, 20), // "resetParticleSysSize"
-QT_MOC_LITERAL(5, 59, 11), // "resetTexure"
-QT_MOC_LITERAL(6, 71, 19), // "resetDepthsortValue"
-QT_MOC_LITERAL(7, 91, 14), // "resetBGColourR"
-QT_MOC_LITERAL(8, 106, 14), // "resetBGColourG"
-QT_MOC_LITERAL(9, 121, 14), // "resetBGColourB"
-QT_MOC_LITERAL(10, 136, 11), // "renderOnOff"
-QT_MOC_LITERAL(11, 148, 18), // "changeParticleSize"
-QT_MOC_LITERAL(12, 167, 20), // "changeParticleSubSys"
-QT_MOC_LITERAL(13, 188, 9), // "setTexure"
-QT_MOC_LITERAL(14, 198, 11), // "_texureName"
-QT_MOC_LITERAL(15, 210, 8), // "rotateUp"
-QT_MOC_LITERAL(16, 219, 10), // "rotateDown"
-QT_MOC_LITERAL(17, 230, 4), // "left"
-QT_MOC_LITERAL(18, 235, 5), // "right"
-QT_MOC_LITERAL(19, 241, 2), // "up"
-QT_MOC_LITERAL(20, 244, 4), // "down"
-QT_MOC_LITERAL(21, 249, 6), // "zoomIn"
-QT_MOC_LITERAL(22, 256, 7), // "zoomOut"
-QT_MOC_LITERAL(23, 264, 12), // "setBGColourR"
-QT_MOC_LITERAL(24, 277, 12), // "setBGColourG"
-QT_MOC_LITERAL(25, 290, 12), // "setBGColourB"
-QT_MOC_LITERAL(26, 303, 17) // "setDepthsortValue"
+QT_MOC_LITERAL(5, 59, 12), // "resetTexture"
+QT_MOC_LITERAL(6, 72, 19), // "resetDepthsortValue"
+QT_MOC_LITERAL(7, 92, 14), // "resetBGColourR"
+QT_MOC_LITERAL(8, 107, 14), // "resetBGColourG"
+QT_MOC_LITERAL(9, 122, 14), // "resetBGColourB"
+QT_MOC_LITERAL(10, 137, 11), // "renderOnOff"
+QT_MOC_LITERAL(11, 149, 18), // "changeParticleSize"
+QT_MOC_LITERAL(12, 168, 20), // "changeParticleSubSys"
+QT_MOC_LITERAL(13, 189, 10), // "setTexture"
+QT_MOC_LITERAL(14, 200, 12), // "_textureName"
+QT_MOC_LITERAL(15, 213, 8), // "rotateUp"
+QT_MOC_LITERAL(16, 222, 10), // "rotateDown"
+QT_MOC_LITERAL(17, 233, 4), // "left"
+QT_MOC_LITERAL(18, 238, 5), // "right"
+QT_MOC_LITERAL(19, 244, 2), // "up"
+QT_MOC_LITERAL(20, 247, 4), // "down"
+QT_MOC_LITERAL(21, 252, 6), // "zoomIn"
+QT_MOC_LITERAL(22, 259, 7), // "zoomOut"
+QT_MOC_LITERAL(23, 267, 12), // "setBGColourR"
+QT_MOC_LITERAL(24, 280, 12), // "setBGColourG"
+QT_MOC_LITERAL(25, 293, 12), // "setBGColourB"
+QT_MOC_LITERAL(26, 306, 17) // "setDepthsortValue"
 
     },
     "NGL_Context\0resetParticleSize\0\0_value\0"
-    "resetParticleSysSize\0resetTexure\0"
+    "resetParticleSysSize\0resetTexture\0"
     "resetDepthsortValue\0resetBGColourR\0"
     "resetBGColourG\0resetBGColourB\0renderOnOff\0"
     "changeParticleSize\0changeParticleSubSys\0"
-    "setTexure\0_texureName\0rotateUp\0"
+    "setTexture\0_textureName\0rotateUp\0"
     "rotateDown\0left\0right\0up\0down\0zoomIn\0"
     "zoomOut\0setBGColourR\0setBGColourG\0"
     "setBGColourB\0setDepthsortValue"
@@ -148,7 +148,7 @@ void NGL_Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         switch (_id) {
         case 0: _t->resetParticleSize((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->resetParticleSysSize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->resetTexure((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->resetTexture((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 3: _t->resetDepthsortValue((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->resetBGColourR((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 5: _t->resetBGColourG((*reinterpret_cast< double(*)>(_a[1]))); break;
@@ -156,7 +156,7 @@ void NGL_Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 7: _t->renderOnOff(); break;
         case 8: _t->changeParticleSize((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->changeParticleSubSys((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 10: _t->setTexure((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 10: _t->setTexture((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 11: _t->rotateUp(); break;
         case 12: _t->rotateDown(); break;
         case 13: _t->left(); break;
@@ -188,7 +188,7 @@ void NGL_Context::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         }
         {
             typedef void (NGL_Context::*_t)(QString );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NGL_Context::resetTexure)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NGL_Context::resetTexture)) {
                 *result = 2;
             }
         }
@@ -270,7 +270,7 @@ void NGL_Context::resetParticleSysSize(int _t1)
 }
 
 // SIGNAL 2
-void NGL_Context::resetTexure(QString _t1)
+void NGL_Context::resetTexture(QString _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
