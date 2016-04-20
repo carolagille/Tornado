@@ -5,10 +5,9 @@
 
 TornadoCurve::TornadoCurve()
 {
-
+ //constructor setting all defualt values
 
     m_changeRate = 300;
-
 
     m_curveResult[0]=(0);
     m_curveResult[1]=(0);
@@ -17,16 +16,14 @@ TornadoCurve::TornadoCurve()
     m_resultPoint=(0.0f);
     m_curveCount=3;
 
-
     m_maxHeight=ngl::Vec3(0.0f,0.0f,400);
     m_speed=2;
 
     m_speedUp=2;
 
-    m_timeUp=m_maxHeight[2]*m_speedUp; // needs to be calculated when actually using the curves
+    m_timeUp=m_maxHeight[2]*m_speedUp; // needs to be calculated
     m_midPoint=(0.0f);
     m_frame=0;
-
 
     m_controlPoints[0]=ngl::Vec3(130.0f,10.0f,(float)m_maxHeight[2]/2.0);
     m_controlPoints[1]=ngl::Vec3(-70.0f,-50.0f,(float)(m_maxHeight[2]/2.0));
@@ -42,9 +39,9 @@ TornadoCurve::TornadoCurve()
 void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _index, int _curveNum)
 { // this function calculates a points by interpolating between a minumum and maximum height in respect to a control point
     float t;
-    //t=0;
+
     if(_particleTime==0)
-    {
+    { //preventing from division by 0
         t=0;
     }
     else
@@ -52,17 +49,18 @@ void TornadoCurve::guideCurve(int _particleTime, ngl::Vec3 _controlPoint, int _i
         t=(float)_particleTime/(float)m_timeUp;
     }
 
+    //bernstein interpolation wiht controll point
+    m_curveResult[_curveNum][_index] = 0 * (pow((1.0-t), 2.0))  \
+                                       + _controlPoint[_index] * (2.0 * t * (1.0-t)) \
+                                       + m_maxHeight[_index] * (pow(t,2.0));
 
-    m_curveResult[_curveNum][_index] = 0 * (pow((1.0-t), 2.0)) + _controlPoint[_index] * (2.0 * t * (1.0-t)) + m_maxHeight[_index] * (pow(t,2.0));
-
-    //V=V1(1-t)^2+Vc2t(1-t)+v2*t^2
 
 
 }
 
 void TornadoCurve::frameChange(int _frame)
 {
-
+//changing the frame and the tracker for the curves according to the change rate
 
 
     if (_frame % (int)m_changeRate == 0)
@@ -78,7 +76,7 @@ void TornadoCurve::frameChange(int _frame)
 
 void TornadoCurve::interpolate(int _particleTime)
 {
-
+    //interpolates between the points calculated by the guide curve function
 
 
          for(int j=0; j<=2;j++)
@@ -86,13 +84,14 @@ void TornadoCurve::interpolate(int _particleTime)
                 guideCurve(_particleTime,m_controlPoints[m_tracker],j,0);
                 guideCurve(_particleTime,m_controlPoints[(m_tracker+1)%(int)m_curveCount],j,1);
 
+                //calculating t (interpolation value)
          float t = (float)(m_frame%(int)m_changeRate)/(float)m_changeRate;
 
          for(int i=0;i<=2;i++)
-        {
-            m_midPoint[i] = (m_curveResult[0][i]*((2*pow(t ,3.0))- (3*pow(t ,2.0))+1))+(m_curveResult[1][i]*((-2*pow(t ,3.0)) + (3*pow(t ,2.0)))); //cubic interpolation
-            //m_midPoint[i] = (m_curveResult[0][i] * pow(cos(t),2.0)) + (m_curveResult[1][i] * pow(sin(t),2.0) ); //quadratic interpolation
-           // m_midPoint[i] = (m_curveResult[0][i]*(1.0-t))+(m_curveResult[1][i]*t); // linear interpolation
+        {   //cubic interpolation
+            m_midPoint[i] = (m_curveResult[0][i]*((2*pow(t ,3.0)) - (3*pow(t ,2.0))+1))\
+                           +(m_curveResult[1][i]*((-2*pow(t ,3.0)) + (3*pow(t ,2.0))));
+
         }
 
 
@@ -102,11 +101,18 @@ void TornadoCurve::interpolate(int _particleTime)
 
 void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
 {
+  //spiral function that calculates a circle type motion around a midpoint
+    interpolate(_particleTime);
 
     if((_particleTime<m_pickUpTime)&&(_particleTime>=1))
     {
+      //to achieve the motion of particles being picked up from the ground the tornado
+      //has a start radius and a time that it takes to pick up the particles from the ground
+      //over that time the original radius is interpolated to the normal curve movement and this
+      //creates a more natural looking flow of the particles into the tornado
+
       float t;
-      interpolate(_particleTime);
+
       if(_particleTime==0)
       {
         t=0;
@@ -114,26 +120,49 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
       }
       else
       {
+        //interpolation
         t=(float)_particleTime/m_pickUpTime;
       }
-      //std::cout<<t<<"\n";
-      float origin=(float)m_midPoint[0]+(float)_radius * m_pickUpRadius *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
-      float normal=(float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+      // calculating the origin which is the ground radius and the normal curve value
 
+      /*calculation
+       * origin
+       * + the radius
+       * * the sin /cos value
+       */
+      float origin=(float)m_midPoint[0]+\
+                   (float)_radius * m_pickUpRadius\
+                    * (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+
+
+
+
+      float normal=(float)m_midPoint[0]\
+                  +(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) \
+                  *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
+
+      //interpolates between the ground and the tornado point
       m_resultPoint[0]=(1-t)*origin+(t)*normal;
-      //m_resultPoint[0]=0.9*origin+0.1*normal;
-      origin=(float)m_midPoint[1]+(float)_radius * m_pickUpRadius *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
-      normal=(float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
 
+      //calculations for the Y value
+      origin=(float)m_midPoint[1]\
+            +(float)_radius * m_pickUpRadius\
+            *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
 
+      normal=(float)m_midPoint[1]+\
+             (float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  \
+             (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
 
       m_resultPoint[1]=(1-t)*origin+(t)*normal;
+
+      //upwards movement
       m_resultPoint[2]= (float)_particleTime/m_speedUp ;
 
     }
     else if(_particleTime<m_timeUp)
       {
-        interpolate(_particleTime);
+      //normal tornado movemnet
+
         m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*sin (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0)))+ _offset);
         m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/2.0)*cos (((float)_particleTime/(10.0/m_speed*(1.0/_particleTime/10.0))) + _offset);
 
@@ -144,10 +173,10 @@ void TornadoCurve::spiral(int _radius, int _particleTime, int _offset)
         interpolate(m_timeUp);
         m_resultPoint[0]= (float)m_midPoint[0]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/(float)m_speed)*sin (((float)_particleTime/10.0)+ _offset);
         m_resultPoint[1]= (float)m_midPoint[1]+(float)_radius * ((float)_particleTime/m_radiusGrowth+m_startValue) *  (1.0/(float)m_speed)*cos (((float)_particleTime/10.0) + _offset);
-        //refine this
+
         m_resultPoint[2]= m_maxHeight[2]+(_particleTime-m_timeUp)/100;
     }
-    //printPoint();
+
 }
 
 

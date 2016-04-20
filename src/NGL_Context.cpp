@@ -7,7 +7,7 @@
 #include <ngl/Util.h>
 #include <stdlib.h>
 #include <fstream>
-//#include <Magick++.h>
+#include <Magick++.h>
 #include <sstream>
 #include <ngl/Image.h>
 #include "MainWindow.h"
@@ -17,13 +17,14 @@ NGL_Context::NGL_Context( Tornado *_tornado)
 {
     m_tornado=_tornado;
 }
-
+//------------------------------------------------------------------------------------------------------------------
 NGL_Context::~NGL_Context()
 {  //Destructor deltes instance of tornado object
     std::cout<<"NGL Destructor called\n";
     free(m_pixels);
     delete m_tornado;
 }
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::initializeGL()
 {
     //setting all default values
@@ -38,7 +39,7 @@ void NGL_Context::initializeGL()
     m_depthSortState=false;
     m_zoom=500;
     m_angleX=0;
-    m_angleY=0;
+    m_angleZ=90;
     m_gridCenter=100;
 
 
@@ -48,7 +49,7 @@ void NGL_Context::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
-    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_gridCenter,m_zoom,),ngl::Vec3(0,m_gridCenter,0),ngl::Vec3(0,1,0));
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
     // store to vp for later use
     m_vp=view*perspective;
@@ -96,14 +97,16 @@ void NGL_Context::initializeGL()
 
     //creating a point??
     createPoints();
-    shader->setShaderParam4f("Colour",1,1,1,1);
+
+    //creating text that displays the frame rate
     m_text.reset( new ngl::Text(QFont("Courier",18)));
     m_text->setColour(1,1,0);
     m_text->setScreenSize(width(),height());
+
     glPointSize(5);
     startTimer(20);
  }
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::resizeGL(QResizeEvent *_event)
 {
     //resizes the window and sets the width and height for the window
@@ -114,7 +117,7 @@ void NGL_Context::resizeGL(QResizeEvent *_event)
     //chages the text position according to the right width and height
     m_text->setScreenSize(width(),height());
 }
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::resizeGL(int _w, int _h)
 {   //resizes the window and sets the width and height for the window
     m_width=_w*devicePixelRatio();
@@ -124,7 +127,7 @@ void NGL_Context::resizeGL(int _w, int _h)
     //chages the text position according to the right width and height
     m_text->setScreenSize(width(),height());
 }
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::paintGL()
 {
     //setting the background colour
@@ -133,10 +136,10 @@ void NGL_Context::paintGL()
     glBindTexture(GL_TEXTURE_2D,m_texture);
     //creating MVP
     ngl::Transformation transform;
-    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_gridCenter,m_zoom),ngl::Vec3(0,m_gridCenter,0),ngl::Vec3(0,1,0));
+    ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
     ngl::Mat4 perspective=ngl::perspective(45,float(width())/height(),0.1,10000);
     m_vp=view*perspective;
-    transform.setRotation(m_angleX,m_angleY,0);
+    transform.setRotation(m_angleX,0,m_angleZ);
     ngl::Mat4 MVP =transform.getMatrix()*m_vp;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -164,6 +167,27 @@ void NGL_Context::paintGL()
 
     //------------------------------------------------------------------------------------------------------------------
 
+
+
+    //Grid
+    ngl::Transformation transformGrid;
+    ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
+    //change colour to black
+    shader->use("nglColourShader");
+    shader->setShaderParam4f("Colour",0.5f,0.5f,0.5f,1.0f);
+
+    transformGrid.setRotation(90+m_angleX,0,m_angleZ);
+    transformGrid.setScale(20,20,20);
+    ngl::Mat4 MVP2=transformGrid.getMatrix()*m_vp;
+    shader->setRegisteredUniformFromMat4("MVP",MVP2);
+
+
+    prim->draw("plane");
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+    //------------------------------------------------------------------------------------------------------------------
+
     //Particles
 
     glPointSize(m_particleSize);
@@ -183,26 +207,6 @@ void NGL_Context::paintGL()
     glDisable(GL_BLEND);
 
     //------------------------------------------------------------------------------------------------------------------
-
-    //Grid
-    ngl::Transformation transformGrid;
-    ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);//
-    //change colour to black
-    shader->use("nglColourShader");
-    shader->setShaderParam4f("Colour",0.5f,0.5f,0.5f,1.0f);
-
-    transformGrid.setRotation(90+m_angleX,0,m_angleY);
-    transformGrid.setScale(20,20,20);
-    ngl::Mat4 MVP2=transformGrid.getMatrix()*m_vp;
-    shader->setRegisteredUniformFromMat4("MVP",MVP2);
-
-
-    prim->draw("plane");
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-
-    //------------------------------------------------------------------------------------------------------------------
-
     //Text
 
     m_text->setColour(1,0,0);
@@ -220,7 +224,7 @@ void NGL_Context::paintGL()
 
     m_time++;
 }
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::createPoints()
 {
    //updates the tornado positions and fills list
@@ -270,7 +274,7 @@ void NGL_Context::createPoints()
 
  glBindVertexArray(0);
 }
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::updatePoints()
 {
     //getting list of particle system position
@@ -280,7 +284,7 @@ void NGL_Context::updatePoints()
     // now copy the data/
     glBindBuffer(GL_ARRAY_BUFFER, m_vao);
     glBufferData(GL_ARRAY_BUFFER, pointsParticlSys.size()*sizeof(ngl::Vec3), &pointsParticlSys[0].m_x, GL_STATIC_DRAW);
-    // always best to unbind after use
+    // unbind after use
     glBindVertexArray(0);
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -293,37 +297,13 @@ void NGL_Context::updatePoints()
 
 
     std::vector<ngl::Vec3> pointsParticle= m_tornado->getParticleList();
-    /*for(int i=0;i<pointsParticle.size();i++)
-    {
-      ngl::Vec4 positionAlpha= MV*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
 
-      //std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
-
-      pointsParticle[i][0]=positionAlpha[0];
-      pointsParticle[i][1]=positionAlpha[1];
-      pointsParticle[i][2]=positionAlpha[2];
-    }
-
-
-    MV=MV.inverse();
-    for(int i=0;i<pointsParticle.size();i++)
-    {
-      ngl::Vec4 positionAlpha= MV*ngl::Vec4(pointsParticle[i][0],pointsParticle[i][1],pointsParticle[i][2],0);
-
-      //std::cout << positionAlpha[0] << ", " << positionAlpha[1] << ", " << positionAlpha[2] << std::endl;
-
-      pointsParticle[i][0]=positionAlpha[0];
-      pointsParticle[i][1]=positionAlpha[1];
-      pointsParticle[i][2]=positionAlpha[2];
-    }
-*/
 
     if(m_depthSortState)
     {
+      //sorts list by their Z value so alpha only works correctly for the Z axis
       std::sort(pointsParticle.begin(),pointsParticle.end(),NGL_Context::depthSort);
     }
-
-
 
     glBindVertexArray(m_vao2);
     // now copy the data/
@@ -333,9 +313,7 @@ void NGL_Context::updatePoints()
     glBindVertexArray(0);
 
 }
-
-
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::loadTexture()
 {
   glGenTextures(1, &m_texture);
@@ -384,80 +362,28 @@ void NGL_Context::loadTexture()
   else
     std::cout<<"TEXTURE FILE NOT LOADED\n";
 }
-
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::timerEvent(QTimerEvent *_event)
 {
-
+  //updating tornado values
   m_tornado->update();
-  //m_tornado->printList();
+  //updating all VAOs
   updatePoints();
+  //calls paint GL function
   update();
 
 }
-
-void NGL_Context::zoomIn()
-{
-  m_zoom-=50;
-}
-void NGL_Context::zoomOut()
-{
-  m_zoom+=50;
-}
-void NGL_Context::rotateUp()
-{
-   m_angleX-=5;
-}
-
-void NGL_Context::rotateDown()
-{
-  m_angleX+=5;
-}
-
-void NGL_Context::left()
-{
-  m_angleY+=5;
-}
-
-void NGL_Context::right()
-{
-  m_angleY-=5;
-}
-
-void NGL_Context::up()
-{
-  m_gridCenter+=10;
-}
-
-void NGL_Context::down()
-{
-  m_gridCenter-=10;
-}
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::saveImage()
-{ //boost format
+{
 
     std::cout<<"Rendering...\n";
     std::ostringstream filename;
+    //creates a unique name that includes the frame number so that the images can be read into nuke
+   filename<<"renders/tornado"<<m_time<<".jpg";
 
-
-
-    filename<<"renders/tornado"<<m_time<<".jpg";
-   /*QString qfilename= QString::fromStdString(filename.str());
-    std::cout<<"working\n";
-    QImage image=QOpenGLWidget::grabFramebuffer();
-
-    image.save(qfilename);*/
-
-
-    //glBindFramebuffer(GL_FRAMEBUFFER,defaultFramebufferObject());
-    //ngl::Image::saveFrameBufferToFile(filename.str(),0,0,m_width,m_height,ngl::Image::ImageModes::RGB);
-
-
-  //  GLuint buffer;
-
-//    glBindBuffer(GL_PIXEL_PACK_BUFFER,buffer);
- /*   glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
+   //gets the pixel information and stores it in m_pixel
+    glReadPixels(0, 0, m_width, m_height, GL_RGB, GL_UNSIGNED_BYTE, m_pixels);
     Magick::Blob b( m_pixels, 3 * m_width * m_height );
     Magick::Image i( m_width,
                     m_height,
@@ -467,90 +393,28 @@ void NGL_Context::saveImage()
 
 
     i.write(filename.str());
-*/
-
-
-
-}
-
-void NGL_Context::renderOnOff()
-{
-
-  m_render==0 ? m_render=1 : m_render=0;
-}
-void NGL_Context::changeParticleSize(int _value)
-{
-  m_particleSize=_value;
-}
-void NGL_Context::changeParticleSubSys(int _value)
-{
-  m_particleSubSysSize=_value;
-}
-void NGL_Context::setTexture(QString _textureName)
-{
-  m_textureName=_textureName;
-  loadTexture();
-}
-
-int NGL_Context::getHeight()
-{
-  return m_height;
-}
-
-int NGL_Context::getWidth()
-{
-  return m_width;
-}
-
-
-
-
-
-
-void NGL_Context::setBGColourR(double _value)
-{
-  m_bgColour[0]=_value;
 
 
 }
-
-void NGL_Context::setBGColourG(double _value)
-{
-  m_bgColour[1]=_value;
-
-}
-
-void NGL_Context::setBGColourB(double _value)
-{
-
-  m_bgColour[2]=_value;
-
-}
-
+//------------------------------------------------------------------------------------------------------------------
 bool NGL_Context::depthSort(ngl::Vec3 _a, ngl::Vec3 _b)
 {
-
-  return (_a.m_x)<(_b.m_x);// && (_a.m_x)<(_b.m_x);
+  //return true if a is smaller than b
+  return (_a.m_x)<(_b.m_x);
 }
-void NGL_Context::setDepthsortValue(bool _value)
-{
-  m_depthSortState=_value;
-}
-
-
+//------------------------------------------------------------------------------------------------------------------
 void NGL_Context::reset()
 {
+  //resets all values and emit their values so that their according value in the user interface is also changed
   m_zoom=500;
   m_angleX=0;
-  m_angleY=0;
+  m_angleZ=0;
   m_gridCenter=100;
 
   ngl::Mat4 view=ngl::lookAt(ngl::Vec3(m_zoom,m_zoom,m_gridCenter),ngl::Vec3(0,0,m_gridCenter),ngl::Vec3(0,0,1));
   ngl::Mat4 perspective=ngl::perspective(45,float(width()/height()),0.1,10000);
-  // store to vp for later use
+
   m_vp=view*perspective;
-  //.m_vao.
-  //GLuint m_vao2;
 
 
   m_time=0;
@@ -570,7 +434,97 @@ void NGL_Context::reset()
   emit resetBGColourG(m_bgColour[1]);
   emit resetBGColourB(m_bgColour[2]);
   glClearColor(m_bgColour[0],m_bgColour[1],m_bgColour[2],1.0f);
+  //resets all values in the tornado class
   m_tornado->reset();
+
+}
+//------------------------------------------------------------------------------------------------------------------
+int NGL_Context::getHeight()
+{
+  return m_height;
+}
+//------------------------------------------------------------------------------------------------------------------
+int NGL_Context::getWidth()
+{
+  return m_width;
+}
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+
+
+//public slots
+
+
+void NGL_Context::renderOnOff()
+{
+  m_render==0 ? m_render=1 : m_render=0;
+}
+void NGL_Context::changeParticleSize(int _value)
+{
+  m_particleSize=_value;
+}
+void NGL_Context::changeParticleSubSys(int _value)
+{
+  m_particleSubSysSize=_value;
+}
+void NGL_Context::setTexture(QString _textureName)
+{
+  m_textureName=_textureName;
+  loadTexture();
+}
+void NGL_Context::rotateUp()
+{
+   m_angleX-=5;
+}
+void NGL_Context::rotateDown()
+{
+  m_angleX+=5;
+}
+void NGL_Context::left()
+{
+  m_angleZ+=5;
+}
+void NGL_Context::right()
+{
+  m_angleZ-=5;
+}
+void NGL_Context::up()
+{
+  m_gridCenter+=10;
+}
+void NGL_Context::down()
+{
+  m_gridCenter-=10;
+}
+void NGL_Context::zoomIn()
+{
+  m_zoom-=50;
+}
+void NGL_Context::zoomOut()
+{
+  m_zoom+=50;
+}
+void NGL_Context::setBGColourR(double _value)
+{
+  m_bgColour[0]=_value;
 
 
 }
+void NGL_Context::setBGColourG(double _value)
+{
+  m_bgColour[1]=_value;
+
+}
+void NGL_Context::setBGColourB(double _value)
+{
+
+  m_bgColour[2]=_value;
+
+}
+void NGL_Context::setDepthsortValue(bool _value)
+{
+  m_depthSortState=_value;
+}
+
+
+
