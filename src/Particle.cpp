@@ -66,25 +66,31 @@ void Particle::move(ngl::Vec3 _newCenter, ngl::Vec3 _center, float _boundingBox,
 
     if(particleParticleSys.length()>_boundingBox)
     {
+        //checks if particle is on outside of the bounding box
+        //than attracs it to the particle system center
         m_velocity=(0.3*m_velocity)+(0.5*particleSysVelocity)+(0.2*particleParticleSys);
     }
 
 
     else if(_boundingBox<particleParticleSys.length()<0.6*_boundingBox)
     {
+        //buffer area
         m_velocity=m_velocity;
     }
 
 
     else if(particleParticleSys.length()<=_boundingBox)
     {
+        //inside bounding box
         particleSysTornadoCenter.normalize();
         if(particleSysTornadoCenter.length() > particleTornadoCenter.length())
         {
+            //inside tornado
             m_velocity=(0.5*m_velocity)+(0.3*particleSysVelocity)+(0.2*particleSysTornadoCenter);
         }
         else if(particleSysTornadoCenter.length() <= particleTornadoCenter.length())
         {
+            //outside tornado
             m_velocity=(0.5*m_velocity)+(0.3*particleSysVelocity)-(0.2*particleSysTornadoCenter);
         }
     }

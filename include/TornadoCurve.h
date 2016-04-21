@@ -4,13 +4,13 @@
 #include <ngl/Vec3.h>
 #include <QObject>
 
-/// @file Tornado.h
+/// @file TornadoCurve.h
 /// @brief inherites from QObject
 /// @author Carola Gille
 /// @version 1.0
 /// @date 15/04/16
-/// @class Tornado
-/// @brief Tornado Class that holds the particles systems
+/// @class TornadoCurve
+/// @brief Tornado Curve class that calculates the particle system positions
 
 
 class TornadoCurve:public QObject
@@ -92,90 +92,90 @@ class TornadoCurve:public QObject
  signals:
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the state of the curve that than disables or enables the second curve
-    /// @param[in]_state state to emmit
+    /// @param[in] _state state to emmit
     //----------------------------------------------------------------------------------------------------------------------
     void disableCurve2(bool _state);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the state of the curve that than disables or enables the third curve
-    /// @param[in]_state state to emmit
+    /// @param[in] _state state to emmit
     //----------------------------------------------------------------------------------------------------------------------
     void disableCurve3(bool _state);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the curve count value
     /// used by the curve count field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetCurveCount(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the X value of the first control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint1X(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the Z value of the first control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint1Z(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the X value of the second control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint2X(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the Z value of the second control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint2Z(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the X value of the third control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in]  _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint3X(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the Z value of the third control point
     /// used by the control points field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetControllPoint3Z(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the maximum height of the Tornado
     /// used by the max height field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetHeight(int _value);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the radius that the tornado picks particles from
     /// used by the pick up radius field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetPickUpRadius(double _changeValue);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the time it takes to pick up the particles from the ground
     /// used by the pick up time field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetPickUpTime(int _changeValue);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the offset for the starting value of the tornado
     /// used by the start value field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetStartValue(int _changeValue);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the speed up value
     /// used by the speed up field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetSpeedUp(double _changeValue);
     //----------------------------------------------------------------------------------------------------------------------
     ///@brief emmits the radius growth value
     /// used by the radius growth field in the ui
-    /// @param[in]_value value that is emmitted
+    /// @param[in] _value value that is emmitted
     //----------------------------------------------------------------------------------------------------------------------
     void resetRadiusGrowth(double _changeValue);
 
